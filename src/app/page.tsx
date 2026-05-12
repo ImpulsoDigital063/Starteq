@@ -513,15 +513,15 @@ export default function Home() {
           sizes="(max-width: 768px) 100vw, 1px"
           className="md:hidden object-cover object-center"
         />
-        {/* Desktop: satélite wide na direita · Earth no horizonte */}
+        {/* Desktop: satélite wide · mostra raio gold inteiro saindo da antena pra esquerda */}
         <Image
           src="/satelite-desktop.jpg"
           alt="Satélite Starteq · linha direta de comunicação com Palmas"
           fill
-          quality={90}
+          quality={92}
           sizes="(min-width: 768px) 100vw, 1px"
           className="hidden md:block object-cover"
-          style={{ objectPosition: "right center", filter: "brightness(1.05) saturate(1.05)" }}
+          style={{ objectPosition: "center center", filter: "brightness(1.08) saturate(1.08)" }}
         />
 
         {/* Gradient mobile · vertical fade pra preto inferior */}
