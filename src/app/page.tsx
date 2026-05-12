@@ -504,14 +504,14 @@ export default function Home() {
 
       {/* CTA FINAL · linha direta WhatsApp · satélite Starteq comunica com Palmas */}
       <section className="relative overflow-hidden bg-starteq-black py-20 md:py-24 lg:py-32 min-h-[560px] md:min-h-[560px] lg:min-h-[620px]">
-        {/* Mobile: satélite vertical (usa desktop até mobile dedicada chegar) */}
+        {/* Mobile: satélite vertical com laser gold descendo pra Terra */}
         <Image
-          src="/satelite-desktop.jpg"
-          alt="Satélite Starteq · linha direta de comunicação com Palmas"
+          src="/satelite-mobile.jpg"
+          alt="Satélite Starteq · laser gold descendo pra Palmas-TO"
           fill
           quality={88}
           sizes="(max-width: 768px) 100vw, 1px"
-          className="md:hidden object-cover object-center"
+          className="md:hidden object-cover object-top"
         />
         {/* Desktop: satélite wide · mostra raio gold inteiro saindo da antena pra esquerda */}
         <Image
