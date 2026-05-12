@@ -502,29 +502,87 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA FINAL · ignição */}
-      <section className="bg-starteq-black py-20 lg:py-32 relative overflow-hidden nebula-bg">
-        <StarField className="opacity-50" />
-        <Meteors className="opacity-60" />
-        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-4">
-            <Icon name="zap" size={14} />
-            Monte em 3 minutos
+      {/* CTA FINAL · linha direta WhatsApp · satélite Starteq comunica com Palmas */}
+      <section className="relative overflow-hidden bg-starteq-black py-20 md:py-24 lg:py-32 min-h-[560px] md:min-h-[560px] lg:min-h-[620px]">
+        {/* Mobile: satélite vertical (usa desktop até mobile dedicada chegar) */}
+        <Image
+          src="/satelite-desktop.jpg"
+          alt="Satélite Starteq · linha direta de comunicação com Palmas"
+          fill
+          quality={88}
+          sizes="(max-width: 768px) 100vw, 1px"
+          className="md:hidden object-cover object-center"
+        />
+        {/* Desktop: satélite wide na direita · Earth no horizonte */}
+        <Image
+          src="/satelite-desktop.jpg"
+          alt="Satélite Starteq · linha direta de comunicação com Palmas"
+          fill
+          quality={90}
+          sizes="(min-width: 768px) 100vw, 1px"
+          className="hidden md:block object-cover"
+          style={{ objectPosition: "right center", filter: "brightness(1.05) saturate(1.05)" }}
+        />
+
+        {/* Gradient mobile · vertical fade pra preto inferior */}
+        <div className="md:hidden absolute inset-0 bg-gradient-to-b from-transparent via-starteq-black/55 to-starteq-black pointer-events-none" />
+        {/* Gradient desktop · horizontal fade pra preto na esquerda */}
+        <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-starteq-black via-starteq-black/85 via-50% to-transparent pointer-events-none" />
+
+        {/* Meteoros mix-blend-screen */}
+        <div className="absolute inset-0 pointer-events-none" style={{ mixBlendMode: "screen" }}>
+          <Meteors className="opacity-50" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[inherit] h-full grid md:grid-cols-2 gap-8 items-end md:items-center pt-32 md:pt-0">
+          <div>
+            <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-starteq-pix opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-starteq-pix" />
+              </span>
+              Linha direta · online agora
+            </div>
+            <h2 className="font-space text-4xl lg:text-6xl font-black text-starteq-bone leading-[0.95] mb-4 drop-shadow-[0_2px_16px_rgba(0,0,0,0.95)]">
+              Em dúvida?<br />
+              <span className="text-space-grad">Fala com a gente.</span>
+            </h2>
+            <p className="text-starteq-text text-lg max-w-xl mb-8 drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+              Equipe real em Palmas · responde no WhatsApp em até <strong className="text-starteq-bone">30 minutos</strong> de segunda a sábado, 8h às 18h.
+              Sem bot impessoal · sem letrinha miúda.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3">
+              <a
+                href="https://wa.me/5563992528619?text=Oi!%20Cheguei%20pelo%20site%20da%20Starteq%2C%20preciso%20de%20uma%20ajuda%20pra%20escolher%20um%20produto."
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center gap-2 bg-starteq-pix text-white hover:opacity-90 font-space font-bold tracking-wide uppercase text-base px-8 py-5 rounded-lg transition-all shadow-2xl shadow-starteq-pix/30"
+              >
+                <Icon name="whatsapp" size={20} strokeWidth={2.2} />
+                Falar com a equipe
+              </a>
+              <Link
+                href="/montador"
+                className="inline-flex items-center justify-center gap-2 bg-starteq-black/60 backdrop-blur-sm border border-starteq-gold/40 hover:border-starteq-gold text-starteq-gold font-space font-bold tracking-wide uppercase text-sm px-6 py-5 rounded-lg transition-all"
+              >
+                Prefiro montar sozinho
+              </Link>
+            </div>
+
+            <div className="mt-6 flex items-center gap-4 text-xs text-starteq-muted">
+              <span className="inline-flex items-center gap-1">
+                <Icon name="check" size={12} className="text-starteq-pix" /> Sem bot
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <Icon name="check" size={12} className="text-starteq-pix" /> Sem fila
+              </span>
+              <span className="inline-flex items-center gap-1">
+                <Icon name="check" size={12} className="text-starteq-pix" /> Time em Palmas
+              </span>
+            </div>
           </div>
-          <h2 className="font-space text-4xl lg:text-6xl font-black text-starteq-bone leading-tight">
-            Para de adiar<br />
-            <span className="text-space-grad">o setup dos sonhos.</span>
-          </h2>
-          <p className="text-starteq-muted mt-6 text-lg max-w-xl mx-auto">
-            8 passos · compatibilidade automática · orçamento direto no WhatsApp.
-            Em 3 minutos sai daqui sabendo exatamente quanto custa.
-          </p>
-          <Link
-            href="/montador"
-            className="mt-10 inline-flex items-center justify-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-base px-10 py-5 rounded-lg transition-all animate-pulse-glow"
-          >
-            Iniciar montador <Icon name="arrow-right" size={20} strokeWidth={2.5} />
-          </Link>
+          <div className="hidden md:block" aria-hidden />
         </div>
       </section>
 
