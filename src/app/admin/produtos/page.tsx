@@ -1,4 +1,6 @@
 import { PRODUCTS, type Category } from "@/lib/catalog";
+import { Icon } from "@/components/Icon";
+import { ImportarCSVButton } from "./ImportarCSVButton";
 
 const CATEGORY_LABEL: Record<Category, string> = {
   cpu: "Processadores",
@@ -21,14 +23,17 @@ const CATEGORY_LABEL: Record<Category, string> = {
 export default function AdminProdutos() {
   return (
     <>
-      <header className="mb-8 flex items-end justify-between">
+      <header className="mb-8 flex items-end justify-between flex-wrap gap-3">
         <div>
           <h1 className="font-display text-4xl font-bold text-starteq-bone">Produtos</h1>
           <p className="text-starteq-muted mt-2">{PRODUCTS.length} SKUs cadastrados · gerencie estoque, preço e disponibilidade</p>
         </div>
-        <button className="bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-display font-bold tracking-wide uppercase text-sm px-6 py-3 rounded-lg transition-all">
-          + Novo produto
-        </button>
+        <div className="flex flex-wrap gap-2">
+          <ImportarCSVButton />
+          <button className="inline-flex items-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-display font-bold tracking-wide uppercase text-sm px-6 py-3 rounded-lg transition-all">
+            <Icon name="plus" size={14} /> Novo produto
+          </button>
+        </div>
       </header>
 
       <div className="bg-starteq-card border border-starteq-line rounded-xl overflow-hidden">
