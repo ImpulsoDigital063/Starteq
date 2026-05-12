@@ -1,4 +1,4 @@
-import { Icon } from "@/components/Icon";
+import { PrintButton } from "./PrintButton";
 
 export const metadata = {
   title: "Proposta · Impulso Digital × Starteq Tocantins",
@@ -29,14 +29,7 @@ export default function PropostaPage() {
           <strong className="font-bold">Proposta Impulso × Starteq</strong>
           <span className="ml-2 opacity-60">· Ctrl+P pra salvar PDF / imprimir</span>
         </div>
-        <button
-          onClick={() => {
-            if (typeof window !== "undefined") window.print();
-          }}
-          className="bg-[#F5C518] text-[#1A1A1A] font-bold text-xs uppercase tracking-wider px-4 py-2 rounded"
-        >
-          Imprimir / Salvar PDF
-        </button>
+        <PrintButton />
       </div>
 
       <article className="max-w-3xl mx-auto px-6 py-8 print:px-0 print:py-0">
@@ -210,6 +203,76 @@ export default function PropostaPage() {
           </div>
         </section>
 
+        {/* BLOCO · INFRAESTRUTURA GRATUITA */}
+        <section className="mb-6 page-break-inside-avoid">
+          <h2 className="text-base font-bold uppercase tracking-wider text-[#1A1A1A] border-b border-[#E0E0E0] pb-1 mb-3">
+            Infraestrutura · zero custo até a Starteq escalar
+          </h2>
+          <p className="text-sm leading-relaxed text-[#2A2A2A] mb-3">
+            A stack que escolhemos roda no <strong>plano gratuito</strong> da GitHub, Vercel
+            e Supabase — três das maiores plataformas de tecnologia do mundo.
+            <strong> Toda a operação atual da Starteq cabe dentro do free tier delas.</strong> Você
+            só começa a pagar essas ferramentas quando o negócio crescer para escalas bem maiores
+            que a atual — e mesmo aí, são valores baixos.
+          </p>
+
+          <div className="grid grid-cols-3 gap-3 mb-3">
+            <Infra
+              name="GitHub Free"
+              role="Código-fonte"
+              capacity="Repositórios privados ilimitados · 2.000 min/mês de automação"
+              limit="Praticamente nunca paga"
+              cost="—"
+            />
+            <Infra
+              name="Vercel Hobby"
+              role="Servidor + site"
+              capacity="100 GB de tráfego/mês · ~50.000 visitas/mês"
+              limit="Quando passar de 50k visitas/mês"
+              cost="US$ 20/mês (~R$ 110)"
+            />
+            <Infra
+              name="Supabase Free"
+              role="Banco de dados + login"
+              capacity="500 MB de dados · 50.000 usuários · backup diário"
+              limit="Quando passar de ~3.000 clientes ativos"
+              cost="US$ 25/mês (~R$ 137)"
+            />
+          </div>
+
+          <div className="border border-[#E0E0E0] rounded-md p-3 bg-[#FAFAFA] text-xs leading-relaxed">
+            <div className="font-bold text-[#1A1A1A] text-[11px] uppercase tracking-wider mb-1.5">
+              Custos reais que aparecem no caixa da Starteq
+            </div>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[#2A2A2A]">
+              <div>
+                <strong>Domínio (Registro.br):</strong> <span className="font-mono">R$ 40/ano</span> <span className="text-[#7A7A7A]">(~R$ 3,33/mês)</span>
+              </div>
+              <div>
+                <strong>NFe (Focus NFe):</strong> <span className="font-mono">R$ 39/mês</span> <span className="text-[#7A7A7A]">(até 100 NFes/mês)</span>
+              </div>
+              <div>
+                <strong>Asaas (PIX/cartão):</strong> <span className="font-mono">% por venda</span> <span className="text-[#7A7A7A]">(zero mensalidade)</span>
+              </div>
+              <div>
+                <strong>WhatsApp Business:</strong> <span className="font-mono">grátis</span> <span className="text-[#7A7A7A]">(API que você já tem)</span>
+              </div>
+            </div>
+            <div className="mt-2 pt-2 border-t border-[#E0E0E0] text-[#2A2A2A]">
+              <strong>Total fixo mensal de infra:</strong> <span className="font-mono text-[#1A1A1A] font-bold">R$ 42/mês</span> ·
+              vendas pagam o Asaas como % (taxa de cartão/PIX normal de mercado).
+            </div>
+          </div>
+
+          <p className="text-xs text-[#4A4A4A] mt-3 leading-relaxed">
+            <strong className="text-[#1A1A1A]">Quando vai precisar pagar mais?</strong> Vercel Pro entra quando
+            o site passar de <strong>~50.000 visitas/mês</strong>. Supabase Pro entra quando o cadastro passar
+            de <strong>~3.000 clientes ativos</strong>. Hoje a loja roda em escala bem abaixo disso, então
+            a infra continua gratuita por bastante tempo. Quando crescer ao ponto de precisar dos planos
+            pagos, o faturamento já vai sustentar com folga (~R$ 250/mês de infra total).
+          </p>
+        </section>
+
         {/* BLOCO · WHITE LABEL */}
         <section className="mb-6">
           <h2 className="text-base font-bold uppercase tracking-wider text-[#1A1A1A] border-b border-[#E0E0E0] pb-1 mb-3">
@@ -309,6 +372,38 @@ function AddOn({ name, price }: { name: string; price: string }) {
     <div className="border border-[#E0E0E0] rounded p-2">
       <div className="font-bold text-[11px] text-[#1A1A1A] leading-tight">{name}</div>
       <div className="text-[#F5C518] font-bold font-mono text-sm mt-1">{price}</div>
+    </div>
+  );
+}
+
+function Infra({
+  name,
+  role,
+  capacity,
+  limit,
+  cost,
+}: {
+  name: string;
+  role: string;
+  capacity: string;
+  limit: string;
+  cost: string;
+}) {
+  return (
+    <div className="border border-[#E0E0E0] rounded p-2.5">
+      <div className="flex items-center gap-1.5 mb-1">
+        <span className="text-[9px] uppercase tracking-wider font-bold text-[#F5C518] bg-[#1A1A1A] px-1.5 py-0.5 rounded">
+          GRÁTIS
+        </span>
+        <h3 className="font-bold text-[12px] text-[#1A1A1A]">{name}</h3>
+      </div>
+      <div className="text-[10px] uppercase tracking-wider text-[#7A7A7A] font-bold mb-1.5">{role}</div>
+      <div className="text-[11px] text-[#2A2A2A] leading-snug mb-2">{capacity}</div>
+      <div className="border-t border-[#E0E0E0] pt-1.5">
+        <div className="text-[9px] uppercase tracking-wider text-[#7A7A7A] font-bold">Quando paga</div>
+        <div className="text-[10px] text-[#4A4A4A] leading-snug">{limit}</div>
+        <div className="text-[11px] font-mono font-bold text-[#1A1A1A] mt-0.5">{cost}</div>
+      </div>
     </div>
   );
 }
