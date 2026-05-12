@@ -362,17 +362,18 @@ export default function Home() {
           sizes="(max-width: 768px) 100vw, 1px"
           className="md:hidden object-cover object-top"
         />
-        {/* Desktop: engenheiro wide na direita · mostra cena completa (engenheiro + holograma + arco) */}
+        {/* Desktop: engenheiro wide à direita · object-contain mostra a CENA INTEIRA
+           (engenheiro + holograma + arco + sparks) sem zoom in close-up */}
         <Image
           src="/engenheiro-desktop.jpg"
           alt="Engenheiro Starteq montando PC com placa-mãe holográfica"
           fill
           quality={90}
           sizes="(min-width: 768px) 100vw, 1px"
-          className="hidden md:block object-cover"
+          className="hidden md:block object-contain"
           style={{
-            objectPosition: "calc(100% + 120px) center",
-            filter: "brightness(1.08) saturate(1.05)",
+            objectPosition: "right center",
+            filter: "brightness(1.08) saturate(1.08)",
           }}
         />
 
