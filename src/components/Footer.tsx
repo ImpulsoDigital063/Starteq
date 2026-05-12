@@ -1,11 +1,29 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Logo } from "./Logo";
 import { Icon } from "./Icon";
 import { OpenNowBadge } from "./OpenNowBadge";
 
 export function Footer() {
   return (
-    <footer className="bg-starteq-coal border-t border-starteq-line">
+    <footer className="relative bg-starteq-coal border-t border-starteq-line overflow-hidden">
+      {/* Background · Terra vista do espaço com Palmas em destaque
+         (sutil · opacity 0.18 · pra não competir com texto) */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden>
+        <Image
+          src="/terra-footer.jpg"
+          alt=""
+          fill
+          quality={80}
+          sizes="100vw"
+          className="object-cover opacity-20"
+          style={{ objectPosition: "center 30%" }}
+        />
+        {/* Overlay escuro pra garantir contraste */}
+        <div className="absolute inset-0 bg-gradient-to-b from-starteq-black via-starteq-coal/85 to-starteq-coal" />
+      </div>
+
+      <div className="relative">
       {/* Top bar · 2 cards de atendimento + badge live + mini-mapa Google */}
       <div className="bg-starteq-card border-b border-starteq-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid md:grid-cols-2 gap-6">
@@ -231,6 +249,7 @@ export function Footer() {
             </a>
           </div>
         </div>
+      </div>
       </div>
     </footer>
   );
