@@ -9,7 +9,12 @@ const CATEGORY_LABEL: Record<Category, string> = {
   fonte: "Fonte",
   ssd: "SSD",
   gabinete: "Gabinete",
-  perifericos: "Periféricos",
+  mouse: "Mouse",
+  teclado: "Teclado",
+  mousepad: "Mousepad",
+  monitor: "Monitor",
+  headset: "Headset",
+  cadeira: "Cadeira",
   computadores: "Computadores",
 };
 

@@ -234,7 +234,12 @@ export function categoryLabel(c: Product["category"]): string {
     ssd: "Armazenamento",
     gabinete: "Gabinete",
     fonte: "Fonte",
-    perifericos: "Periféricos",
+    mouse: "Mouse",
+    teclado: "Teclado",
+    mousepad: "Mousepad",
+    monitor: "Monitor",
+    headset: "Headset",
+    cadeira: "Cadeira",
     computadores: "Computador",
   }[c];
 }

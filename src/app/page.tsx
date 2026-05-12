@@ -2,19 +2,32 @@ import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StarField } from "@/components/StarField";
+import { Meteors } from "@/components/Meteors";
 import { AstroPhoenix } from "@/components/AstroPhoenix";
-import { PRODUCTS } from "@/lib/catalog";
+import { ProductCard } from "@/components/ProductCard";
+import { ProductShelf } from "@/components/ProductShelf";
+import { PRODUCTS, productsByBadge, BRANDS } from "@/lib/catalog";
 
 export default function Home() {
-  const highlights = PRODUCTS.filter((p) => p.highlight).slice(0, 3);
+  const lancamentos = productsByBadge("Lançamento");
+  const maisVendidos = productsByBadge("Mais Vendido");
+  const promos = [...productsByBadge("Promo"), ...productsByBadge("OpenBox")];
+  const pcsProntos = PRODUCTS.filter((p) => p.category === "computadores");
+  const perifericos = PRODUCTS.filter((p) =>
+    ["mouse", "teclado", "monitor", "headset", "mousepad", "cadeira"].includes(p.category)
+  ).slice(0, 8);
+  const hardware = PRODUCTS.filter((p) =>
+    ["gpu", "cpu", "ssd", "fonte"].includes(p.category)
+  ).slice(0, 8);
 
   return (
     <>
       <Header />
 
-      {/* HERO ESPACIAL · estrelas + nebula + mascote */}
+      {/* HERO ESPACIAL · meteoros + estrelas + nebula + mascote */}
       <section className="relative overflow-hidden bg-starteq-black nebula-bg min-h-[88vh] flex items-center">
         <StarField />
+        <Meteors />
         <div className="absolute inset-0 grid-bg opacity-50 pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-starteq-gold/5 blur-3xl pointer-events-none" />
 
@@ -70,7 +83,6 @@ export default function Home() {
 
             <div className="relative h-[500px] hidden lg:flex items-center justify-center">
               <AstroPhoenix size={400} />
-              {/* Anéis orbitais */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div
                   className="w-[460px] h-[460px] rounded-full border border-starteq-gold/15"
@@ -81,95 +93,104 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Fade pra próxima section */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-starteq-coal pointer-events-none" />
       </section>
 
-      {/* CATEGORIAS · launch pad */}
-      <section className="bg-starteq-coal py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-end justify-between mb-10">
-            <div>
-              <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-2">
-                🛸 Plataforma de Lançamento
-              </div>
-              <h2 className="font-space text-3xl lg:text-4xl font-black text-starteq-bone">Por onde decolar</h2>
-              <p className="text-starteq-muted mt-2">Escolha o caminho · monte do zero ou pegue pronto pra voar</p>
-            </div>
-            <Link href="/produtos" className="hidden sm:inline-flex text-sm text-starteq-gold hover:text-starteq-bone font-space font-bold uppercase tracking-wider">
-              Catálogo completo →
-            </Link>
-          </div>
+      {/* BANNER PROMO · faixa amarela full-width */}
+      <section className="bg-starteq-gold text-starteq-black py-3 overflow-hidden">
+        <div className="flex items-center justify-center gap-12 whitespace-nowrap animate-[scroll_30s_linear_infinite] font-space font-bold uppercase tracking-wider text-sm">
+          <span>🛵 Same-day em Palmas</span>
+          <span>·</span>
+          <span>💳 10x sem juros no cartão</span>
+          <span>·</span>
+          <span>⚡ 15% off no PIX à vista</span>
+          <span>·</span>
+          <span>🛡️ Garantia por peça sem lacre</span>
+          <span>·</span>
+          <span>🤖 IA + atendimento humano no WhatsApp</span>
+          <span>·</span>
+          <span>🚀 Build com compatibilidade validada</span>
+        </div>
+      </section>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <CategoryCard
-              href="/montador"
-              title="Monte seu PC"
-              subtitle="Compatibilidade validada"
-              accent
-            />
-            <CategoryCard
-              href="/produtos/categoria/computadores"
-              title="PCs prontos"
-              subtitle="Builds curadas"
-            />
-            <CategoryCard
-              href="/produtos/categoria/gpu"
-              title="Placas de vídeo"
-              subtitle="RTX 4060 → 5070"
-            />
-            <CategoryCard
-              href="/produtos/categoria/perifericos"
-              title="Periféricos"
-              subtitle="Mouse · teclado · monitor"
-            />
+      {/* CATEGORIAS · launch pad */}
+      <section className="bg-starteq-coal py-12 lg:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-2">
+            🛸 Plataforma de Lançamento
+          </div>
+          <h2 className="font-space text-3xl lg:text-4xl font-black text-starteq-bone mb-8">Por onde decolar</h2>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            <CategoryTile href="/montador" label="Monte seu PC" icon="🔧" accent />
+            <CategoryTile href="/produtos/categoria/computadores" label="PCs prontos" icon="🖥️" />
+            <CategoryTile href="/produtos/categoria/gpu" label="Placas de vídeo" icon="🎮" />
+            <CategoryTile href="/produtos/categoria/mouse" label="Mouse · Teclado" icon="🖱️" />
+            <CategoryTile href="/produtos/categoria/monitor" label="Monitores" icon="🖼️" />
+            <CategoryTile href="/produtos/categoria/cadeira" label="Cadeiras" icon="🪑" />
           </div>
         </div>
       </section>
 
-      {/* DESTAQUES · top de linha */}
-      {highlights.length > 0 && (
-        <section className="bg-starteq-black py-16 lg:py-24 relative overflow-hidden">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-starteq-gold/5 rounded-full blur-3xl pointer-events-none" />
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-end justify-between mb-10">
-              <div>
-                <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-2">
-                  ⚡ Top de linha
-                </div>
-                <h2 className="font-space text-3xl lg:text-4xl font-black text-starteq-bone">
-                  Hardware de elite em órbita
-                </h2>
-              </div>
+      {/* VITRINE · LANÇAMENTOS */}
+      {lancamentos.length > 0 && (
+        <ProductShelf
+          eyebrow="⚡ Lançamentos"
+          title="Acaba de pousar na estação"
+          subtitle="As últimas peças que chegaram em Palmas · do RTX 5070 ao Z790 DDR5"
+          products={lancamentos}
+          accentColor="gold"
+        />
+      )}
+
+      {/* BANNER CTA MONTADOR · full-width espacial */}
+      <section className="relative overflow-hidden bg-starteq-black py-16 lg:py-20 border-y border-starteq-line">
+        <StarField className="opacity-40" />
+        <Meteors className="opacity-50" />
+        <div className="absolute inset-0 nebula-bg opacity-70" />
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[1fr_auto] gap-8 items-center">
+          <div>
+            <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3">
+              ⚙ Configurador inteligente
             </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {highlights.map((p) => (
-                <Link
-                  key={p.sku}
-                  href={`/produtos/${p.slug}`}
-                  className="group bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-xl p-6 transition-all hover:-translate-y-1"
-                >
-                  <div className="aspect-video bg-starteq-coal rounded-lg mb-4 flex items-center justify-center text-starteq-line text-xs font-mono border border-starteq-line">
-                    {p.category.toUpperCase()}
-                  </div>
-                  <div className="text-xs text-starteq-muted uppercase tracking-wider mb-1 font-space font-bold">{p.brand}</div>
-                  <div className="font-display font-semibold text-starteq-bone group-hover:text-starteq-gold transition-colors leading-snug">
-                    {p.name}
-                  </div>
-                  <div className="mt-4 flex items-end justify-between">
-                    <div>
-                      <div className="font-mono font-bold text-2xl text-starteq-pix">
-                        R$ {p.pix_price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
-                      </div>
-                      <div className="text-xs text-starteq-muted">à vista no PIX</div>
-                    </div>
-                    <span className="text-xs text-starteq-green">● em estoque</span>
-                  </div>
-                </Link>
-              ))}
-            </div>
+            <h2 className="font-space text-3xl lg:text-5xl font-black text-starteq-bone leading-tight mb-3">
+              Monte seu PC <span className="text-space-grad">do seu jeito.</span>
+            </h2>
+            <p className="text-starteq-muted text-lg max-w-xl">
+              8 passos · compatibilidade validada · orçamento direto no WhatsApp.
+              A IA cuida pra você não comprar peça errada.
+            </p>
           </div>
-        </section>
+          <Link
+            href="/montador"
+            className="inline-flex items-center justify-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-base px-8 py-5 rounded-lg transition-all animate-pulse-glow whitespace-nowrap"
+          >
+            Iniciar montador →
+          </Link>
+        </div>
+      </section>
+
+      {/* VITRINE · MAIS VENDIDOS */}
+      {maisVendidos.length > 0 && (
+        <ProductShelf
+          eyebrow="🔥 Mais Vendidos"
+          title="Top de linha em Palmas"
+          subtitle="O que a comunidade gamer de Palmas mais pede aqui"
+          products={maisVendidos}
+          accentColor="red"
+        />
+      )}
+
+      {/* VITRINE · PCs PRONTOS */}
+      {pcsProntos.length > 0 && (
+        <ProductShelf
+          eyebrow="🖥️ PCs Prontos"
+          title="Decola na hora"
+          subtitle="PCs montados, certificados e enviados com BIOS+drivers atualizados"
+          products={pcsProntos}
+          accentColor="gold"
+          highlightFirst
+        />
       )}
 
       {/* SOCIAL PROOF · transmissão da base */}
@@ -200,10 +221,70 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SELOS INSTITUCIONAIS · Montagem · Entrega · Garantia */}
-      <section className="bg-starteq-black py-16 lg:py-24 relative">
+      {/* VITRINE · HARDWARE */}
+      {hardware.length > 0 && (
+        <ProductShelf
+          eyebrow="⚙️ Hardware"
+          title="As peças que fazem a build"
+          subtitle="GPU · CPU · SSD · Fonte das melhores marcas"
+          products={hardware}
+          ctaHref="/produtos/categoria/gpu"
+          ctaLabel="Ver Hardware completo"
+          accentColor="gold"
+        />
+      )}
+
+      {/* VITRINE · PERIFÉRICOS */}
+      {perifericos.length > 0 && (
+        <ProductShelf
+          eyebrow="🎮 Periféricos"
+          title="Setup completo na base"
+          subtitle="Mouse · teclado · monitor · headset · cadeira · tudo Husky/Razer/HyperX e mais"
+          products={perifericos}
+          ctaHref="/produtos/categoria/mouse"
+          ctaLabel="Ver Periféricos"
+          accentColor="purple"
+        />
+      )}
+
+      {/* VITRINE · PROMOS / OPENBOX */}
+      {promos.length > 0 && (
+        <ProductShelf
+          eyebrow="💸 Promo · OpenBox"
+          title="Aproveita antes que esgote"
+          subtitle="Produtos com desconto especial ou em condição open-box (testados, NF, garantia mantida)"
+          products={promos}
+          accentColor="red"
+        />
+      )}
+
+      {/* MARCAS · carrossel logos */}
+      <section className="bg-starteq-coal py-12 border-y border-starteq-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="text-center mb-6">
+            <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase">
+              Marcas oficiais que vendemos
+            </div>
+          </div>
+          <div className="overflow-hidden">
+            <div className="flex gap-8 animate-[scroll_40s_linear_infinite] whitespace-nowrap">
+              {[...BRANDS, ...BRANDS].map((b, i) => (
+                <div
+                  key={i}
+                  className="flex-shrink-0 px-6 py-3 bg-starteq-card border border-starteq-line rounded-lg text-starteq-muted hover:text-starteq-gold transition-colors font-space font-bold text-sm uppercase tracking-wider"
+                >
+                  {b}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SELOS · Montagem · Entrega · Garantia */}
+      <section className="bg-starteq-black py-16 lg:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
             <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-2">
               Procedimento de bordo
             </div>
@@ -213,57 +294,46 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-4">
-            <Seal
-              icon="🔧"
-              title="Montagem"
-              text="PC enviado MONTADO e certificado · BIOS e drivers atualizados · cabos pela parte de trás · acabamento de fábrica."
-            />
-            <Seal
-              icon="📦"
-              title="Entrega"
-              text="Caixa de papelão de ondas duplas exclusiva · fitas de segurança com cola ativa · motoboy mesmo dia em Palmas."
-            />
-            <Seal
-              icon="🛡️"
-              title="Garantia"
-              text="Garantia por peça · prazo na nota fiscal · sem lacre · você pode abrir e modificar como quiser."
-            />
+            <Seal icon="🔧" title="Montagem" text="PC enviado MONTADO e certificado · BIOS e drivers atualizados · cabos pela parte de trás · acabamento de fábrica." />
+            <Seal icon="📦" title="Entrega" text="Caixa de papelão de ondas duplas exclusiva · fitas de segurança com cola ativa · motoboy mesmo dia em Palmas." />
+            <Seal icon="🛡️" title="Garantia" text="Garantia por peça · prazo na nota fiscal · sem lacre · você pode abrir e modificar como quiser." />
           </div>
         </div>
       </section>
 
-      {/* DIFERENCIAIS */}
-      <section className="bg-starteq-coal py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-space text-3xl lg:text-4xl font-black text-starteq-bone text-center mb-3">
-            Por que voar conosco
+      {/* NEWSLETTER */}
+      <section className="bg-starteq-coal py-16 border-y border-starteq-line">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3">
+            📡 Conexão direta
+          </div>
+          <h2 className="font-space text-3xl lg:text-4xl font-black text-starteq-bone mb-3">
+            Receba lançamentos antes da galáxia
           </h2>
-          <p className="text-starteq-muted text-center max-w-2xl mx-auto mb-12">
-            Atendimento de gente, em Palmas. Não somos call center genérico, somos seu vizinho.
+          <p className="text-starteq-muted mb-8">
+            Cupons exclusivos, lançamentos em primeira mão, e dicas de build · uma vez por semana no email. Sem spam.
           </p>
-          <div className="grid md:grid-cols-3 gap-6">
-            <Differential
-              icon="⚙️"
-              title="Compatibilidade validada"
-              text="Cada peça do montador é checada por software antes de você pagar. Sem erro de socket, RAM, wattagem ou gabinete."
+          <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <input
+              type="email"
+              required
+              placeholder="seuemail@galaxia.com"
+              className="flex-1 px-4 py-3 rounded-lg bg-starteq-black border border-starteq-line focus:border-starteq-gold focus:outline-none text-starteq-bone font-sans"
             />
-            <Differential
-              icon="🛵"
-              title="Same-day em Palmas"
-              text="Comprou de manhã, joga à tarde. Motoboy nosso entrega no mesmo dia em todo Plano Diretor."
-            />
-            <Differential
-              icon="🤖"
-              title="IA + atendimento humano"
-              text="Tira dúvida no WhatsApp com IA treinada no nosso estoque · finaliza com gente real sempre."
-            />
-          </div>
+            <button
+              type="submit"
+              className="bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-sm px-6 py-3 rounded-lg transition-all"
+            >
+              Inscrever
+            </button>
+          </form>
         </div>
       </section>
 
-      {/* CTA FINAL · contagem regressiva */}
+      {/* CTA FINAL · ignição */}
       <section className="bg-starteq-black py-20 lg:py-32 relative overflow-hidden nebula-bg">
         <StarField className="opacity-50" />
+        <Meteors className="opacity-60" />
         <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-4">
             ⚡ Ignição em 3 minutos
@@ -293,46 +363,35 @@ export default function Home() {
   );
 }
 
-function CategoryCard({
+function CategoryTile({
   href,
-  title,
-  subtitle,
+  label,
+  icon,
   accent = false,
 }: {
   href: string;
-  title: string;
-  subtitle: string;
+  label: string;
+  icon: string;
   accent?: boolean;
 }) {
   return (
     <Link
       href={href}
-      className={`group rounded-xl p-6 border transition-all hover:-translate-y-1 ${
+      className={`group rounded-xl p-4 lg:p-5 border text-center transition-all hover:-translate-y-1 ${
         accent
-          ? "bg-starteq-gold/5 border-starteq-gold/40 hover:border-starteq-gold hover:bg-starteq-gold/10 animate-pulse-glow"
+          ? "bg-starteq-gold/5 border-starteq-gold/40 hover:border-starteq-gold animate-pulse-glow"
           : "bg-starteq-card border-starteq-line hover:border-starteq-gold/40"
       }`}
     >
+      <div className="text-3xl mb-2">{icon}</div>
       <div
-        className={`font-space font-bold text-xl mb-1 ${
+        className={`font-space font-bold text-sm leading-tight ${
           accent ? "text-starteq-gold" : "text-starteq-bone group-hover:text-starteq-gold"
-        } transition-colors`}
+        }`}
       >
-        {title}
+        {label}
       </div>
-      <div className="text-sm text-starteq-muted">{subtitle}</div>
-      <div className="mt-4 text-starteq-muted group-hover:text-starteq-gold transition-colors">→</div>
     </Link>
-  );
-}
-
-function Differential({ icon, title, text }: { icon: string; title: string; text: string }) {
-  return (
-    <div className="bg-starteq-card border border-starteq-line rounded-xl p-6 hover:border-starteq-gold/30 transition-all">
-      <div className="text-3xl mb-3">{icon}</div>
-      <h3 className="font-space font-bold text-xl text-starteq-bone mb-2">{title}</h3>
-      <p className="text-sm text-starteq-muted leading-relaxed">{text}</p>
-    </div>
   );
 }
 

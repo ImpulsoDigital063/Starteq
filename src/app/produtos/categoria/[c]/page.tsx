@@ -2,16 +2,25 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { ProductCard } from "@/components/ProductCard";
 import { PRODUCTS, type Category } from "@/lib/catalog";
 
-const VALID: Record<string, { label: string; intro: string }> = {
-  cpu: { label: "Processadores", intro: "AMD e Intel · validados peça a peça" },
-  mobo: { label: "Placas-mãe", intro: "Compatíveis com seu processador" },
-  gpu: { label: "Placas de vídeo", intro: "RTX 4060 a 5070 · NVIDIA e AMD" },
-  ram: { label: "Memória RAM", intro: "DDR4 e DDR5 das melhores marcas" },
-  fonte: { label: "Fontes", intro: "Calculadas pra sua build" },
-  perifericos: { label: "Periféricos", intro: "Mouse · teclado · monitor · gabinete" },
-  computadores: { label: "Computadores", intro: "PCs prontos curados" },
+const VALID: Record<string, { label: string; intro: string; icon: string }> = {
+  computadores: { label: "PCs Prontos", intro: "Builds montadas, certificadas e prontas pra decolar", icon: "🖥️" },
+  cpu: { label: "Processadores", intro: "AMD e Intel · validados peça a peça", icon: "🧠" },
+  mobo: { label: "Placas-mãe", intro: "Compatíveis com seu processador", icon: "🔌" },
+  gpu: { label: "Placas de vídeo", intro: "RTX 4060 a 5070 Ti · NVIDIA e AMD", icon: "🎮" },
+  ram: { label: "Memória RAM", intro: "DDR4 e DDR5 das melhores marcas", icon: "💾" },
+  ssd: { label: "Armazenamento SSD", intro: "NVMe PCIe 4.0 e SATA III", icon: "💿" },
+  fonte: { label: "Fontes", intro: "Calculadas pra build · 550W a 1000W", icon: "⚡" },
+  cooler: { label: "Coolers", intro: "Ar tower · AIO 240/360mm", icon: "❄️" },
+  gabinete: { label: "Gabinetes", intro: "ATX · mATX · ITX · airflow ou silêncio", icon: "📦" },
+  mouse: { label: "Mouse", intro: "Sem fio · 4K Hz · DPI alto", icon: "🖱️" },
+  teclado: { label: "Teclados", intro: "Mecânico · TKL · 65% · 75%", icon: "⌨️" },
+  mousepad: { label: "Mousepads", intro: "Speed · Control · XXL · RGB", icon: "📐" },
+  monitor: { label: "Monitores", intro: "144Hz · 240Hz · 1080p · 1440p · QHD", icon: "🖼️" },
+  headset: { label: "Headsets", intro: "Surround 7.1 · wireless · com mic", icon: "🎧" },
+  cadeira: { label: "Cadeiras", intro: "Apoio lombar · reclinável · gamer", icon: "🪑" },
 };
 
 type Params = { params: Promise<{ c: string }> };
@@ -38,56 +47,40 @@ export default async function CategoriaPage({ params }: Params) {
     <>
       <Header />
       <main className="flex-1 bg-starteq-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
-          <nav className="text-xs text-starteq-muted mb-4 font-mono">
-            <Link href="/produtos" className="hover:text-starteq-gold">produtos</Link>
-            <span className="mx-2">/</span>
-            <span className="text-starteq-gold">{c}</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-12">
+          <nav className="text-xs text-starteq-muted mb-4 font-space font-bold uppercase tracking-wider">
+            <Link href="/" className="hover:text-starteq-gold">Início</Link>
+            <span className="mx-2 text-starteq-line">/</span>
+            <Link href="/produtos" className="hover:text-starteq-gold">Produtos</Link>
+            <span className="mx-2 text-starteq-line">/</span>
+            <span className="text-starteq-gold">{meta.label}</span>
           </nav>
 
-          <header className="mb-10">
-            <h1 className="font-display text-4xl lg:text-5xl font-bold text-starteq-bone">
-              {meta.label}
-            </h1>
-            <p className="text-starteq-muted mt-2">{meta.intro} · {items.length} produtos</p>
+          <header className="mb-10 flex items-center gap-5">
+            <div className="w-20 h-20 rounded-2xl bg-starteq-gold/10 border-2 border-starteq-gold/30 flex items-center justify-center text-5xl flex-shrink-0">
+              {meta.icon}
+            </div>
+            <div>
+              <h1 className="font-space text-3xl lg:text-5xl font-black text-starteq-bone leading-tight">
+                {meta.label}
+              </h1>
+              <p className="text-starteq-muted mt-1">{meta.intro} · <span className="text-starteq-gold">{items.length} produto{items.length !== 1 ? "s" : ""}</span></p>
+            </div>
           </header>
 
           {items.length === 0 ? (
             <div className="bg-starteq-card border border-starteq-line rounded-xl p-12 text-center">
-              <div className="text-starteq-muted">Nenhum produto cadastrado nessa categoria ainda.</div>
-              <Link href="/produtos" className="inline-block mt-4 text-starteq-gold hover:underline text-sm">
+              <div className="text-6xl mb-4">🛸</div>
+              <h3 className="font-space font-bold text-xl text-starteq-bone mb-2">Nenhum produto nessa órbita ainda</h3>
+              <p className="text-starteq-muted mb-6">Estamos repondo estoque · volta em alguns dias.</p>
+              <Link href="/produtos" className="inline-block text-starteq-gold hover:underline text-sm font-space font-bold uppercase tracking-wider">
                 Ver todos os produtos →
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {items.map((p) => (
-                <Link
-                  key={p.sku}
-                  href={`/produtos/${p.slug}`}
-                  className="group bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-xl p-5 transition-all"
-                >
-                  <div className="aspect-square bg-starteq-coal rounded-lg mb-4 flex items-center justify-center text-starteq-line text-xs font-mono">
-                    {p.category.toUpperCase()}
-                  </div>
-                  <div className="text-xs text-starteq-muted uppercase tracking-wider mb-1">{p.brand}</div>
-                  <h3 className="font-display font-semibold text-starteq-bone group-hover:text-starteq-gold transition-colors leading-snug min-h-[3rem]">
-                    {p.name}
-                  </h3>
-                  <div className="mt-4 pt-4 border-t border-starteq-line">
-                    <div className="flex items-end justify-between">
-                      <div>
-                        <div className="font-mono font-bold text-xl text-starteq-gold">
-                          R$ {p.pix_price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
-                        </div>
-                        <div className="text-xs text-starteq-muted">à vista PIX</div>
-                      </div>
-                      <span className={`text-xs ${p.stock > 0 ? "text-starteq-green" : "text-starteq-red"}`}>
-                        {p.stock > 0 ? "● estoque" : "● esgotado"}
-                      </span>
-                    </div>
-                  </div>
-                </Link>
+                <ProductCard key={p.sku} product={p} />
               ))}
             </div>
           )}
