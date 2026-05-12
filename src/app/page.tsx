@@ -80,12 +80,20 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative h-[360px] sm:h-[460px] hidden md:flex items-center justify-center">
-              <AstroPhoenix size={360} />
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="relative h-[280px] sm:h-[400px] lg:h-[520px] flex items-center justify-center">
+              <div className="sm:hidden">
+                <AstroPhoenix size={240} priority />
+              </div>
+              <div className="hidden sm:block lg:hidden">
+                <AstroPhoenix size={380} priority />
+              </div>
+              <div className="hidden lg:block">
+                <AstroPhoenix size={480} priority />
+              </div>
+              <div className="absolute inset-0 hidden lg:flex items-center justify-center pointer-events-none">
                 <div
-                  className="w-[420px] h-[420px] rounded-full border border-starteq-gold/15"
-                  style={{ animation: "orbit 18s linear infinite" }}
+                  className="w-[540px] h-[540px] rounded-full border border-starteq-gold/15"
+                  style={{ animation: "orbit 22s linear infinite" }}
                 />
               </div>
             </div>
