@@ -229,23 +229,23 @@ export default function Home() {
           <Meteors className="opacity-60" />
         </div>
 
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[1fr_auto] gap-6 lg:gap-8 items-end lg:items-center h-full pt-20 md:pt-0">
-          <div className="max-w-xl">
-            <div className="flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[1fr_auto] gap-6 lg:gap-8 items-end lg:items-center h-full pt-20 md:pt-0 text-center lg:text-left">
+          <div className="max-w-xl mx-auto lg:mx-0">
+            <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
               <Icon name="cpu" size={16} />
               Configurador inteligente
             </div>
             <h2 className="font-space text-3xl lg:text-5xl font-black text-starteq-bone leading-tight mb-3 drop-shadow-[0_2px_16px_rgba(0,0,0,0.85)]">
               Monte seu PC <span className="text-space-grad">do seu jeito.</span>
             </h2>
-            <p className="text-starteq-text text-base lg:text-lg max-w-xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+            <p className="text-starteq-text text-base lg:text-lg max-w-xl mx-auto lg:mx-0 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
               8 passos · compatibilidade validada · orçamento direto no WhatsApp.
               A IA cuida pra você não comprar peça errada.
             </p>
           </div>
           <Link
             href="/montador"
-            className="inline-flex items-center justify-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-base px-8 py-5 rounded-lg transition-all animate-pulse-glow whitespace-nowrap shadow-2xl shadow-starteq-gold/30"
+            className="inline-flex items-center justify-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-base px-8 py-5 rounded-lg transition-all animate-pulse-glow whitespace-nowrap shadow-2xl shadow-starteq-gold/30 mx-auto lg:mx-0"
           >
             Iniciar montador <Icon name="arrow-right" size={20} strokeWidth={2.5} />
           </Link>
