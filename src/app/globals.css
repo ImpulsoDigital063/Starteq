@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* paleta Starteq · Phoenix preto + amarelo dourado */
+  --color-starteq-black: #0A0A0A;
+  --color-starteq-coal: #141414;
+  --color-starteq-card: #1A1A1A;
+  --color-starteq-line: #262626;
+  --color-starteq-muted: #6B6B6B;
+  --color-starteq-text: #E5E5E5;
+  --color-starteq-bone: #FAFAFA;
+  --color-starteq-gold: #F5C518;
+  --color-starteq-gold-dk: #C49A12;
+  --color-starteq-gold-soft: #FFF8E1;
+  --color-starteq-red: #DC2626;
+  --color-starteq-green: #10B981;
+
+  /* fontes · gamer display + clean body */
+  --font-display: var(--font-rajdhani);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+}
+
+@layer base {
+  html {
+    background: var(--color-starteq-black);
+    color: var(--color-starteq-text);
+  }
+  body {
+    background: var(--color-starteq-black);
+    color: var(--color-starteq-text);
+    font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display), var(--font-sans), sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  /* scrollbar dark */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--color-starteq-black); }
+  ::-webkit-scrollbar-thumb { background: var(--color-starteq-line); border-radius: 5px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-starteq-gold-dk); }
+}
+
+@layer utilities {
+  .text-gold-grad {
+    background: linear-gradient(90deg, #F5C518 0%, #FFD84D 50%, #F5C518 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .border-glow-gold {
+    box-shadow: 0 0 20px rgba(245, 197, 24, 0.25);
+  }
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(245, 197, 24, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245, 197, 24, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+}
