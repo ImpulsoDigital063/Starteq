@@ -50,13 +50,13 @@ export function Footer() {
                 <li>104 Sul · SE 05 · Lt. 19 · Sala 07</li>
                 <li>Plano Diretor Sul · CEP 77020-018</li>
               </ul>
-              <div className="mt-3 rounded-lg overflow-hidden border border-starteq-line">
+              <div className="mt-3 rounded-lg overflow-hidden border border-starteq-gold/30 ring-1 ring-starteq-gold/10">
                 <iframe
                   title="Localização Starteq Tocantins"
                   src="https://maps.google.com/maps?q=104%20Sul%20SE%2005%20Lote%2019%20Palmas%20TO&t=&z=15&ie=UTF8&iwloc=&output=embed"
                   width="100%"
-                  height="160"
-                  style={{ border: 0, filter: "invert(0.92) hue-rotate(180deg) saturate(0.4)" }}
+                  height="180"
+                  style={{ border: 0, display: "block" }}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 />
