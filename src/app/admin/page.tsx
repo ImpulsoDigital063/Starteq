@@ -19,12 +19,20 @@ export default function AdminDashboard() {
             Operação Starteq · {new Date().toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long" })}
           </p>
         </div>
-        <Link
-          href="/admin/os?action=new"
-          className="inline-flex items-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-xs px-5 py-3 rounded-lg transition-all"
-        >
-          <Icon name="wrench" size={16} /> Nova OS
-        </Link>
+        <div className="flex gap-2 flex-wrap">
+          <Link
+            href="/admin/site"
+            className="inline-flex items-center gap-2 bg-starteq-card border border-starteq-gold/40 hover:border-starteq-gold text-starteq-gold font-space font-bold tracking-wide uppercase text-xs px-5 py-3 rounded-lg transition-all"
+          >
+            <Icon name="sparkles" size={16} /> Editar Site
+          </Link>
+          <Link
+            href="/admin/os?action=new"
+            className="inline-flex items-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-xs px-5 py-3 rounded-lg transition-all"
+          >
+            <Icon name="wrench" size={16} /> Nova OS
+          </Link>
+        </div>
       </header>
 
       {/* FOCO DO DIA */}

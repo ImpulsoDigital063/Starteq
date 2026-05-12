@@ -25,6 +25,7 @@ const NAV: { href: string; label: string; icon: IconName }[] = [
   { href: "/admin/financeiro", label: "Financeiro", icon: "credit-card" },
   { href: "/admin/whatsapp", label: "WhatsApp", icon: "whatsapp" },
   { href: "/admin/campanhas", label: "Campanhas · Reativação", icon: "radio" },
+  { href: "/admin/site", label: "Editar Site", icon: "sparkles" },
   { href: "/admin/relatorios", label: "Relatórios", icon: "trophy" },
   { href: "/admin/api-ia", label: "API · IA", icon: "bot" },
   { href: "/admin/configuracoes", label: "Configurações", icon: "info" },
