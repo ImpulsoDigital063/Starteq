@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { ProductCard } from "@/components/ProductCard";
+import { CategoryGrid } from "@/components/CategoryGrid";
 import { Icon, type IconName } from "@/components/Icon";
 import { PRODUCTS, type Category } from "@/lib/catalog";
 
@@ -81,11 +81,7 @@ export default async function CategoriaPage({ params }: Params) {
               </Link>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-              {items.map((p) => (
-                <ProductCard key={p.sku} product={p} />
-              ))}
-            </div>
+            <CategoryGrid items={items} />
           )}
         </div>
       </main>

@@ -90,3 +90,39 @@ function simpleHash(str: string): number {
   for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) | 0;
   return Math.abs(h);
 }
+
+// Galeria PDP · 4 fotos com narrativa diferente em cada uma
+// 1: foto principal do produto
+// 2: contexto (montagem · gabinete aberto)
+// 3: detalhe (componente em destaque)
+// 4: ambiente (PC montado em uso)
+export function getProductGallery(
+  product: Pick<Product, "sku" | "slug" | "category" | "brand">,
+): string[] {
+  const primary = getProductPhoto(product);
+  const cat = product.category;
+
+  // Periféricos · galeria mais "ambiente" e "uso real"
+  if (["mouse", "teclado", "mousepad", "headset", "monitor", "cadeira"].includes(cat)) {
+    return [
+      primary,
+      `${BASE}/pc-rgb.jpg`,
+      `${BASE}/pc-pro.jpg`,
+      `${BASE}/pc-build.jpg`,
+    ];
+  }
+
+  // Hardware · galeria mostra "instalado · montagem · em uso"
+  if (["cpu", "gpu", "ram", "mobo", "ssd", "cooler", "fonte", "gabinete"].includes(cat)) {
+    const variants = [primary, `${BASE}/pc-build.jpg`, `${BASE}/pc-rgb.jpg`, `${BASE}/pc-pro.jpg`];
+    return Array.from(new Set(variants)).slice(0, 4);
+  }
+
+  // Computadores · principal + 3 ângulos diferentes de PCs
+  if (cat === "computadores") {
+    const variants = [primary, `${BASE}/pc-rgb.jpg`, `${BASE}/pc-build.jpg`, `${BASE}/pc-pro.jpg`];
+    return Array.from(new Set(variants)).slice(0, 4);
+  }
+
+  return [primary, primary, primary, primary];
+}

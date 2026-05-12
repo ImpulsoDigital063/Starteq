@@ -6,6 +6,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { ProductImage } from "@/components/ProductImage";
 import { Icon, type IconName } from "@/components/Icon";
 import { PRODUCTS } from "@/lib/catalog";
+import { getProductGallery } from "@/lib/product-images";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -47,6 +48,8 @@ export default async function ProdutoPage({ params }: Params) {
     ? Math.round(((product.price - product.pix_price) / product.price) * 100)
     : 0;
 
+  const gallery = getProductGallery(product);
+
   return (
     <>
       <Header />
@@ -62,11 +65,12 @@ export default async function ProdutoPage({ params }: Params) {
             </Link>
           </nav>
 
-          <div className="grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-12">
+          <div className="grid md:grid-cols-[1.2fr_1fr] gap-6 md:gap-8 lg:gap-12">
             {/* GALERIA */}
             <div>
               <div className="relative bg-starteq-card border border-starteq-line rounded-2xl overflow-hidden">
                 <ProductImage
+                  url={gallery[0]}
                   category={product.category}
                   product={product}
                   alt={product.name}
@@ -84,9 +88,9 @@ export default async function ProdutoPage({ params }: Params) {
                 )}
               </div>
               <div className="grid grid-cols-4 gap-2 mt-3">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className={`aspect-square rounded-lg border ${i === 1 ? "border-starteq-gold" : "border-starteq-line"} bg-starteq-card overflow-hidden`}>
-                    <ProductImage category={product.category} product={product} alt={`${product.name} foto ${i}`} className="w-full h-full opacity-70 hover:opacity-100 transition-opacity" />
+                {gallery.map((src, i) => (
+                  <div key={`${src}-${i}`} className={`aspect-square rounded-lg border ${i === 0 ? "border-starteq-gold" : "border-starteq-line"} bg-starteq-card overflow-hidden`}>
+                    <ProductImage url={src} category={product.category} alt={`${product.name} foto ${i + 1}`} className="w-full h-full opacity-70 hover:opacity-100 transition-opacity" />
                   </div>
                 ))}
               </div>
