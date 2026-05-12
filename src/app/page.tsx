@@ -1,9 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StarField } from "@/components/StarField";
 import { Meteors } from "@/components/Meteors";
-import { AstroPhoenix } from "@/components/AstroPhoenix";
 import { ProductShelf } from "@/components/ProductShelf";
 import { Icon, type IconName } from "@/components/Icon";
 import { PRODUCTS, productsByBadge, BRANDS } from "@/lib/catalog";
@@ -24,78 +24,97 @@ export default function Home() {
     <>
       <Header />
 
-      {/* HERO ESPACIAL · meteoros + estrelas + nebula + astronauta */}
-      <section className="relative overflow-hidden bg-starteq-black nebula-bg min-h-[88vh] flex items-center">
-        <StarField />
+      {/* HERO · imagem cinematográfica full-bleed + texto sobre negative space */}
+      <section className="relative overflow-hidden bg-starteq-black min-h-[100svh] md:min-h-[88vh] flex items-end md:items-center">
+        {/* Mobile: astronauta vertical no topo · texto embaixo */}
+        <Image
+          src="/hero-mobile.jpg"
+          alt="Astronauta Starteq · capacete dourado refletindo o eclipse Phoenix"
+          fill
+          priority
+          quality={88}
+          sizes="(max-width: 768px) 100vw, 1px"
+          className="object-cover object-top md:hidden"
+        />
+        {/* Desktop: astronauta wide na direita · texto na esquerda */}
+        <Image
+          src="/hero-desktop.jpg"
+          alt="Astronauta Starteq · capacete dourado refletindo o eclipse Phoenix"
+          fill
+          priority
+          quality={88}
+          sizes="(min-width: 768px) 100vw, 1px"
+          className="hidden md:block object-cover"
+          style={{ objectPosition: "right center" }}
+        />
+
+        {/* Gradient overlay mobile: vertical fade pra preto na metade inferior · esconde watermark AI */}
+        <div className="md:hidden absolute inset-0 bg-gradient-to-b from-transparent via-starteq-black/20 to-starteq-black pointer-events-none" />
+        {/* Gradient overlay desktop: horizontal fade pra preto na esquerda */}
+        <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-starteq-black via-starteq-black/85 to-transparent pointer-events-none" />
+        {/* Gradient fino topo+base · fade pra preto puro */}
+        <div className="absolute inset-0 bg-gradient-to-b from-starteq-black/40 via-transparent to-starteq-black/60 pointer-events-none" />
+
+        {/* Meteoros sutis sobre a imagem · mantém movimento */}
         <Meteors />
-        <div className="absolute inset-0 grid-bg opacity-50 pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-starteq-gold/5 blur-3xl pointer-events-none" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 w-full">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="relative z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-starteq-gold/30 bg-starteq-gold/5 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-6">
-                <span className="w-1.5 h-1.5 rounded-full bg-starteq-gold animate-pulse" />
-                Estação Palmas · Tocantins
-              </div>
-              <h1 className="font-space text-4xl sm:text-5xl lg:text-7xl font-black leading-[0.95] text-starteq-bone mb-6">
-                Sua build pronta<br />
-                <span className="text-space-grad">em Palmas. Hoje.</span>
-              </h1>
-              <p className="text-base sm:text-lg text-starteq-muted leading-relaxed max-w-lg mb-8">
-                PC gamer montado, testado e entregue no mesmo dia.
-                Compatibilidade validada peça a peça · atendimento no WhatsApp em até 30 minutos.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Link
-                  href="/montador"
-                  className="inline-flex items-center justify-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-sm px-8 py-4 rounded-lg transition-all animate-pulse-glow"
-                >
-                  Decolar montador
-                  <Icon name="arrow-right" size={18} strokeWidth={2.5} />
-                </Link>
-                <Link
-                  href="/produtos/categoria/computadores"
-                  className="inline-flex items-center justify-center gap-2 bg-transparent border border-starteq-line hover:border-starteq-gold/40 text-starteq-bone hover:text-starteq-gold font-space font-bold tracking-wide uppercase text-sm px-8 py-4 rounded-lg transition-all"
-                >
-                  PCs prontos
-                </Link>
-              </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-24 w-full">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-starteq-gold/40 bg-starteq-black/60 backdrop-blur-sm text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-starteq-gold animate-pulse" />
+              Estação Palmas · Tocantins
+            </div>
+            <h1 className="font-space text-4xl sm:text-5xl lg:text-7xl font-black leading-[0.95] text-starteq-bone mb-6 drop-shadow-[0_2px_20px_rgba(0,0,0,0.85)]">
+              Sua build pronta<br />
+              <span className="text-space-grad">em Palmas. Hoje.</span>
+            </h1>
+            <p className="text-base sm:text-lg text-starteq-text leading-relaxed max-w-lg mb-8 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+              PC gamer montado, testado e entregue no mesmo dia.
+              Compatibilidade validada peça a peça · atendimento no WhatsApp em até 30 minutos.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link
+                href="/montador"
+                className="inline-flex items-center justify-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-sm px-8 py-4 rounded-lg transition-all animate-pulse-glow shadow-2xl shadow-starteq-gold/30"
+              >
+                Decolar montador
+                <Icon name="arrow-right" size={18} strokeWidth={2.5} />
+              </Link>
+              <Link
+                href="/produtos/categoria/computadores"
+                className="inline-flex items-center justify-center gap-2 bg-starteq-black/60 backdrop-blur-sm border border-starteq-line hover:border-starteq-gold/40 text-starteq-bone hover:text-starteq-gold font-space font-bold tracking-wide uppercase text-sm px-8 py-4 rounded-lg transition-all"
+              >
+                PCs prontos
+              </Link>
+            </div>
 
-              <div className="mt-12 grid grid-cols-3 gap-6 max-w-md">
-                <div>
-                  <div className="text-2xl sm:text-3xl font-space font-black text-starteq-gold flex items-center gap-1">
-                    4.6 <Icon name="star" size={20} className="text-starteq-gold" />
-                  </div>
-                  <div className="text-[10px] sm:text-xs text-starteq-muted uppercase tracking-wider mt-1">67 reviews Google</div>
+            <div className="mt-8 md:mt-12 hidden md:grid grid-cols-3 gap-6 max-w-md">
+              <div>
+                <div className="text-2xl sm:text-3xl font-space font-black text-starteq-gold flex items-center gap-1 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+                  4.6 <Icon name="star" size={20} className="text-starteq-gold" />
                 </div>
-                <div>
-                  <div className="text-2xl sm:text-3xl font-space font-black text-starteq-gold">6+</div>
-                  <div className="text-[10px] sm:text-xs text-starteq-muted uppercase tracking-wider mt-1">Anos em Palmas</div>
-                </div>
-                <div>
-                  <div className="text-2xl sm:text-3xl font-space font-black text-starteq-gold">9k+</div>
-                  <div className="text-[10px] sm:text-xs text-starteq-muted uppercase tracking-wider mt-1">No Instagram</div>
-                </div>
+                <div className="text-[10px] sm:text-xs text-starteq-muted uppercase tracking-wider mt-1">67 reviews Google</div>
+              </div>
+              <div>
+                <div className="text-2xl sm:text-3xl font-space font-black text-starteq-gold drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">6+</div>
+                <div className="text-[10px] sm:text-xs text-starteq-muted uppercase tracking-wider mt-1">Anos em Palmas</div>
+              </div>
+              <div>
+                <div className="text-2xl sm:text-3xl font-space font-black text-starteq-gold drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">9k+</div>
+                <div className="text-[10px] sm:text-xs text-starteq-muted uppercase tracking-wider mt-1">No Instagram</div>
               </div>
             </div>
 
-            <div className="relative h-[280px] sm:h-[400px] lg:h-[520px] flex items-center justify-center">
-              <div className="sm:hidden">
-                <AstroPhoenix size={240} priority />
-              </div>
-              <div className="hidden sm:block lg:hidden">
-                <AstroPhoenix size={380} priority />
-              </div>
-              <div className="hidden lg:block">
-                <AstroPhoenix size={480} priority />
-              </div>
-              <div className="absolute inset-0 hidden lg:flex items-center justify-center pointer-events-none">
-                <div
-                  className="w-[540px] h-[540px] rounded-full border border-starteq-gold/15"
-                  style={{ animation: "orbit 22s linear infinite" }}
-                />
-              </div>
+            {/* Stats compactos pro mobile · linha única abaixo dos CTAs */}
+            <div className="md:hidden mt-6 flex items-center gap-4 text-xs text-starteq-muted">
+              <span className="inline-flex items-center gap-1 text-starteq-gold font-space font-bold">
+                4.6 <Icon name="star" size={12} />
+              </span>
+              <span>·</span>
+              <span>6 anos em Palmas</span>
+              <span>·</span>
+              <span className="text-starteq-gold font-space font-bold">9k+</span>
+              <span>seguidores</span>
             </div>
           </div>
         </div>
