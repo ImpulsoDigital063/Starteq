@@ -5,34 +5,15 @@ import { Meteors } from "@/components/Meteors";
 import { AstroPhoenix } from "@/components/AstroPhoenix";
 import { Logo } from "@/components/Logo";
 import { Icon } from "@/components/Icon";
-import { validateCredentials, createSessionToken, ADMIN_COOKIE, getServerSession } from "@/lib/admin-auth";
-import { cookies } from "next/headers";
+import { getServerSession } from "@/lib/admin-auth";
 
 export const metadata = {
   title: "Login · Painel Starteq",
 };
 
-async function loginAction(formData: FormData) {
-  "use server";
-  const email = String(formData.get("email") ?? "");
-  const password = String(formData.get("password") ?? "");
-
-  const payload = validateCredentials(email, password);
-  if (!payload) {
-    redirect("/admin/login?error=1");
-  }
-
-  const token = await createSessionToken(payload.email, payload.name, payload.role);
-  const store = await cookies();
-  store.set(ADMIN_COOKIE.name, token, {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    maxAge: ADMIN_COOKIE.maxAge,
-    path: "/",
-  });
-  redirect("/admin");
-}
+// Form POSTa pra /api/admin/login (route handler tradicional)
+// Era Server Action · troquei pra route handler porque Next 16 + Server Action
+// tinha issue de cookie não propagar entre navegações
 
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const session = await getServerSession();
@@ -73,7 +54,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
             </div>
           )}
 
-          <form action={loginAction} className="space-y-4">
+          <form action="/api/admin/login" method="POST" className="space-y-4">
             <div>
               <label htmlFor="email" className="block text-xs font-space font-bold uppercase tracking-wider text-starteq-muted mb-2">
                 Email

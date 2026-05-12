@@ -3,7 +3,9 @@
 
 import { cookies } from "next/headers";
 
-const SECRET = process.env.ADMIN_AUTH_SECRET ?? "starteq-dev-secret-fica-aqui-mock-virou-supabase-na-fase-2";
+// SECRET com || (não ??) pra cair no fallback mesmo se a env var resolver pra string vazia
+// (Edge runtime trata env vars diferente · `||` é mais defensivo)
+const SECRET = process.env.ADMIN_AUTH_SECRET || "starteq-dev-secret-fica-aqui-mock-virou-supabase-na-fase-2";
 const COOKIE_NAME = "starteq_admin_session";
 const MAX_AGE = 60 * 60 * 24 * 7; // 7 dias
 
