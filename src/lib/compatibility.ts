@@ -1,19 +1,49 @@
-// Regras de compatibilidade de PC · MVP
-// Replica lógica Pichau de "esconder o que não bate" + alertar wattagem
+// Regras de compatibilidade de PC · refinadas pós-CIC 3 Pichau
+// Lógica híbrida: silenciosa pra socket/DDR · explícita pra TDP/cooler/iGPU
 
 import type { Product } from "./catalog";
 
 export type Build = Partial<Record<Product["category"], Product>>;
 
 export type ValidationIssue = {
-  type: "error" | "warn";
+  type: "error" | "warn" | "info";
   field: Product["category"];
   message: string;
 };
 
 /**
- * Filtra produtos compatíveis com o que já foi escolhido.
- * Ex: ao escolher Mobo AM5 · só mostra RAM DDR5
+ * Os 8 componentes obrigatórios + 1 opcional (periféricos)
+ * GPU é condicionalmente obrigatório (depende de iGPU da CPU)
+ */
+export const REQUIRED_CATEGORIES: Product["category"][] = [
+  "cpu",
+  "cooler",
+  "mobo",
+  "ram",
+  "gpu",
+  "ssd",
+  "gabinete",
+  "fonte",
+];
+
+/**
+ * GPU é obrigatória SE a CPU não tem iGPU
+ */
+export function isGpuRequired(build: Build): boolean {
+  return !build.cpu?.specs.igpu;
+}
+
+/**
+ * Cooler é obrigatório SE a CPU não vem com cooler box
+ */
+export function isCoolerRequired(build: Build): boolean {
+  // Se ainda não escolheu CPU, default é obrigatório
+  if (!build.cpu) return true;
+  return !build.cpu.specs.cooler_included;
+}
+
+/**
+ * Filtra produtos compatíveis com o que já foi escolhido (silencioso)
  */
 export function filterCompatible(
   candidates: Product[],
@@ -25,20 +55,30 @@ export function filterCompatible(
     if (category === "mobo" && build.cpu) {
       return p.specs.socket === build.cpu.specs.socket;
     }
-    // cpu (na ordem inversa) precisa bater socket da mobo se já escolhida
+    // cpu (inverso) precisa bater socket da mobo
     if (category === "cpu" && build.mobo) {
       return p.specs.socket === build.mobo.specs.socket;
     }
-    // ram precisa bater tipo (DDR4/DDR5) com mobo
+    // ram precisa bater tipo com mobo
     if (category === "ram" && build.mobo) {
       return p.specs.ram_type === build.mobo.specs.ram_type;
+    }
+    // cooler precisa suportar socket da cpu
+    if (category === "cooler" && build.cpu) {
+      const supports = p.specs.supports_socket as string[] | undefined;
+      return Array.isArray(supports) && supports.includes(build.cpu.specs.socket as string);
+    }
+    // gabinete precisa suportar form factor da mobo
+    if (category === "gabinete" && build.mobo) {
+      const supports = p.specs.supports_mobo as string[] | undefined;
+      return Array.isArray(supports) && supports.includes(build.mobo.specs.form as string);
     }
     return true;
   });
 }
 
 /**
- * Estima wattagem total da build (TDP CPU + TDP GPU + 100W resto)
+ * Estima wattagem total (TDP CPU + TDP GPU + 100W resto)
  */
 export function estimateWattage(build: Build): number {
   const cpuTdp = Number(build.cpu?.specs.tdp ?? 0);
@@ -48,11 +88,20 @@ export function estimateWattage(build: Build): number {
 }
 
 /**
- * Wattagem mínima recomendada (estimativa × 1.3 = 30% margem)
+ * Wattagem mínima recomendada (estimativa × 1.5 = 50% margem ≈ regra Pichau)
  */
 export function recommendedWattage(build: Build): number {
   const total = estimateWattage(build);
-  return Math.ceil((total * 1.3) / 50) * 50; // arredonda pra cima em múltiplos de 50
+  return Math.ceil((total * 1.5) / 50) * 50;
+}
+
+/**
+ * Verifica se a fonte tem watts suficientes pra build atual
+ */
+export function isFonteAdequate(fonte: Product, build: Build): boolean {
+  const required = recommendedWattage(build);
+  const watts = Number(fonte.specs.watts ?? 0);
+  return watts >= required;
 }
 
 /**
@@ -61,7 +110,27 @@ export function recommendedWattage(build: Build): number {
 export function validateBuild(build: Build): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
 
-  // socket CPU vs mobo
+  // Cooler obrigatório se CPU não vem com box
+  if (isCoolerRequired(build) && !build.cooler) {
+    issues.push({
+      type: "error",
+      field: "cooler",
+      message: build.cpu
+        ? `Cooler é obrigatório para o ${build.cpu.name} (não acompanha cooler box)`
+        : "Cooler é obrigatório",
+    });
+  }
+
+  // GPU obrigatória se CPU não tem iGPU
+  if (isGpuRequired(build) && !build.gpu) {
+    issues.push({
+      type: "error",
+      field: "gpu",
+      message: "Placa de vídeo obrigatória (processador sem gráficos integrados)",
+    });
+  }
+
+  // Socket mobo vs cpu
   if (build.cpu && build.mobo && build.cpu.specs.socket !== build.mobo.specs.socket) {
     issues.push({
       type: "error",
@@ -75,19 +144,32 @@ export function validateBuild(build: Build): ValidationIssue[] {
     issues.push({
       type: "error",
       field: "ram",
-      message: `Memória ${build.ram.specs.ram_type} não bate com a placa-mãe (${build.mobo.specs.ram_type})`,
+      message: `Memória ${build.ram.specs.ram_type} não bate com placa-mãe (${build.mobo.specs.ram_type})`,
     });
   }
 
-  // Fonte vs wattagem total
-  if (build.fonte) {
+  // Fonte vs wattagem
+  if (build.fonte && build.cpu) {
     const required = recommendedWattage(build);
     const fonteWatts = Number(build.fonte.specs.watts ?? 0);
     if (fonteWatts < required) {
       issues.push({
         type: "warn",
         field: "fonte",
-        message: `Fonte de ${fonteWatts}W está abaixo do recomendado para essa build (mínimo ~${required}W)`,
+        message: `Fonte ${fonteWatts}W abaixo do recomendado · mínimo ~${required}W para essa build`,
+      });
+    }
+  }
+
+  // GPU vs gabinete (comprimento)
+  if (build.gpu && build.gabinete) {
+    const gpuLength = Number(build.gpu.specs.length_mm ?? 0);
+    const maxLength = Number(build.gabinete.specs.max_gpu_mm ?? 999);
+    if (gpuLength > maxLength) {
+      issues.push({
+        type: "error",
+        field: "gabinete",
+        message: `GPU ${gpuLength}mm não cabe no gabinete (máx ${maxLength}mm)`,
       });
     }
   }
@@ -106,7 +188,31 @@ export function buildTotal(build: Build, useDiscount = true): number {
 }
 
 /**
- * Gera link WhatsApp com resumo da build
+ * Status do build pra UI: X de N obrigatórios + percentual
+ */
+export function buildStatus(build: Build): {
+  filled: number;
+  required: number;
+  pending: Product["category"][];
+  percent: number;
+} {
+  const requiredCats = REQUIRED_CATEGORIES.filter((c) => {
+    if (c === "gpu" && !isGpuRequired(build)) return false;
+    if (c === "cooler" && !isCoolerRequired(build)) return false;
+    return true;
+  });
+  const filled = requiredCats.filter((c) => build[c]).length;
+  const pending = requiredCats.filter((c) => !build[c]);
+  return {
+    filled,
+    required: requiredCats.length,
+    pending,
+    percent: Math.round((filled / requiredCats.length) * 100),
+  };
+}
+
+/**
+ * Link WhatsApp com resumo da build
  */
 export function buildWhatsAppLink(build: Build): string {
   const parts = Object.entries(build)
@@ -121,12 +227,13 @@ export function buildWhatsAppLink(build: Build): string {
 export function categoryLabel(c: Product["category"]): string {
   return {
     cpu: "Processador",
+    cooler: "Cooler",
     mobo: "Placa-mãe",
     ram: "Memória RAM",
     gpu: "Placa de vídeo",
-    fonte: "Fonte",
-    ssd: "SSD",
+    ssd: "Armazenamento",
     gabinete: "Gabinete",
+    fonte: "Fonte",
     perifericos: "Periféricos",
     computadores: "Computador",
   }[c];

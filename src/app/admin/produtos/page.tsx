@@ -2,6 +2,7 @@ import { PRODUCTS, type Category } from "@/lib/catalog";
 
 const CATEGORY_LABEL: Record<Category, string> = {
   cpu: "Processadores",
+  cooler: "Coolers",
   mobo: "Placas-mãe",
   ram: "Memória RAM",
   gpu: "Placa de vídeo",

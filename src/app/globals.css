@@ -14,6 +14,8 @@
   --color-starteq-gold-soft: #FFF8E1;
   --color-starteq-red: #DC2626;
   --color-starteq-green: #10B981;
+  --color-starteq-pix: #009E2A;        /* verde PIX gritante · padrão Pichau */
+  --color-starteq-warn: #F59E0B;       /* laranja "Potência Insuficiente" */
 
   /* fontes · gamer display + clean body */
   --font-display: var(--font-rajdhani);
