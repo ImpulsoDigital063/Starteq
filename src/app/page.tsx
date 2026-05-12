@@ -46,10 +46,8 @@ export default function Home() {
           sizes="(min-width: 768px) 100vw, 1px"
           className="hidden md:block object-cover"
           style={{
-            objectPosition: "right center",
-            transform: "scale(1.18)",
-            transformOrigin: "right center",
-            filter: "brightness(1.18) saturate(1.12) contrast(1.05)",
+            objectPosition: "calc(100% + 80px) center",
+            filter: "brightness(1.05) saturate(1.05)",
           }}
         />
 
@@ -60,8 +58,11 @@ export default function Home() {
         {/* Gradient fino topo+base · fade pra preto puro · sutil pra preservar brilho */}
         <div className="absolute inset-0 bg-gradient-to-b from-starteq-black/25 via-transparent to-starteq-black/50 pointer-events-none" />
 
-        {/* Meteoros sutis sobre a imagem · mantém movimento */}
-        <Meteors />
+        {/* Meteoros · mix-blend-mode screen faz eles "passarem atrás" do astronauta
+           (visíveis nas zonas pretas do fundo, invisíveis nas zonas claras da imagem) */}
+        <div className="absolute inset-0 pointer-events-none" style={{ mixBlendMode: "screen" }}>
+          <Meteors />
+        </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-24 w-full">
           <div className="max-w-2xl">
