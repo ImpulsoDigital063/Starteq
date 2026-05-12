@@ -1,33 +1,76 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
 import { Icon } from "./Icon";
+import { OpenNowBadge } from "./OpenNowBadge";
 
 export function Footer() {
   return (
     <footer className="bg-starteq-coal border-t border-starteq-line">
-      {/* Top bar · 2 cards de atendimento (Pichau-style) */}
+      {/* Top bar · 2 cards de atendimento + badge live + mini-mapa Google */}
       <div className="bg-starteq-card border-b border-starteq-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid md:grid-cols-2 gap-6">
-          <ContactCard
-            title="Atendimento Loja Virtual"
-            lines={[
-              "Segunda a sexta · 8h às 12h e 14h às 18h",
-              "Sábado · 9h às 13h",
-              "WhatsApp: (63) 99252-8619",
-              "Email: starteqpalmas@gmail.com",
-            ]}
-            cta={{ href: "https://wa.me/5563992528619", label: "Chamar no WhatsApp" }}
-          />
-          <ContactCard
-            title="Loja Física em Palmas-TO"
-            lines={[
-              "104 Sul · SE 05 · Lt. 19 · Sala 07",
-              "Plano Diretor Sul · Palmas-TO",
-              "CEP 77020-018",
-              "Seg a sex · 8h às 18h",
-            ]}
-            cta={{ href: "https://www.google.com/maps/search/?api=1&query=104+Sul+SE+05+Palmas+TO", label: "Ver no Maps" }}
-          />
+          {/* Card 1 · Atendimento Virtual */}
+          <div className="flex flex-col sm:flex-row gap-4 items-start">
+            <div className="w-12 h-12 rounded-lg bg-starteq-gold/10 border border-starteq-gold/30 flex items-center justify-center flex-shrink-0">
+              <Icon name="whatsapp" size={22} className="text-starteq-gold" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 flex-wrap mb-2">
+                <h3 className="font-space font-bold text-starteq-bone text-base">Atendimento Loja Virtual</h3>
+                <OpenNowBadge />
+              </div>
+              <ul className="space-y-0.5 text-xs text-starteq-muted">
+                <li>Seg-sex · 8h-12h · 14h-18h</li>
+                <li>Sáb · 9h-13h</li>
+                <li>WhatsApp: <span className="text-starteq-text">(63) 99252-8619</span></li>
+                <li>Email: <span className="text-starteq-text">starteqpalmas@gmail.com</span></li>
+              </ul>
+              <a
+                href="https://wa.me/5563992528619?text=Oi!%20Cheguei%20pelo%20site%20da%20Starteq."
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1 mt-3 text-xs text-starteq-gold hover:text-starteq-bone font-space font-bold uppercase tracking-wider"
+              >
+                Chamar no WhatsApp →
+              </a>
+            </div>
+          </div>
+
+          {/* Card 2 · Loja Física com mini-mapa Google embed */}
+          <div className="flex flex-col sm:flex-row gap-4 items-start">
+            <div className="w-12 h-12 rounded-lg bg-starteq-gold/10 border border-starteq-gold/30 flex items-center justify-center flex-shrink-0">
+              <Icon name="map-pin" size={22} className="text-starteq-gold" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 flex-wrap mb-2">
+                <h3 className="font-space font-bold text-starteq-bone text-base">Loja Física · Palmas-TO</h3>
+                <OpenNowBadge />
+              </div>
+              <ul className="space-y-0.5 text-xs text-starteq-muted">
+                <li>104 Sul · SE 05 · Lt. 19 · Sala 07</li>
+                <li>Plano Diretor Sul · CEP 77020-018</li>
+              </ul>
+              <div className="mt-3 rounded-lg overflow-hidden border border-starteq-line">
+                <iframe
+                  title="Localização Starteq Tocantins"
+                  src="https://maps.google.com/maps?q=104%20Sul%20SE%2005%20Lote%2019%20Palmas%20TO&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                  width="100%"
+                  height="160"
+                  style={{ border: 0, filter: "invert(0.92) hue-rotate(180deg) saturate(0.4)" }}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+              <a
+                href="https://www.google.com/maps/dir/?api=1&destination=104+Sul+SE+05+Lote+19+Palmas+TO"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1 mt-3 text-xs text-starteq-gold hover:text-starteq-bone font-space font-bold uppercase tracking-wider"
+              >
+                Como chegar →
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
