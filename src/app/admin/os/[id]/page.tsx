@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Icon } from "@/components/Icon";
 import { SERVICE_ORDERS, SERVICE_STATUS_LABEL, SERVICE_STATUS_COLOR } from "@/lib/admin-mock";
+import { NFeActions } from "../../nfe/NFeActions";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -60,6 +61,7 @@ export default async function OSDetail({ params }: Params) {
           >
             <Icon name="file" size={14} /> Imprimir etiqueta
           </Link>
+          <NFeActions reference={os.id} customer={os.customer_name} value={os.total} type="os" />
         </div>
       </header>
 

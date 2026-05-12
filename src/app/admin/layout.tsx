@@ -10,8 +10,10 @@ export const metadata = {
 
 const NAV: { href: string; label: string; icon: IconName }[] = [
   { href: "/admin", label: "Dashboard", icon: "rocket" },
+  { href: "/admin/tecnico", label: "Minha área (técnico)", icon: "wrench" },
   { href: "/admin/os", label: "Ordens de Serviço", icon: "wrench" },
   { href: "/admin/pedidos", label: "Pedidos", icon: "shopping-cart" },
+  { href: "/admin/nfe", label: "Notas Fiscais", icon: "file" },
   { href: "/admin/produtos", label: "Produtos", icon: "package" },
   { href: "/admin/estoque", label: "Estoque", icon: "memory" },
   { href: "/admin/clientes", label: "Clientes", icon: "user" },

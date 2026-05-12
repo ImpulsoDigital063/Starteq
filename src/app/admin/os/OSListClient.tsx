@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Icon } from "@/components/Icon";
-import { SERVICE_STATUS_LABEL, SERVICE_STATUS_COLOR, type ServiceOrder, type ServiceOrderStatus } from "@/lib/admin-mock";
+import { SERVICE_STATUS_LABEL, SERVICE_STATUS_COLOR, TECHNICIANS, type ServiceOrder, type ServiceOrderStatus } from "@/lib/admin-mock";
 
 type QuickFilter = "todos" | "hoje" | "prontas" | "atrasadas";
 type StatusFilter = ServiceOrderStatus | "todos";
@@ -92,6 +92,14 @@ export function OSListClient({ initialOrders }: { initialOrders: ServiceOrder[] 
           ? { ...o, status: "entregue" as const, delivered_at: new Date().toISOString() }
           : o
       )
+    );
+  }
+
+  function atribuirTecnico(id: string, tecId: string, tecName: string) {
+    setOrders((prev) =>
+      prev.map((o) =>
+        o.id === id ? { ...o, technician_id: tecId, technician_name: tecName, commission_pct: 30 } : o,
+      ),
     );
   }
 
@@ -257,6 +265,7 @@ export function OSListClient({ initialOrders }: { initialOrders: ServiceOrder[] 
                       >
                         <Icon name="whatsapp" size={12} />
                       </a>
+                      <AtribuirTecnicoButton os={os} onAssign={(tecId, tecName) => atribuirTecnico(os.id, tecId, tecName)} />
                     </div>
                   </div>
                 </div>
@@ -334,6 +343,67 @@ function Field({ label, value, onChange, placeholder, required, textarea }: { la
         <textarea value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} rows={2} className={cls} />
       ) : (
         <input value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} required={required} className={cls} />
+      )}
+    </div>
+  );
+}
+
+
+function AtribuirTecnicoButton({
+  os,
+  onAssign,
+}: {
+  os: ServiceOrder;
+  onAssign: (tecId: string, tecName: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const tecsAtivos = TECHNICIANS.filter((t) => t.active);
+
+  const select = (tecId: string, tecName: string, tecPhone: string) => {
+    onAssign(tecId, tecName);
+    setOpen(false);
+    // Pré-monta msg WhatsApp pro técnico (abre em nova aba)
+    const text = encodeURIComponent(
+      `${tecName.split(" ")[0]}, nova OS atribuída pra você: ${os.id} · Cliente: ${os.customer_name} · ${os.device}. Verifica no painel.`,
+    );
+    window.open(`https://wa.me/55${tecPhone.replace(/\D/g, "")}?text=${text}`, "_blank");
+  };
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        className="inline-flex items-center gap-1.5 bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 text-starteq-text hover:text-starteq-gold font-space font-bold uppercase text-[10px] px-3 py-2 rounded-lg transition-all"
+        title="Atribuir OS pra um técnico"
+      >
+        <Icon name="user" size={12} /> {os.technician_name ? "Trocar técnico" : "Atribuir técnico"}
+      </button>
+      {open && (
+        <>
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            className="fixed inset-0 z-40 cursor-default"
+            aria-label="Fechar"
+          />
+          <div className="absolute right-0 mt-1 z-50 w-56 bg-starteq-coal border border-starteq-line rounded-lg shadow-xl py-1">
+            {tecsAtivos.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => select(t.id, t.name, t.phone)}
+                className={`w-full text-left px-3 py-2 text-xs hover:bg-starteq-card flex items-center justify-between gap-2 ${
+                  os.technician_id === t.id ? "text-starteq-gold" : "text-starteq-bone"
+                }`}
+              >
+                <div className="flex-1 min-w-0">
+                  <div className="font-display font-semibold truncate">{t.name}</div>
+                  <div className="text-[10px] text-starteq-muted">{t.commission_default}% comissão</div>
+                </div>
+                {os.technician_id === t.id && <Icon name="check" size={12} />}
+              </button>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
