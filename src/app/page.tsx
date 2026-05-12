@@ -4,8 +4,8 @@ import { Footer } from "@/components/Footer";
 import { StarField } from "@/components/StarField";
 import { Meteors } from "@/components/Meteors";
 import { AstroPhoenix } from "@/components/AstroPhoenix";
-import { ProductCard } from "@/components/ProductCard";
 import { ProductShelf } from "@/components/ProductShelf";
+import { Icon, type IconName } from "@/components/Icon";
 import { PRODUCTS, productsByBadge, BRANDS } from "@/lib/catalog";
 
 export default function Home() {
@@ -24,7 +24,7 @@ export default function Home() {
     <>
       <Header />
 
-      {/* HERO ESPACIAL · meteoros + estrelas + nebula + mascote */}
+      {/* HERO ESPACIAL · meteoros + estrelas + nebula + astronauta */}
       <section className="relative overflow-hidden bg-starteq-black nebula-bg min-h-[88vh] flex items-center">
         <StarField />
         <Meteors />
@@ -38,11 +38,11 @@ export default function Home() {
                 <span className="w-1.5 h-1.5 rounded-full bg-starteq-gold animate-pulse" />
                 Estação Palmas · Tocantins
               </div>
-              <h1 className="font-space text-5xl lg:text-7xl font-black leading-[0.95] text-starteq-bone mb-6">
+              <h1 className="font-space text-4xl sm:text-5xl lg:text-7xl font-black leading-[0.95] text-starteq-bone mb-6">
                 Sua build<br />
                 <span className="text-space-grad">em órbita.</span>
               </h1>
-              <p className="text-lg text-starteq-muted leading-relaxed max-w-lg mb-8">
+              <p className="text-base sm:text-lg text-starteq-muted leading-relaxed max-w-lg mb-8">
                 Hardware gamer com compatibilidade validada peça a peça.
                 Atendimento humano · IA no WhatsApp · entrega no mesmo dia em Palmas.
                 Quem joga em Palmas joga conosco.
@@ -53,9 +53,7 @@ export default function Home() {
                   className="inline-flex items-center justify-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-sm px-8 py-4 rounded-lg transition-all animate-pulse-glow"
                 >
                   Decolar montador
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
+                  <Icon name="arrow-right" size={18} strokeWidth={2.5} />
                 </Link>
                 <Link
                   href="/produtos/categoria/computadores"
@@ -67,25 +65,27 @@ export default function Home() {
 
               <div className="mt-12 grid grid-cols-3 gap-6 max-w-md">
                 <div>
-                  <div className="text-3xl font-space font-black text-starteq-gold">9k+</div>
-                  <div className="text-xs text-starteq-muted uppercase tracking-wider mt-1">Tripulação Insta</div>
+                  <div className="text-2xl sm:text-3xl font-space font-black text-starteq-gold">9k+</div>
+                  <div className="text-[10px] sm:text-xs text-starteq-muted uppercase tracking-wider mt-1">Tripulação Insta</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-space font-black text-starteq-gold">4.6 ★</div>
-                  <div className="text-xs text-starteq-muted uppercase tracking-wider mt-1">67 reviews Google</div>
+                  <div className="text-2xl sm:text-3xl font-space font-black text-starteq-gold flex items-center gap-1">
+                    4.6 <Icon name="star" size={20} className="text-starteq-gold" />
+                  </div>
+                  <div className="text-[10px] sm:text-xs text-starteq-muted uppercase tracking-wider mt-1">67 reviews Google</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-space font-black text-starteq-gold">Same</div>
-                  <div className="text-xs text-starteq-muted uppercase tracking-wider mt-1">Day Palmas</div>
+                  <div className="text-2xl sm:text-3xl font-space font-black text-starteq-gold">Same</div>
+                  <div className="text-[10px] sm:text-xs text-starteq-muted uppercase tracking-wider mt-1">Day Palmas</div>
                 </div>
               </div>
             </div>
 
-            <div className="relative h-[500px] hidden lg:flex items-center justify-center">
-              <AstroPhoenix size={400} />
+            <div className="relative h-[400px] sm:h-[500px] hidden lg:flex items-center justify-center">
+              <AstroPhoenix size={420} />
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div
-                  className="w-[460px] h-[460px] rounded-full border border-starteq-gold/15"
+                  className="w-[480px] h-[480px] rounded-full border border-starteq-gold/15"
                   style={{ animation: "orbit 18s linear infinite" }}
                 />
               </div>
@@ -96,46 +96,47 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-starteq-coal pointer-events-none" />
       </section>
 
-      {/* BANNER PROMO · faixa amarela full-width */}
+      {/* FAIXA PROMO · marquee */}
       <section className="bg-starteq-gold text-starteq-black py-3 overflow-hidden">
         <div className="flex items-center justify-center gap-12 whitespace-nowrap animate-[scroll_30s_linear_infinite] font-space font-bold uppercase tracking-wider text-sm">
-          <span>🛵 Same-day em Palmas</span>
+          <PromoBadge icon="bike" text="Same-day em Palmas" />
           <span>·</span>
-          <span>💳 10x sem juros no cartão</span>
+          <PromoBadge icon="credit-card" text="10x sem juros no cartão" />
           <span>·</span>
-          <span>⚡ 15% off no PIX à vista</span>
+          <PromoBadge icon="zap" text="15% off no PIX à vista" />
           <span>·</span>
-          <span>🛡️ Garantia por peça sem lacre</span>
+          <PromoBadge icon="shield" text="Garantia por peça sem lacre" />
           <span>·</span>
-          <span>🤖 IA + atendimento humano no WhatsApp</span>
+          <PromoBadge icon="bot" text="IA + atendimento humano no WhatsApp" />
           <span>·</span>
-          <span>🚀 Build com compatibilidade validada</span>
+          <PromoBadge icon="rocket" text="Build com compatibilidade validada" />
         </div>
       </section>
 
       {/* CATEGORIAS · launch pad */}
       <section className="bg-starteq-coal py-12 lg:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-2">
-            🛸 Plataforma de Lançamento
+          <div className="flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-2">
+            <Icon name="ufo" size={16} />
+            Plataforma de Lançamento
           </div>
           <h2 className="font-space text-3xl lg:text-4xl font-black text-starteq-bone mb-8">Por onde decolar</h2>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            <CategoryTile href="/montador" label="Monte seu PC" icon="🔧" accent />
-            <CategoryTile href="/produtos/categoria/computadores" label="PCs prontos" icon="🖥️" />
-            <CategoryTile href="/produtos/categoria/gpu" label="Placas de vídeo" icon="🎮" />
-            <CategoryTile href="/produtos/categoria/mouse" label="Mouse · Teclado" icon="🖱️" />
-            <CategoryTile href="/produtos/categoria/monitor" label="Monitores" icon="🖼️" />
-            <CategoryTile href="/produtos/categoria/cadeira" label="Cadeiras" icon="🪑" />
+            <CategoryTile href="/montador" label="Monte seu PC" icon="wrench" accent />
+            <CategoryTile href="/produtos/categoria/computadores" label="PCs prontos" icon="monitor" />
+            <CategoryTile href="/produtos/categoria/gpu" label="Placas de vídeo" icon="gamepad" />
+            <CategoryTile href="/produtos/categoria/mouse" label="Mouse · Teclado" icon="mouse" />
+            <CategoryTile href="/produtos/categoria/monitor" label="Monitores" icon="image" />
+            <CategoryTile href="/produtos/categoria/cadeira" label="Cadeiras" icon="armchair" />
           </div>
         </div>
       </section>
 
-      {/* VITRINE · LANÇAMENTOS */}
       {lancamentos.length > 0 && (
         <ProductShelf
-          eyebrow="⚡ Lançamentos"
+          eyebrowIcon="zap"
+          eyebrow="Lançamentos"
           title="Acaba de pousar na estação"
           subtitle="As últimas peças que chegaram em Palmas · do RTX 5070 ao Z790 DDR5"
           products={lancamentos}
@@ -143,20 +144,21 @@ export default function Home() {
         />
       )}
 
-      {/* BANNER CTA MONTADOR · full-width espacial */}
+      {/* BANNER CTA MONTADOR */}
       <section className="relative overflow-hidden bg-starteq-black py-16 lg:py-20 border-y border-starteq-line">
         <StarField className="opacity-40" />
         <Meteors className="opacity-50" />
         <div className="absolute inset-0 nebula-bg opacity-70" />
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[1fr_auto] gap-8 items-center">
           <div>
-            <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3">
-              ⚙ Configurador inteligente
+            <div className="flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3">
+              <Icon name="cpu" size={16} />
+              Configurador inteligente
             </div>
             <h2 className="font-space text-3xl lg:text-5xl font-black text-starteq-bone leading-tight mb-3">
               Monte seu PC <span className="text-space-grad">do seu jeito.</span>
             </h2>
-            <p className="text-starteq-muted text-lg max-w-xl">
+            <p className="text-starteq-muted text-base lg:text-lg max-w-xl">
               8 passos · compatibilidade validada · orçamento direto no WhatsApp.
               A IA cuida pra você não comprar peça errada.
             </p>
@@ -165,15 +167,15 @@ export default function Home() {
             href="/montador"
             className="inline-flex items-center justify-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-base px-8 py-5 rounded-lg transition-all animate-pulse-glow whitespace-nowrap"
           >
-            Iniciar montador →
+            Iniciar montador <Icon name="arrow-right" size={20} strokeWidth={2.5} />
           </Link>
         </div>
       </section>
 
-      {/* VITRINE · MAIS VENDIDOS */}
       {maisVendidos.length > 0 && (
         <ProductShelf
-          eyebrow="🔥 Mais Vendidos"
+          eyebrowIcon="flame"
+          eyebrow="Mais Vendidos"
           title="Top de linha em Palmas"
           subtitle="O que a comunidade gamer de Palmas mais pede aqui"
           products={maisVendidos}
@@ -181,10 +183,10 @@ export default function Home() {
         />
       )}
 
-      {/* VITRINE · PCs PRONTOS */}
       {pcsProntos.length > 0 && (
         <ProductShelf
-          eyebrow="🖥️ PCs Prontos"
+          eyebrowIcon="monitor"
+          eyebrow="PCs Prontos"
           title="Decola na hora"
           subtitle="PCs montados, certificados e enviados com BIOS+drivers atualizados"
           products={pcsProntos}
@@ -197,13 +199,16 @@ export default function Home() {
       <section className="bg-starteq-coal py-12 border-y border-starteq-line">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase">
-              📡 Transmissão da base
+            <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase">
+              <Icon name="radio" size={16} />
+              Transmissão da base
             </div>
           </div>
           <div className="grid sm:grid-cols-3 gap-6 text-center">
             <div>
-              <div className="font-space text-4xl font-black text-starteq-gold">4.6 ★</div>
+              <div className="font-space text-4xl font-black text-starteq-gold inline-flex items-center gap-2 justify-center">
+                4.6 <Icon name="star" size={28} className="text-starteq-gold" />
+              </div>
               <div className="text-sm text-starteq-text mt-1">67 reviews no Google</div>
               <div className="text-xs text-starteq-muted mt-0.5">Operando há 6+ anos em Palmas</div>
             </div>
@@ -221,10 +226,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* VITRINE · HARDWARE */}
       {hardware.length > 0 && (
         <ProductShelf
-          eyebrow="⚙️ Hardware"
+          eyebrowIcon="cpu"
+          eyebrow="Hardware"
           title="As peças que fazem a build"
           subtitle="GPU · CPU · SSD · Fonte das melhores marcas"
           products={hardware}
@@ -234,10 +239,10 @@ export default function Home() {
         />
       )}
 
-      {/* VITRINE · PERIFÉRICOS */}
       {perifericos.length > 0 && (
         <ProductShelf
-          eyebrow="🎮 Periféricos"
+          eyebrowIcon="gamepad"
+          eyebrow="Periféricos"
           title="Setup completo na base"
           subtitle="Mouse · teclado · monitor · headset · cadeira · tudo Husky/Razer/HyperX e mais"
           products={perifericos}
@@ -247,10 +252,10 @@ export default function Home() {
         />
       )}
 
-      {/* VITRINE · PROMOS / OPENBOX */}
       {promos.length > 0 && (
         <ProductShelf
-          eyebrow="💸 Promo · OpenBox"
+          eyebrowIcon="tag"
+          eyebrow="Promo · OpenBox"
           title="Aproveita antes que esgote"
           subtitle="Produtos com desconto especial ou em condição open-box (testados, NF, garantia mantida)"
           products={promos}
@@ -294,9 +299,9 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-4">
-            <Seal icon="🔧" title="Montagem" text="PC enviado MONTADO e certificado · BIOS e drivers atualizados · cabos pela parte de trás · acabamento de fábrica." />
-            <Seal icon="📦" title="Entrega" text="Caixa de papelão de ondas duplas exclusiva · fitas de segurança com cola ativa · motoboy mesmo dia em Palmas." />
-            <Seal icon="🛡️" title="Garantia" text="Garantia por peça · prazo na nota fiscal · sem lacre · você pode abrir e modificar como quiser." />
+            <Seal iconName="wrench" title="Montagem" text="PC enviado MONTADO e certificado · BIOS e drivers atualizados · cabos pela parte de trás · acabamento de fábrica." />
+            <Seal iconName="package" title="Entrega" text="Caixa de papelão de ondas duplas exclusiva · fitas de segurança com cola ativa · motoboy mesmo dia em Palmas." />
+            <Seal iconName="shield" title="Garantia" text="Garantia por peça · prazo na nota fiscal · sem lacre · você pode abrir e modificar como quiser." />
           </div>
         </div>
       </section>
@@ -304,8 +309,9 @@ export default function Home() {
       {/* NEWSLETTER */}
       <section className="bg-starteq-coal py-16 border-y border-starteq-line">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3">
-            📡 Conexão direta
+          <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3">
+            <Icon name="radio" size={14} />
+            Conexão direta
           </div>
           <h2 className="font-space text-3xl lg:text-4xl font-black text-starteq-bone mb-3">
             Receba lançamentos antes da galáxia
@@ -335,8 +341,9 @@ export default function Home() {
         <StarField className="opacity-50" />
         <Meteors className="opacity-60" />
         <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-4">
-            ⚡ Ignição em 3 minutos
+          <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-4">
+            <Icon name="zap" size={14} />
+            Ignição em 3 minutos
           </div>
           <h2 className="font-space text-4xl lg:text-6xl font-black text-starteq-bone leading-tight">
             Para de adiar<br />
@@ -350,16 +357,22 @@ export default function Home() {
             href="/montador"
             className="mt-10 inline-flex items-center justify-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-base px-10 py-5 rounded-lg transition-all animate-pulse-glow"
           >
-            Iniciar montador
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
+            Iniciar montador <Icon name="arrow-right" size={20} strokeWidth={2.5} />
           </Link>
         </div>
       </section>
 
       <Footer />
     </>
+  );
+}
+
+function PromoBadge({ icon, text }: { icon: IconName; text: string }) {
+  return (
+    <span className="inline-flex items-center gap-2">
+      <Icon name={icon} size={16} strokeWidth={2.5} />
+      {text}
+    </span>
   );
 }
 
@@ -371,7 +384,7 @@ function CategoryTile({
 }: {
   href: string;
   label: string;
-  icon: string;
+  icon: IconName;
   accent?: boolean;
 }) {
   return (
@@ -383,7 +396,9 @@ function CategoryTile({
           : "bg-starteq-card border-starteq-line hover:border-starteq-gold/40"
       }`}
     >
-      <div className="text-3xl mb-2">{icon}</div>
+      <div className="w-10 h-10 rounded-lg bg-starteq-coal mx-auto mb-2 flex items-center justify-center">
+        <Icon name={icon} size={22} className={accent ? "text-starteq-gold" : "text-starteq-text group-hover:text-starteq-gold"} />
+      </div>
       <div
         className={`font-space font-bold text-sm leading-tight ${
           accent ? "text-starteq-gold" : "text-starteq-bone group-hover:text-starteq-gold"
@@ -395,11 +410,11 @@ function CategoryTile({
   );
 }
 
-function Seal({ icon, title, text }: { icon: string; title: string; text: string }) {
+function Seal({ iconName, title, text }: { iconName: IconName; title: string; text: string }) {
   return (
     <div className="bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-xl p-8 text-center transition-all hover:-translate-y-1">
-      <div className="w-20 h-20 rounded-full bg-starteq-gold/10 border-2 border-starteq-gold/30 flex items-center justify-center mx-auto mb-5 text-4xl">
-        {icon}
+      <div className="w-20 h-20 rounded-full bg-starteq-gold/10 border-2 border-starteq-gold/30 flex items-center justify-center mx-auto mb-5">
+        <Icon name={iconName} size={36} className="text-starteq-gold" />
       </div>
       <h3 className="font-space font-bold text-2xl text-starteq-bone mb-3">{title}</h3>
       <p className="text-sm text-starteq-muted leading-relaxed">{text}</p>

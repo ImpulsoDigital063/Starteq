@@ -1,9 +1,11 @@
 import Link from "next/link";
 import type { Product } from "@/lib/catalog";
 import { ProductCard } from "./ProductCard";
+import { Icon, type IconName } from "./Icon";
 
 type ProductShelfProps = {
   eyebrow: string;
+  eyebrowIcon?: IconName;
   title: string;
   subtitle?: string;
   products: Product[];
@@ -22,6 +24,7 @@ const ACCENT_STYLES: Record<NonNullable<ProductShelfProps["accentColor"]>, strin
 
 export function ProductShelf({
   eyebrow,
+  eyebrowIcon,
   title,
   subtitle,
   products,
@@ -39,7 +42,8 @@ export function ProductShelf({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between mb-8 gap-4">
           <div className="flex-1 min-w-0">
-            <div className={`text-xs font-space font-bold tracking-[0.3em] uppercase mb-2 ${accent}`}>
+            <div className={`flex items-center gap-2 text-xs font-space font-bold tracking-[0.3em] uppercase mb-2 ${accent}`}>
+              {eyebrowIcon && <Icon name={eyebrowIcon} size={14} />}
               {eyebrow}
             </div>
             <h2 className="font-space text-2xl lg:text-4xl font-black text-starteq-bone leading-tight">

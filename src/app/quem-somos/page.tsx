@@ -74,7 +74,7 @@ export default function QuemSomosPage() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
               <Stat number="6+" label="Anos de operação em Palmas" />
               <Stat number="9k" label="Seguidores no Instagram" />
-              <Stat number="4.6★" label="67 reviews Google" />
+              <Stat number="4.6" label="67 reviews Google · 5 estrelas" />
               <Stat number="Same" label="Day em Palmas" />
             </div>
           </div>

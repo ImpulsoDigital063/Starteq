@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
+import { Icon } from "./Icon";
 
 export function Footer() {
   return (
@@ -144,9 +145,9 @@ export function Footer() {
                 <PayBadge label="Hipercard" />
                 <PayBadge label="Boleto" />
               </div>
-              <div className="text-xs text-starteq-muted mt-3">
-                💳 Em até <strong className="text-starteq-bone">10x sem juros</strong> no cartão
-                · ⚡ <strong className="text-starteq-pix">15% off</strong> à vista no PIX
+              <div className="text-xs text-starteq-muted mt-3 inline-flex items-center gap-2 flex-wrap">
+                <Icon name="credit-card" size={14} /> Em até <strong className="text-starteq-bone">10x sem juros</strong> no cartão
+                · <Icon name="zap" size={14} /> <strong className="text-starteq-pix">15% off</strong> à vista no PIX
               </div>
             </div>
 
@@ -155,10 +156,10 @@ export function Footer() {
                 Compra Segura
               </h4>
               <div className="flex flex-wrap gap-2">
-                <PayBadge label="🔒 SSL" />
-                <PayBadge label="🛡️ Garantia" />
-                <PayBadge label="📄 NF-e" />
-                <PayBadge label="✓ CDC 7d" />
+                <PayBadge icon="lock" label="SSL" />
+                <PayBadge icon="shield" label="Garantia" />
+                <PayBadge icon="file" label="NF-e" />
+                <PayBadge icon="check" label="CDC 7d" />
               </div>
               <div className="text-xs text-starteq-muted mt-3">
                 Conexão criptografada · seus dados protegidos · garantia por peça via NF
@@ -269,15 +270,24 @@ function SocialIcon({ href, label, icon }: { href: string; label: string; icon: 
   );
 }
 
-function PayBadge({ label, highlight = false }: { label: string; highlight?: boolean }) {
+function PayBadge({
+  label,
+  icon,
+  highlight = false,
+}: {
+  label: string;
+  icon?: import("./Icon").IconName;
+  highlight?: boolean;
+}) {
   return (
     <span
-      className={`inline-flex items-center px-3 py-1.5 rounded text-xs font-space font-bold border ${
+      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-space font-bold border ${
         highlight
           ? "bg-starteq-pix/10 border-starteq-pix/40 text-starteq-pix"
           : "bg-starteq-card border-starteq-line text-starteq-text"
       }`}
     >
+      {icon && <Icon name={icon} size={14} />}
       {label}
     </span>
   );

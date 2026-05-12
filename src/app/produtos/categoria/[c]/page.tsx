@@ -3,24 +3,25 @@ import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
+import { Icon, type IconName } from "@/components/Icon";
 import { PRODUCTS, type Category } from "@/lib/catalog";
 
-const VALID: Record<string, { label: string; intro: string; icon: string }> = {
-  computadores: { label: "PCs Prontos", intro: "Builds montadas, certificadas e prontas pra decolar", icon: "🖥️" },
-  cpu: { label: "Processadores", intro: "AMD e Intel · validados peça a peça", icon: "🧠" },
-  mobo: { label: "Placas-mãe", intro: "Compatíveis com seu processador", icon: "🔌" },
-  gpu: { label: "Placas de vídeo", intro: "RTX 4060 a 5070 Ti · NVIDIA e AMD", icon: "🎮" },
-  ram: { label: "Memória RAM", intro: "DDR4 e DDR5 das melhores marcas", icon: "💾" },
-  ssd: { label: "Armazenamento SSD", intro: "NVMe PCIe 4.0 e SATA III", icon: "💿" },
-  fonte: { label: "Fontes", intro: "Calculadas pra build · 550W a 1000W", icon: "⚡" },
-  cooler: { label: "Coolers", intro: "Ar tower · AIO 240/360mm", icon: "❄️" },
-  gabinete: { label: "Gabinetes", intro: "ATX · mATX · ITX · airflow ou silêncio", icon: "📦" },
-  mouse: { label: "Mouse", intro: "Sem fio · 4K Hz · DPI alto", icon: "🖱️" },
-  teclado: { label: "Teclados", intro: "Mecânico · TKL · 65% · 75%", icon: "⌨️" },
-  mousepad: { label: "Mousepads", intro: "Speed · Control · XXL · RGB", icon: "📐" },
-  monitor: { label: "Monitores", intro: "144Hz · 240Hz · 1080p · 1440p · QHD", icon: "🖼️" },
-  headset: { label: "Headsets", intro: "Surround 7.1 · wireless · com mic", icon: "🎧" },
-  cadeira: { label: "Cadeiras", intro: "Apoio lombar · reclinável · gamer", icon: "🪑" },
+const VALID: Record<string, { label: string; intro: string; icon: IconName }> = {
+  computadores: { label: "PCs Prontos", intro: "Builds montadas, certificadas e prontas pra decolar", icon: "monitor" },
+  cpu: { label: "Processadores", intro: "AMD e Intel · validados peça a peça", icon: "cpu" },
+  mobo: { label: "Placas-mãe", intro: "Compatíveis com seu processador", icon: "plug" },
+  gpu: { label: "Placas de vídeo", intro: "RTX 4060 a 5070 Ti · NVIDIA e AMD", icon: "gamepad" },
+  ram: { label: "Memória RAM", intro: "DDR4 e DDR5 das melhores marcas", icon: "memory" },
+  ssd: { label: "Armazenamento SSD", intro: "NVMe PCIe 4.0 e SATA III", icon: "disc" },
+  fonte: { label: "Fontes", intro: "Calculadas pra build · 550W a 1000W", icon: "zap" },
+  cooler: { label: "Coolers", intro: "Ar tower · AIO 240/360mm", icon: "snowflake" },
+  gabinete: { label: "Gabinetes", intro: "ATX · mATX · ITX · airflow ou silêncio", icon: "package" },
+  mouse: { label: "Mouse", intro: "Sem fio · 4K Hz · DPI alto", icon: "mouse" },
+  teclado: { label: "Teclados", intro: "Mecânico · TKL · 65% · 75%", icon: "keyboard" },
+  mousepad: { label: "Mousepads", intro: "Speed · Control · XXL · RGB", icon: "ruler" },
+  monitor: { label: "Monitores", intro: "144Hz · 240Hz · 1080p · 1440p · QHD", icon: "image" },
+  headset: { label: "Headsets", intro: "Surround 7.1 · wireless · com mic", icon: "headphones" },
+  cadeira: { label: "Cadeiras", intro: "Apoio lombar · reclinável · gamer", icon: "armchair" },
 };
 
 type Params = { params: Promise<{ c: string }> };
@@ -57,8 +58,8 @@ export default async function CategoriaPage({ params }: Params) {
           </nav>
 
           <header className="mb-10 flex items-center gap-5">
-            <div className="w-20 h-20 rounded-2xl bg-starteq-gold/10 border-2 border-starteq-gold/30 flex items-center justify-center text-5xl flex-shrink-0">
-              {meta.icon}
+            <div className="w-20 h-20 rounded-2xl bg-starteq-gold/10 border-2 border-starteq-gold/30 flex items-center justify-center flex-shrink-0">
+              <Icon name={meta.icon} size={42} className="text-starteq-gold" />
             </div>
             <div>
               <h1 className="font-space text-3xl lg:text-5xl font-black text-starteq-bone leading-tight">
@@ -70,7 +71,9 @@ export default async function CategoriaPage({ params }: Params) {
 
           {items.length === 0 ? (
             <div className="bg-starteq-card border border-starteq-line rounded-xl p-12 text-center">
-              <div className="text-6xl mb-4">🛸</div>
+              <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-starteq-gold/10 flex items-center justify-center">
+                <Icon name="ufo" size={36} className="text-starteq-gold" />
+              </div>
               <h3 className="font-space font-bold text-xl text-starteq-bone mb-2">Nenhum produto nessa órbita ainda</h3>
               <p className="text-starteq-muted mb-6">Estamos repondo estoque · volta em alguns dias.</p>
               <Link href="/produtos" className="inline-block text-starteq-gold hover:underline text-sm font-space font-bold uppercase tracking-wider">

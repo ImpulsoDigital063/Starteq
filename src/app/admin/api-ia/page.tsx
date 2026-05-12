@@ -69,7 +69,7 @@ export default function ApiIaPage() {
       </div>
 
       <div className="mt-10 bg-starteq-gold/5 border border-starteq-gold/30 rounded-xl p-6">
-        <h3 className="font-display font-bold text-starteq-gold text-lg mb-2">🤖 Como a IA usa</h3>
+        <h3 className="font-display font-bold text-starteq-gold text-lg mb-2">Como a IA usa</h3>
         <ol className="text-sm text-starteq-text space-y-2 list-decimal list-inside">
           <li>Cliente manda mensagem no WhatsApp: <em>"quero um PC pra jogar Valorant até R$ 5 mil"</em></li>
           <li>IA chama <code className="font-mono text-starteq-gold">GET /api/products?category=cpu&limit=50</code> pra ver estoque atual</li>

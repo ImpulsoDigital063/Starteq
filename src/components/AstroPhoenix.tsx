@@ -1,5 +1,5 @@
-// Mascote · Phoenix astronauta · ave dourada com capacete espacial
-// SVG inline pra animar via CSS · paleta Starteq
+// Astronauta realista NASA-style · Phoenix dourada como visor reflection
+// SVG inline · zero dependência · responsivo
 
 type AstroPhoenixProps = {
   size?: number;
@@ -12,20 +12,20 @@ export function AstroPhoenix({ size = 240, className = "", animated = true }: As
     <div
       className={`relative ${animated ? "animate-float-slow" : ""} ${className}`}
       style={{ width: size, height: size }}
-      aria-label="Phoenix astronauta · mascote Starteq"
+      aria-label="Astronauta Starteq"
     >
       {/* Glow ring atrás */}
       <div
-        className="absolute inset-0 rounded-full"
+        className="absolute inset-0 rounded-full pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(245,197,24,0.3) 0%, rgba(245,197,24,0.1) 40%, transparent 70%)",
-          filter: "blur(20px)",
+            "radial-gradient(circle, rgba(245,197,24,0.35) 0%, rgba(245,197,24,0.10) 40%, transparent 70%)",
+          filter: "blur(30px)",
         }}
       />
 
       <svg
-        viewBox="0 0 240 240"
+        viewBox="0 0 320 320"
         width={size}
         height={size}
         fill="none"
@@ -33,90 +33,145 @@ export function AstroPhoenix({ size = 240, className = "", animated = true }: As
         className="relative z-10"
       >
         <defs>
-          <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+          {/* Suit white-gray gradient */}
+          <linearGradient id="suit" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#F5F5F5" />
+            <stop offset="50%" stopColor="#E5E5E5" />
+            <stop offset="100%" stopColor="#9CA3AF" />
+          </linearGradient>
+          {/* Suit shadow */}
+          <linearGradient id="suitShadow" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#9CA3AF" />
+            <stop offset="100%" stopColor="#4B5563" />
+          </linearGradient>
+          {/* Helmet visor · radial reflection */}
+          <radialGradient id="visor" cx="0.35" cy="0.35" r="0.7">
+            <stop offset="0%" stopColor="#F5C518" stopOpacity="0.95" />
+            <stop offset="30%" stopColor="#FFE066" stopOpacity="0.7" />
+            <stop offset="55%" stopColor="#0A0A0A" />
+            <stop offset="100%" stopColor="#000000" />
+          </radialGradient>
+          {/* Gold ring */}
+          <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stopColor="#FFE066" />
             <stop offset="50%" stopColor="#F5C518" />
             <stop offset="100%" stopColor="#C49A12" />
           </linearGradient>
-          <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#1A1A1A" />
-            <stop offset="100%" stopColor="#0A0A0A" />
+          {/* Helmet glass curve */}
+          <linearGradient id="visorCurve" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="#FAFAFA" stopOpacity="0.6" />
+            <stop offset="50%" stopColor="#FAFAFA" stopOpacity="0.05" />
+            <stop offset="100%" stopColor="#FAFAFA" stopOpacity="0.4" />
           </linearGradient>
-          <linearGradient id="helmetGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#FAFAFA" stopOpacity="0.95" />
-            <stop offset="100%" stopColor="#9A9A9A" stopOpacity="0.7" />
-          </linearGradient>
-          <radialGradient id="visorGrad" cx="0.5" cy="0.4" r="0.6">
-            <stop offset="0%" stopColor="#F5C518" stopOpacity="0.4" />
-            <stop offset="60%" stopColor="#0A0A0A" />
-            <stop offset="100%" stopColor="#0A0A0A" />
+          {/* Helmet outer shell */}
+          <radialGradient id="helmetShell" cx="0.3" cy="0.3" r="0.8">
+            <stop offset="0%" stopColor="#FAFAFA" />
+            <stop offset="60%" stopColor="#D4D4D8" />
+            <stop offset="100%" stopColor="#71717A" />
           </radialGradient>
         </defs>
 
-        {/* Asas externas (phoenix) */}
+        {/* Backpack life support · atrás do ombro */}
+        <rect x="92" y="180" width="20" height="60" rx="4" fill="url(#suitShadow)" />
+        <rect x="208" y="180" width="20" height="60" rx="4" fill="url(#suitShadow)" />
+
+        {/* Torso (chest piece) */}
         <path
-          d="M40 100 Q20 80 30 60 L50 90 Z M50 130 Q20 150 35 175 L60 140 Z"
-          fill="url(#goldGrad)"
-          opacity="0.95"
-        />
-        <path
-          d="M200 100 Q220 80 210 60 L190 90 Z M190 130 Q220 150 205 175 L180 140 Z"
-          fill="url(#goldGrad)"
-          opacity="0.95"
+          d="M 95 175 L 95 250 Q 95 280 130 285 L 190 285 Q 225 280 225 250 L 225 175 Z"
+          fill="url(#suit)"
         />
 
-        {/* Corpo / traje espacial */}
-        <ellipse cx="120" cy="145" rx="48" ry="55" fill="url(#bodyGrad)" stroke="#F5C518" strokeWidth="2" />
+        {/* Chest control panel · gold accent */}
+        <rect x="135" y="200" width="50" height="35" rx="4" fill="#0A0A0A" stroke="url(#gold)" strokeWidth="2" />
+        <circle cx="145" cy="212" r="2.5" fill="#10B981">
+          {animated && <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" />}
+        </circle>
+        <circle cx="155" cy="212" r="2.5" fill="#F5C518" />
+        <circle cx="165" cy="212" r="2.5" fill="#DC2626" />
+        <rect x="138" y="220" width="44" height="3" rx="1.5" fill="#F5C518" />
+        <rect x="138" y="226" width="32" height="3" rx="1.5" fill="#525252" />
 
-        {/* Detalhe peito · símbolo Starteq */}
-        <circle cx="120" cy="155" r="14" fill="#F5C518" />
+        {/* Starteq logo on chest */}
         <text
-          x="120"
-          y="160"
+          x="160"
+          y="265"
           textAnchor="middle"
           fontFamily="var(--font-orbitron), sans-serif"
           fontWeight="900"
-          fontSize="11"
-          fill="#0A0A0A"
+          fontSize="14"
+          fill="#F5C518"
+          letterSpacing="2"
         >
-          STQ
+          STARTEQ
         </text>
 
-        {/* Pescoço · anel do capacete */}
-        <ellipse cx="120" cy="92" rx="34" ry="6" fill="#F5C518" />
+        {/* Shoulders */}
+        <ellipse cx="105" cy="178" rx="18" ry="14" fill="url(#suit)" />
+        <ellipse cx="215" cy="178" rx="18" ry="14" fill="url(#suit)" />
 
-        {/* Capacete */}
-        <ellipse cx="120" cy="65" rx="42" ry="44" fill="url(#helmetGrad)" stroke="#F5C518" strokeWidth="2" />
+        {/* Arms (simplificado · só ombros visíveis) */}
+        <path d="M 85 180 Q 70 195 70 215 L 80 240 L 92 215 Z" fill="url(#suit)" />
+        <path d="M 235 180 Q 250 195 250 215 L 240 240 L 228 215 Z" fill="url(#suit)" />
 
-        {/* Visor */}
-        <ellipse cx="120" cy="62" rx="32" ry="32" fill="url(#visorGrad)" />
+        {/* Neck ring (gold) */}
+        <ellipse cx="160" cy="170" rx="42" ry="9" fill="url(#gold)" stroke="#C49A12" strokeWidth="1" />
+        <ellipse cx="160" cy="167" rx="42" ry="6" fill="#FFE066" opacity="0.7" />
 
-        {/* Bico phoenix dourado dentro do visor */}
-        <path d="M115 60 L120 75 L125 60 Z" fill="url(#goldGrad)" />
+        {/* HELMET shell · branco metalizado */}
+        <ellipse cx="160" cy="115" rx="62" ry="65" fill="url(#helmetShell)" />
 
-        {/* Olhos brilhantes dourados */}
-        <circle cx="110" cy="55" r="3" fill="#F5C518" />
-        <circle cx="130" cy="55" r="3" fill="#F5C518" />
-        <circle cx="110" cy="55" r="1" fill="#FFE066" />
-        <circle cx="130" cy="55" r="1" fill="#FFE066" />
+        {/* Helmet outer ring */}
+        <ellipse cx="160" cy="115" rx="62" ry="65" fill="none" stroke="#71717A" strokeWidth="2" />
+        <ellipse cx="160" cy="115" rx="58" ry="61" fill="none" stroke="#F5C518" strokeWidth="1.5" opacity="0.6" />
 
-        {/* Reflexo no visor */}
-        <ellipse cx="108" cy="50" rx="6" ry="10" fill="#FAFAFA" opacity="0.25" />
+        {/* VISOR (face glass) · dourado refletivo */}
+        <ellipse cx="160" cy="112" rx="44" ry="44" fill="url(#visor)" />
 
-        {/* Antena no topo */}
-        <line x1="120" y1="21" x2="120" y2="8" stroke="#F5C518" strokeWidth="2" />
-        <circle cx="120" cy="6" r="3" fill="#F5C518">
-          {animated && <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite" />}
+        {/* Visor inner edge gold */}
+        <ellipse cx="160" cy="112" rx="44" ry="44" fill="none" stroke="url(#gold)" strokeWidth="2.5" />
+
+        {/* Reflection inside visor · planet/space scene */}
+        <g opacity="0.5">
+          <circle cx="145" cy="100" r="8" fill="#3B82F6" opacity="0.5" />
+          <circle cx="175" cy="118" r="4" fill="#A855F7" opacity="0.5" />
+          <ellipse cx="145" cy="100" rx="14" ry="3" fill="none" stroke="#3B82F6" strokeWidth="0.5" opacity="0.7" />
+        </g>
+
+        {/* Visor highlight (top-left curve) */}
+        <ellipse cx="148" cy="95" rx="14" ry="20" fill="url(#visorCurve)" opacity="0.4" />
+        <ellipse cx="142" cy="90" rx="6" ry="10" fill="#FAFAFA" opacity="0.5" />
+
+        {/* Phoenix STQ mark dentro do visor */}
+        <g transform="translate(160, 125)">
+          <path d="M -8 -3 L 0 8 L 8 -3 Z" fill="url(#gold)" opacity="0.9" />
+          <text
+            x="0" y="0"
+            textAnchor="middle"
+            fontFamily="var(--font-orbitron), sans-serif"
+            fontWeight="900"
+            fontSize="9"
+            fill="#F5C518"
+          >
+            STQ
+          </text>
+        </g>
+
+        {/* Helmet top antenna */}
+        <line x1="160" y1="48" x2="160" y2="30" stroke="#71717A" strokeWidth="2" />
+        <circle cx="160" cy="28" r="4" fill="#F5C518">
+          {animated && <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" />}
         </circle>
+        <circle cx="160" cy="28" r="2" fill="#FFE066" />
 
-        {/* Plumas (chama phoenix) embaixo */}
-        <path
-          d="M85 195 Q90 215 95 200 M105 200 Q110 220 115 205 M125 205 Q130 225 135 210 M145 200 Q150 220 155 205"
-          stroke="url(#goldGrad)"
-          strokeWidth="3"
-          strokeLinecap="round"
-          fill="none"
-        />
+        {/* Side helmet antennas */}
+        <rect x="93" y="100" width="6" height="14" rx="1" fill="#71717A" />
+        <rect x="221" y="100" width="6" height="14" rx="1" fill="#71717A" />
+        <circle cx="96" cy="107" r="2" fill="#10B981" opacity="0.8" />
+        <circle cx="224" cy="107" r="2" fill="#DC2626" opacity="0.8" />
+
+        {/* Top hatch detail */}
+        <rect x="150" y="50" width="20" height="8" rx="2" fill="url(#suitShadow)" />
+        <rect x="153" y="52" width="14" height="4" rx="1" fill="#F5C518" />
       </svg>
     </div>
   );

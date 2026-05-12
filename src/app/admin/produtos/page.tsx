@@ -75,7 +75,7 @@ export default function AdminProdutos() {
       </div>
 
       <div className="mt-6 text-xs text-starteq-muted">
-        💡 Em produção · cada edição atualiza estoque em tempo real · o site público + a IA do Júnior consomem os preços novos imediatamente
+        Em produção · cada edição atualiza estoque em tempo real · o site público + a IA do Júnior consomem os preços novos imediatamente
       </div>
     </>
   );

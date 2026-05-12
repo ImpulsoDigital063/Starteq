@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { StarField } from "@/components/StarField";
 import { Meteors } from "@/components/Meteors";
 import { AstroPhoenix } from "@/components/AstroPhoenix";
+import { Icon, type IconName } from "@/components/Icon";
 
 export default function NotFound() {
   return (
@@ -17,8 +18,8 @@ export default function NotFound() {
             <AstroPhoenix size={220} />
           </div>
 
-          <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3">
-            ⚠ Sinal perdido
+          <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3">
+            <Icon name="alert" size={14} /> Sinal perdido
           </div>
 
           <h1 className="font-space text-7xl lg:text-9xl font-black text-space-grad leading-none mb-4">
@@ -53,27 +54,31 @@ export default function NotFound() {
               rel="noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-starteq-pix text-white hover:opacity-90 font-space font-bold tracking-wide uppercase text-sm px-8 py-4 rounded-lg transition-all"
             >
-              Falar com a tripulação
+              <Icon name="whatsapp" size={16} /> Falar com a tripulação
             </a>
           </div>
 
           <div className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto">
-            <Link href="/produtos" className="bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-lg p-4 text-sm text-starteq-text hover:text-starteq-gold transition-all">
-              📦 Produtos
-            </Link>
-            <Link href="/produtos/categoria/computadores" className="bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-lg p-4 text-sm text-starteq-text hover:text-starteq-gold transition-all">
-              🖥️ PCs prontos
-            </Link>
-            <Link href="/blog" className="bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-lg p-4 text-sm text-starteq-text hover:text-starteq-gold transition-all">
-              📡 Blog
-            </Link>
-            <Link href="/quem-somos" className="bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-lg p-4 text-sm text-starteq-text hover:text-starteq-gold transition-all">
-              👋 Quem somos
-            </Link>
+            <QuickLink href="/produtos" icon="package" label="Produtos" />
+            <QuickLink href="/produtos/categoria/computadores" icon="monitor" label="PCs prontos" />
+            <QuickLink href="/blog" icon="radio" label="Blog" />
+            <QuickLink href="/quem-somos" icon="user" label="Quem somos" />
           </div>
         </div>
       </main>
       <Footer />
     </>
+  );
+}
+
+function QuickLink({ href, icon, label }: { href: string; icon: IconName; label: string }) {
+  return (
+    <Link
+      href={href}
+      className="bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-lg p-4 text-sm text-starteq-text hover:text-starteq-gold transition-all flex flex-col items-center gap-2"
+    >
+      <Icon name={icon} size={20} />
+      {label}
+    </Link>
   );
 }

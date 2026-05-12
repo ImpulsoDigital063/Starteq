@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
+import { Icon } from "./Icon";
 
 export function Header() {
   return (
@@ -7,10 +8,14 @@ export function Header() {
       {/* Top bar · slogan + WhatsApp */}
       <div className="bg-starteq-coal border-b border-starteq-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-9 text-xs font-space font-medium tracking-wide">
-          <span className="text-starteq-muted hidden sm:inline">
-            🛵 Same-day em Palmas · 💳 10x sem juros · ⚡ 15% off no PIX
+          <span className="text-starteq-muted hidden sm:inline-flex items-center gap-2">
+            <Icon name="bike" size={14} /> Same-day em Palmas <span>·</span>
+            <Icon name="credit-card" size={14} /> 10x sem juros <span>·</span>
+            <Icon name="zap" size={14} /> 15% off no PIX
           </span>
-          <span className="text-starteq-muted sm:hidden">⚡ 15% off no PIX</span>
+          <span className="text-starteq-muted sm:hidden inline-flex items-center gap-1.5">
+            <Icon name="zap" size={14} /> 15% off no PIX
+          </span>
           <a
             href="https://wa.me/5563992528619"
             target="_blank"
@@ -97,8 +102,8 @@ export function Header() {
               Departamentos
             </Link>
             <span className="text-starteq-line">|</span>
-            <Link href="/montador" className="px-3 py-2 text-starteq-gold hover:text-starteq-bone transition-colors whitespace-nowrap">
-              ⚙ Monte Seu PC
+            <Link href="/montador" className="px-3 py-2 text-starteq-gold hover:text-starteq-bone transition-colors whitespace-nowrap inline-flex items-center gap-1.5">
+              <Icon name="wrench" size={14} /> Monte Seu PC
             </Link>
             <Link href="/produtos/categoria/computadores" className="px-3 py-2 text-starteq-text hover:text-starteq-gold transition-colors whitespace-nowrap">
               PCs Prontos

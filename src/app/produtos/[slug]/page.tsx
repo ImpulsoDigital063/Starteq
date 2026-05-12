@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductImage } from "@/components/ProductImage";
+import { Icon, type IconName } from "@/components/Icon";
 import { PRODUCTS } from "@/lib/catalog";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -145,7 +146,7 @@ export default async function ProdutoPage({ params }: Params) {
                   rel="noreferrer"
                   className="flex-1 inline-flex items-center justify-center gap-2 bg-starteq-pix text-white hover:opacity-90 font-space font-bold tracking-wide uppercase text-sm px-6 py-4 rounded-lg transition-all"
                 >
-                  🛒 Comprar pelo WhatsApp
+                  <Icon name="whatsapp" size={18} /> Comprar pelo WhatsApp
                 </a>
                 <Link
                   href="/carrinho"
@@ -157,9 +158,9 @@ export default async function ProdutoPage({ params }: Params) {
 
               {/* Selos institucionais compactos · padrão Pichau */}
               <div className="grid grid-cols-3 gap-2 mb-6 text-center text-xs">
-                <Seal icon="🔧" title="Montagem" sub="Certificada" />
-                <Seal icon="🛵" title="Same-day" sub="Em Palmas" />
-                <Seal icon="🛡️" title="Garantia" sub="Por peça · NF" />
+                <Seal icon="wrench" title="Montagem" sub="Certificada" />
+                <Seal icon="bike" title="Same-day" sub="Em Palmas" />
+                <Seal icon="shield" title="Garantia" sub="Por peça · NF" />
               </div>
 
               {/* Specs */}
@@ -182,17 +183,17 @@ export default async function ProdutoPage({ params }: Params) {
           {/* 3 CARDS GIGANTES institucionais · padrão Pichau */}
           <section className="mt-16 grid md:grid-cols-3 gap-4">
             <BigSeal
-              icon="🔧"
+              icon="wrench"
               title="Montagem"
               text="Acompanha BIOS e drivers atualizados. Todos os cabos são posicionados pela parte traseira do gabinete, dando uma aparência limpa e profissional."
             />
             <BigSeal
-              icon="📦"
+              icon="package"
               title="Entrega"
               text="Embalado com caixa de papelão de ondas duplas exclusiva e fitas de segurança com cola quimicamente ativa. Motoboy mesmo dia em Palmas."
             />
             <BigSeal
-              icon="🛡️"
+              icon="shield"
               title="Garantia"
               text="A garantia é por peça, o prazo será indicado na nota fiscal. Não acompanha lacre, portanto você pode abrir o gabinete e modificar como quiser."
             />
@@ -218,20 +219,22 @@ export default async function ProdutoPage({ params }: Params) {
   );
 }
 
-function Seal({ icon, title, sub }: { icon: string; title: string; sub: string }) {
+function Seal({ icon, title, sub }: { icon: IconName; title: string; sub: string }) {
   return (
     <div className="bg-starteq-card border border-starteq-line rounded-lg p-3">
-      <div className="text-starteq-gold font-space font-bold text-sm">{icon} {title}</div>
+      <div className="text-starteq-gold font-space font-bold text-sm flex items-center justify-center gap-1.5">
+        <Icon name={icon} size={14} /> {title}
+      </div>
       <div className="text-starteq-muted mt-1 text-[10px] uppercase tracking-wider font-space font-bold">{sub}</div>
     </div>
   );
 }
 
-function BigSeal({ icon, title, text }: { icon: string; title: string; text: string }) {
+function BigSeal({ icon, title, text }: { icon: IconName; title: string; text: string }) {
   return (
     <div className="bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-xl p-8 transition-all">
-      <div className="w-16 h-16 rounded-full bg-starteq-gold/10 border-2 border-starteq-gold/30 flex items-center justify-center text-3xl mb-4">
-        {icon}
+      <div className="w-16 h-16 rounded-full bg-starteq-gold/10 border-2 border-starteq-gold/30 flex items-center justify-center mb-4">
+        <Icon name={icon} size={32} className="text-starteq-gold" />
       </div>
       <h3 className="font-space font-bold text-xl text-starteq-bone mb-3">{title}</h3>
       <p className="text-sm text-starteq-muted leading-relaxed">{text}</p>

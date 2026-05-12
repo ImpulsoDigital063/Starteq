@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
+import { Icon, type IconName } from "@/components/Icon";
 import { PRODUCTS, type Category } from "@/lib/catalog";
 
 export const metadata = {
@@ -9,21 +10,21 @@ export const metadata = {
   description: "Catálogo completo · processadores, placas, memória, fontes, periféricos. Entrega same-day em Palmas.",
 };
 
-const CATEGORIES: { slug: Category; label: string; icon: string }[] = [
-  { slug: "computadores", label: "PCs Prontos", icon: "🖥️" },
-  { slug: "cpu", label: "Processadores", icon: "🧠" },
-  { slug: "gpu", label: "Placas de vídeo", icon: "🎮" },
-  { slug: "mobo", label: "Placas-mãe", icon: "🔌" },
-  { slug: "ram", label: "Memória RAM", icon: "💾" },
-  { slug: "ssd", label: "SSDs", icon: "💿" },
-  { slug: "fonte", label: "Fontes", icon: "⚡" },
-  { slug: "cooler", label: "Coolers", icon: "❄️" },
-  { slug: "gabinete", label: "Gabinetes", icon: "📦" },
-  { slug: "mouse", label: "Mouse", icon: "🖱️" },
-  { slug: "teclado", label: "Teclados", icon: "⌨️" },
-  { slug: "monitor", label: "Monitores", icon: "🖼️" },
-  { slug: "headset", label: "Headsets", icon: "🎧" },
-  { slug: "cadeira", label: "Cadeiras", icon: "🪑" },
+const CATEGORIES: { slug: Category; label: string; icon: IconName }[] = [
+  { slug: "computadores", label: "PCs Prontos", icon: "monitor" },
+  { slug: "cpu", label: "Processadores", icon: "cpu" },
+  { slug: "gpu", label: "Placas de vídeo", icon: "gamepad" },
+  { slug: "mobo", label: "Placas-mãe", icon: "plug" },
+  { slug: "ram", label: "Memória RAM", icon: "memory" },
+  { slug: "ssd", label: "SSDs", icon: "disc" },
+  { slug: "fonte", label: "Fontes", icon: "zap" },
+  { slug: "cooler", label: "Coolers", icon: "snowflake" },
+  { slug: "gabinete", label: "Gabinetes", icon: "package" },
+  { slug: "mouse", label: "Mouse", icon: "mouse" },
+  { slug: "teclado", label: "Teclados", icon: "keyboard" },
+  { slug: "monitor", label: "Monitores", icon: "image" },
+  { slug: "headset", label: "Headsets", icon: "headphones" },
+  { slug: "cadeira", label: "Cadeiras", icon: "armchair" },
 ];
 
 type SearchParams = { q?: string; ordem?: string };
@@ -140,7 +141,7 @@ export default async function ProdutosPage({ searchParams }: { searchParams: Pro
                         className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-starteq-coal text-starteq-text hover:text-starteq-gold transition-colors group"
                       >
                         <span className="flex items-center gap-2 text-sm">
-                          <span className="text-base">{c.icon}</span>
+                          <Icon name={c.icon} size={16} className="text-starteq-muted group-hover:text-starteq-gold" />
                           {c.label}
                         </span>
                         <span className="text-xs text-starteq-muted group-hover:text-starteq-gold font-mono">
@@ -153,8 +154,9 @@ export default async function ProdutosPage({ searchParams }: { searchParams: Pro
               </div>
 
               <div className="bg-starteq-gold/5 border border-starteq-gold/30 rounded-xl p-4">
-                <div className="text-starteq-gold text-xs font-space font-bold uppercase tracking-wider mb-2">
-                  ⚙ Não acha o ideal?
+                <div className="flex items-center gap-2 text-starteq-gold text-xs font-space font-bold uppercase tracking-wider mb-2">
+                  <Icon name="cpu" size={14} />
+                  Não acha o ideal?
                 </div>
                 <p className="text-sm text-starteq-text leading-relaxed mb-3">
                   Use o montador · valida compatibilidade peça a peça e envia direto pro WhatsApp.
@@ -171,7 +173,9 @@ export default async function ProdutosPage({ searchParams }: { searchParams: Pro
             {/* GRID PRODUTOS */}
             {items.length === 0 ? (
               <div className="bg-starteq-card border border-starteq-line rounded-xl p-12 text-center">
-                <div className="text-6xl mb-4">🔍</div>
+                <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-starteq-gold/10 flex items-center justify-center">
+                  <Icon name="search" size={36} className="text-starteq-gold" />
+                </div>
                 <h3 className="font-space font-bold text-xl text-starteq-bone mb-2">
                   Nada encontrado pra &quot;{query}&quot;
                 </h3>

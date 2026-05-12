@@ -1,5 +1,7 @@
 // Mock posts do blog · estrutura espelha o que vai virar Supabase depois
 
+import type { IconName } from "@/components/Icon";
+
 export type Post = {
   slug: string;
   title: string;
@@ -8,7 +10,7 @@ export type Post = {
   author: string;
   date: string;        // ISO YYYY-MM-DD
   read_min: number;
-  cover_emoji: string; // placeholder antes de ter imagem real
+  cover_icon: IconName; // SVG cover via Icon component
   body: string;        // markdown simples
 };
 
@@ -22,7 +24,7 @@ export const POSTS: Post[] = [
     author: "Tripulação Starteq",
     date: "2026-05-10",
     read_min: 6,
-    cover_emoji: "🎮",
+    cover_icon: "gamepad",
     body: `Em 2026 não é difícil montar um PC gamer 1080p de alto nível por menos de 3.500. O segredo está no combo CPU + GPU equilibrado.
 
 ## Combo recomendado
@@ -64,7 +66,7 @@ Quer testar a build no /montador? A compatibilidade é validada peça a peça. S
     author: "Tripulação Starteq",
     date: "2026-05-08",
     read_min: 8,
-    cover_emoji: "⚡",
+    cover_icon: "zap",
     body: `A RTX 5070 entrou no mercado prometendo desempenho de 4070 Super com mais eficiência energética. Vamos pro real.
 
 ## Especificações lado a lado
@@ -103,7 +105,7 @@ Quer ver as duas no /montador com fonte recomendada calculada automaticamente? C
     author: "Tripulação Starteq",
     date: "2026-05-05",
     read_min: 5,
-    cover_emoji: "🧠",
+    cover_icon: "cpu",
     body: `DDR5 não é uma revolução universal. Em alguns cenários melhora muito, em outros é diferença de margem.
 
 ## Onde DDR5 ganha
@@ -143,7 +145,7 @@ Não pague mais por DDR5 só pelo número maior. Pague pra build que aproveita e
     author: "Tripulação Starteq",
     date: "2026-05-02",
     read_min: 4,
-    cover_emoji: "💡",
+    cover_icon: "image",
     body: `Tem PC top mas o setup parece de escritório? Dá uma olhada nesses 4 detalhes.
 
 ## 1. Iluminação ambiente
@@ -177,7 +179,7 @@ Headphone over-ear · pad de mouse grande (90×40cm) · USB hub na borda da mesa
     author: "Tripulação Starteq",
     date: "2026-04-28",
     read_min: 6,
-    cover_emoji: "⚡",
+    cover_icon: "zap",
     body: `Pergunta que volta toda semana no WhatsApp. Vamos colocar número real.
 
 ## Consumo típico de PC gamer atual
@@ -215,7 +217,7 @@ PC gamer NÃO é o grande vilão da conta. O vilão é o ar-condicionado e o chu
     author: "Tripulação Starteq",
     date: "2026-04-22",
     read_min: 5,
-    cover_emoji: "🔧",
+    cover_icon: "wrench",
     body: `Antes de gastar dinheiro com upgrade ou pensar que o jogo "tá quebrado", passa por essa lista.
 
 ## 1. Drivers da GPU atualizados?

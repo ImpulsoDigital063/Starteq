@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { Icon } from "@/components/Icon";
 import { PRODUCTS, type Product, type Category } from "@/lib/catalog";
 import {
   filterCompatible,
@@ -154,7 +155,7 @@ export function MontadorClient() {
                             : "bg-starteq-line text-starteq-muted"
                     }`}
                   >
-                    {selected ? "✓" : idx + 1}
+                    {selected ? <Icon name="check" size={16} strokeWidth={3} /> : idx + 1}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
@@ -312,7 +313,7 @@ export function MontadorClient() {
             </div>
             <div className="text-xs text-starteq-muted mt-2">
               {status.percent === 100
-                ? "✓ Pronto pra finalizar"
+                ? "Pronto pra finalizar"
                 : `${status.required - status.filled} componente${status.required - status.filled > 1 ? "s" : ""} obrigatório${status.required - status.filled > 1 ? "s" : ""} pendente${status.required - status.filled > 1 ? "s" : ""}`}
             </div>
           </div>
@@ -325,7 +326,7 @@ export function MontadorClient() {
                   key={idx}
                   className="bg-starteq-red/10 border border-starteq-red/40 rounded-lg p-3 text-sm flex items-start gap-2"
                 >
-                  <span className="text-starteq-red flex-shrink-0 mt-0.5">⚠</span>
+                  <Icon name="alert" size={16} className="text-starteq-red flex-shrink-0 mt-0.5" />
                   <span className="text-starteq-bone leading-snug">{i.message}</span>
                 </div>
               ))}
@@ -336,7 +337,7 @@ export function MontadorClient() {
           {(build.cpu || build.gpu) && (
             <div className="bg-starteq-card border border-starteq-line rounded-xl p-5">
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-starteq-gold">⚡</span>
+                <Icon name="zap" size={16} className="text-starteq-gold" />
                 <h4 className="font-display font-semibold text-starteq-bone text-sm uppercase tracking-wider">
                   Consumo estimado
                 </h4>
@@ -349,7 +350,7 @@ export function MontadorClient() {
               </div>
               {build.fonte && (
                 <div className={`mt-2 text-xs font-mono ${isFonteAdequate(build.fonte, build) ? "text-starteq-pix" : "text-starteq-warn"}`}>
-                  Sua fonte: {build.fonte.specs.watts}W · {isFonteAdequate(build.fonte, build) ? "✓ adequada" : "⚠ insuficiente"}
+                  Sua fonte: {build.fonte.specs.watts}W · {isFonteAdequate(build.fonte, build) ? "adequada" : "insuficiente"}
                 </div>
               )}
             </div>
@@ -367,7 +368,7 @@ export function MontadorClient() {
             }`}
           >
             {allRequiredSelected
-              ? "🛒 Finalizar no WhatsApp"
+              ? "Finalizar no WhatsApp"
               : `Faltam ${status.required - status.filled} componente${status.required - status.filled > 1 ? "s" : ""}`}
           </a>
 
@@ -381,8 +382,8 @@ export function MontadorClient() {
       {showIgpuModal && (
         <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
           <div className="bg-starteq-card border border-starteq-gold/40 rounded-xl max-w-md w-full p-6 border-glow-gold">
-            <div className="text-starteq-gold text-xs font-display font-semibold tracking-[0.3em] uppercase mb-3">
-              ⚙ Processador com vídeo integrado
+            <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3">
+              <Icon name="cpu" size={14} /> Processador com vídeo integrado
             </div>
             <h3 className="font-display font-bold text-starteq-bone text-2xl mb-3">
               Você precisa de placa de vídeo dedicada?

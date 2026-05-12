@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StarField } from "@/components/StarField";
+import { Icon } from "@/components/Icon";
 import { POSTS } from "@/lib/posts";
 
 export const metadata = {
@@ -29,8 +30,8 @@ export default function BlogPage() {
         <section className="relative overflow-hidden nebula-bg py-20">
           <StarField className="opacity-60" />
           <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3">
-              📡 Transmissões da base
+            <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3">
+              <Icon name="radio" size={14} /> Transmissões da base
             </div>
             <h1 className="font-space text-4xl lg:text-6xl font-black text-starteq-bone">
               Blog <span className="text-space-grad">Starteq</span>
@@ -50,7 +51,7 @@ export default function BlogPage() {
             >
               <div className="grid lg:grid-cols-2 gap-0">
                 <div className="aspect-video lg:aspect-auto bg-gradient-to-br from-starteq-gold/20 to-starteq-coal flex items-center justify-center text-9xl">
-                  {featured.cover_emoji}
+                  <Icon name={featured.cover_icon} size={120} className="text-starteq-gold" strokeWidth={1.5} />
                 </div>
                 <div className="p-8 lg:p-10 flex flex-col justify-center">
                   <div className="flex items-center gap-3 text-xs mb-4">
@@ -82,7 +83,7 @@ export default function BlogPage() {
                   className="group bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-xl overflow-hidden transition-all hover:-translate-y-1"
                 >
                   <div className="aspect-video bg-gradient-to-br from-starteq-coal to-starteq-card flex items-center justify-center text-6xl">
-                    {p.cover_emoji}
+                    <Icon name={p.cover_icon} size={72} className="text-starteq-gold" strokeWidth={1.5} />
                   </div>
                   <div className="p-5">
                     <div className="flex items-center gap-2 text-xs mb-3">
