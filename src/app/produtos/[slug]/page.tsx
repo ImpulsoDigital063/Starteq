@@ -50,10 +50,47 @@ export default async function ProdutoPage({ params }: Params) {
 
   const gallery = getProductGallery(product);
 
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    sku: product.sku,
+    brand: { "@type": "Brand", name: product.brand },
+    image: gallery.map((g) => `https://starteq.vercel.app${g}`),
+    offers: {
+      "@type": "Offer",
+      url: `https://starteq.vercel.app/produtos/${product.slug}`,
+      priceCurrency: "BRL",
+      price: product.pix_price.toFixed(2),
+      availability: product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      itemCondition: "https://schema.org/NewCondition",
+      seller: { "@type": "Organization", name: "Starteq Tocantins" },
+    },
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Início", item: "https://starteq.vercel.app" },
+      { "@type": "ListItem", position: 2, name: "Produtos", item: "https://starteq.vercel.app/produtos" },
+      { "@type": "ListItem", position: 3, name: product.category, item: `https://starteq.vercel.app/produtos/categoria/${product.category}` },
+      { "@type": "ListItem", position: 4, name: product.name },
+    ],
+  };
+
   return (
     <>
       <Header />
-      <main className="flex-1 bg-starteq-black">
+      <main className="flex-1 bg-starteq-black pb-20 md:pb-0">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
           <nav className="text-xs text-starteq-muted mb-6 font-space font-bold uppercase tracking-wider">
             <Link href="/" className="hover:text-starteq-gold">Início</Link>
@@ -219,6 +256,24 @@ export default async function ProdutoPage({ params }: Params) {
           )}
         </div>
       </main>
+
+      {/* Sticky CTA mobile · garante preço + WhatsApp sempre visíveis */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-starteq-black/95 backdrop-blur border-t border-starteq-line px-3 py-2.5 flex items-center gap-2">
+        <div className="flex-1 min-w-0">
+          <div className="text-[10px] uppercase tracking-wider font-space font-bold text-starteq-pix leading-none">PIX</div>
+          <div className="font-mono font-black text-lg text-starteq-pix leading-tight truncate">
+            R$ {product.pix_price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+          </div>
+        </div>
+        <a
+          href={whatsappLink}
+          target="_blank"
+          rel="noreferrer"
+          className="flex-shrink-0 inline-flex items-center justify-center gap-1.5 bg-starteq-pix text-white font-space font-bold uppercase text-xs tracking-wider px-4 py-3 rounded-lg"
+        >
+          <Icon name="whatsapp" size={16} /> Comprar
+        </a>
+      </div>
       <Footer />
     </>
   );

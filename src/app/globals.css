@@ -154,4 +154,23 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  /* Performance · suprimir animações decorativas em mobile e em prefers-reduced-motion
+     · CIC apontou 100 animações simultâneas degradando scroll em celular */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .meteor, .star { display: none !important; }
+  }
+
+  @media (max-width: 768px) {
+    .meteor { display: none !important; }
+    .star:nth-child(n+10) { display: none !important; }
+    .animate-float-slow { animation: none !important; }
+    .animate-pulse-glow { animation: none !important; }
+  }
 }

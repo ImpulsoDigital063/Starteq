@@ -1,6 +1,39 @@
 import type { Metadata } from "next";
 import { Inter, Rajdhani, JetBrains_Mono, Orbitron } from "next/font/google";
 import "./globals.css";
+import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+
+const SITE_URL = "https://starteq.vercel.app";
+
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": `${SITE_URL}/#organization`,
+  name: "Starteq Tocantins",
+  description: "Loja de hardware gamer e assistência técnica em Palmas-TO. PCs montados, peças validadas, entrega same-day.",
+  url: SITE_URL,
+  telephone: "+55-63-99252-8619",
+  email: "starteqpalmas@gmail.com",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "104 Sul, SE 05, Lt. 19, Sala 07",
+    addressLocality: "Palmas",
+    addressRegion: "TO",
+    postalCode: "77020-018",
+    addressCountry: "BR",
+  },
+  openingHours: ["Mo-Fr 08:00-18:00", "Sa 09:00-13:00"],
+  priceRange: "$$",
+  paymentAccepted: ["Cash", "Credit Card", "Pix", "Boleto"],
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "4.6",
+    reviewCount: "67",
+  },
+  sameAs: [
+    "https://www.instagram.com/starteq_to",
+  ],
+};
 
 const inter = Inter({
   variable: "--font-inter",
@@ -49,7 +82,14 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${inter.variable} ${rajdhani.variable} ${jetbrains.variable} ${orbitron.variable}`}
     >
-      <body className="min-h-screen flex flex-col">{children}</body>
+      <body className="min-h-screen flex flex-col">
+        {children}
+        <FloatingWhatsApp />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+        />
+      </body>
     </html>
   );
 }

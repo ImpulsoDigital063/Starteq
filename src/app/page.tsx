@@ -116,10 +116,10 @@ export default function Home() {
       <section className="bg-starteq-coal py-12 lg:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-2">
-            <Icon name="ufo" size={16} />
-            Plataforma de Lançamento
+            <Icon name="gamepad" size={16} />
+            Categorias
           </div>
-          <h2 className="font-space text-3xl lg:text-4xl font-black text-starteq-bone mb-8">Por onde decolar</h2>
+          <h2 className="font-space text-3xl lg:text-4xl font-black text-starteq-bone mb-8">Onde quer começar?</h2>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             <CategoryTile href="/montador" label="Monte seu PC" icon="wrench" accent />
@@ -136,8 +136,8 @@ export default function Home() {
         <ProductShelf
           eyebrowIcon="zap"
           eyebrow="Lançamentos"
-          title="Acaba de pousar na estação"
-          subtitle="As últimas peças que chegaram em Palmas · do RTX 5070 ao Z790 DDR5"
+          title="Acabou de chegar"
+          subtitle="Últimas peças que chegaram em Palmas · do RTX 5070 ao Z790 DDR5"
           products={lancamentos}
           accentColor="gold"
         />
@@ -186,7 +186,7 @@ export default function Home() {
         <ProductShelf
           eyebrowIcon="monitor"
           eyebrow="PCs Prontos"
-          title="Decola na hora"
+          title="Leva pra casa hoje"
           subtitle="PCs montados, certificados e enviados com BIOS+drivers atualizados"
           products={pcsProntos}
           accentColor="gold"
@@ -199,8 +199,8 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase">
-              <Icon name="radio" size={16} />
-              Transmissão da base
+              <Icon name="check" size={16} />
+              Quem nos conhece
             </div>
           </div>
           <div className="grid sm:grid-cols-3 gap-6 text-center">
@@ -214,7 +214,7 @@ export default function Home() {
             <div>
               <div className="font-space text-4xl font-black text-starteq-gold">~30 min</div>
               <div className="text-sm text-starteq-text mt-1">Resposta no WhatsApp</div>
-              <div className="text-xs text-starteq-muted mt-0.5">Tripulação real · não bot impessoal</div>
+              <div className="text-xs text-starteq-muted mt-0.5">Equipe real em Palmas · não bot impessoal</div>
             </div>
             <div>
               <div className="font-space text-4xl font-black text-starteq-gold">23k+</div>
@@ -290,7 +290,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-2">
-              Procedimento de bordo
+              O jeito Starteq
             </div>
             <h2 className="font-space text-3xl lg:text-4xl font-black text-starteq-bone">
               Comprou na Starteq, levou tranquilidade
@@ -342,7 +342,7 @@ export default function Home() {
         <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-4">
             <Icon name="zap" size={14} />
-            Ignição em 3 minutos
+            Monte em 3 minutos
           </div>
           <h2 className="font-space text-4xl lg:text-6xl font-black text-starteq-bone leading-tight">
             Para de adiar<br />
@@ -350,7 +350,7 @@ export default function Home() {
           </h2>
           <p className="text-starteq-muted mt-6 text-lg max-w-xl mx-auto">
             8 passos · compatibilidade automática · orçamento direto no WhatsApp.
-            Em 3 minutos sai daqui sabendo exatamente quanto custa pra decolar.
+            Em 3 minutos sai daqui sabendo exatamente quanto custa.
           </p>
           <Link
             href="/montador"
