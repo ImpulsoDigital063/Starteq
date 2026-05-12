@@ -362,7 +362,7 @@ export default function Home() {
           sizes="(max-width: 768px) 100vw, 1px"
           className="md:hidden object-cover object-top"
         />
-        {/* Desktop: engenheiro wide na direita */}
+        {/* Desktop: engenheiro wide na direita · mostra cena completa (engenheiro + holograma + arco) */}
         <Image
           src="/engenheiro-desktop.jpg"
           alt="Engenheiro Starteq montando PC com placa-mãe holográfica"
@@ -371,15 +371,15 @@ export default function Home() {
           sizes="(min-width: 768px) 100vw, 1px"
           className="hidden md:block object-cover"
           style={{
-            objectPosition: "right center",
-            filter: "brightness(1.05) saturate(1.05)",
+            objectPosition: "calc(100% + 120px) center",
+            filter: "brightness(1.08) saturate(1.05)",
           }}
         />
 
         {/* Gradient mobile · vertical fade pra preto inferior */}
         <div className="md:hidden absolute inset-0 bg-gradient-to-b from-transparent via-starteq-black/50 to-starteq-black pointer-events-none" />
-        {/* Gradient desktop · horizontal fade pra preto esquerda */}
-        <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-starteq-black via-starteq-black/85 to-transparent pointer-events-none" />
+        {/* Gradient desktop · cobre 55% da esquerda pra texto+cards lerem · imagem brilha na direita */}
+        <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-starteq-black via-starteq-black/90 via-45% to-transparent pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[inherit] h-full grid md:grid-cols-2 gap-8 items-end md:items-center pt-32 md:pt-0">
           {/* Coluna esquerda · texto + 3 cards stacked · imagem ocupa direita naturalmente */}
