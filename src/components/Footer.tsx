@@ -179,12 +179,12 @@ export function Footer() {
               <h4 className="text-starteq-bone font-space font-bold tracking-wide uppercase text-xs mb-3">
                 Formas de pagamento
               </h4>
-              <div className="flex flex-wrap gap-2">
-                <PayBadge label="PIX" highlight />
-                <PayBadge label="Visa" />
-                <PayBadge label="Master" />
+              <div className="flex flex-wrap gap-2 items-center">
+                <PayLogo src="/pay/pix.svg" alt="PIX" highlight />
+                <PayLogo src="/pay/visa.svg" alt="Visa" />
+                <PayLogo src="/pay/mastercard.svg" alt="Mastercard" />
+                <PayLogo src="/pay/amex.svg" alt="American Express" />
                 <PayBadge label="Elo" />
-                <PayBadge label="Amex" />
                 <PayBadge label="Hipercard" />
                 <PayBadge label="Boleto" />
               </div>
@@ -332,6 +332,30 @@ function PayBadge({
     >
       {icon && <Icon name={icon} size={14} />}
       {label}
+    </span>
+  );
+}
+
+function PayLogo({
+  src,
+  alt,
+  highlight = false,
+}: {
+  src: string;
+  alt: string;
+  highlight?: boolean;
+}) {
+  return (
+    <span
+      className={`inline-flex items-center justify-center h-8 w-14 rounded border ${
+        highlight
+          ? "bg-starteq-pix/10 border-starteq-pix/40"
+          : "bg-starteq-card border-starteq-line"
+      }`}
+      title={alt}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={src} alt={alt} className="h-4 w-auto object-contain" />
     </span>
   );
 }

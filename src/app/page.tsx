@@ -6,7 +6,22 @@ import { StarField } from "@/components/StarField";
 import { Meteors } from "@/components/Meteors";
 import { ProductShelf } from "@/components/ProductShelf";
 import { Icon, type IconName } from "@/components/Icon";
-import { PRODUCTS, productsByBadge, BRANDS } from "@/lib/catalog";
+import { PRODUCTS, productsByBadge } from "@/lib/catalog";
+
+// Marcas com SVG logo local · ordenadas por relevância pro nicho gamer
+const BRAND_LOGOS = [
+  { slug: "intel", name: "Intel" },
+  { slug: "amd", name: "AMD" },
+  { slug: "nvidia", name: "NVIDIA" },
+  { slug: "asus", name: "ASUS" },
+  { slug: "msi", name: "MSI" },
+  { slug: "corsair", name: "Corsair" },
+  { slug: "samsung", name: "Samsung" },
+  { slug: "hyperx", name: "HyperX" },
+  { slug: "razer", name: "Razer" },
+  { slug: "acer", name: "Acer" },
+  { slug: "lg", name: "LG" },
+];
 
 export default function Home() {
   const lancamentos = productsByBadge("Lançamento");
@@ -155,12 +170,12 @@ export default function Home() {
           <h2 className="font-space text-3xl lg:text-4xl font-black text-starteq-bone mb-8">Onde quer começar?</h2>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            <CategoryTile href="/montador" label="Monte seu PC" icon="wrench" accent />
-            <CategoryTile href="/produtos/categoria/computadores" label="PCs prontos" icon="monitor" />
-            <CategoryTile href="/produtos/categoria/gpu" label="Placas de vídeo" icon="gamepad" />
-            <CategoryTile href="/produtos/categoria/mouse" label="Mouse · Teclado" icon="mouse" />
-            <CategoryTile href="/produtos/categoria/monitor" label="Monitores" icon="image" />
-            <CategoryTile href="/produtos/categoria/cadeira" label="Cadeiras" icon="armchair" />
+            <CategoryTile href="/montador" label="Monte seu PC" image="/products/photos/cpu-ryzen.jpg" accent />
+            <CategoryTile href="/produtos/categoria/computadores" label="PCs prontos" image="/products/photos/pc-rgb.jpg" />
+            <CategoryTile href="/produtos/categoria/gpu" label="Placas de vídeo" image="/products/photos/pc-pro.jpg" />
+            <CategoryTile href="/produtos/categoria/mouse" label="Mouse · Teclado" image="/products/photos/mouse.jpg" />
+            <CategoryTile href="/produtos/categoria/monitor" label="Monitores" image="/products/photos/monitor.jpg" />
+            <CategoryTile href="/produtos/categoria/cadeira" label="Cadeiras" image="/products/photos/cadeira.jpg" />
           </div>
         </div>
       </section>
@@ -328,25 +343,32 @@ export default function Home() {
         />
       )}
 
-      {/* MARCAS · carrossel logos */}
-      <section className="bg-starteq-coal py-12 border-y border-starteq-line">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-6">
+      {/* MARCAS · carrossel logos reais (SVG simpleicons) */}
+      <section className="bg-starteq-coal py-12 border-y border-starteq-line overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
+          <div className="text-center">
             <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase">
               Marcas oficiais que vendemos
             </div>
           </div>
-          <div className="overflow-hidden">
-            <div className="flex gap-8 animate-[scroll_40s_linear_infinite] whitespace-nowrap">
-              {[...BRANDS, ...BRANDS].map((b, i) => (
-                <div
-                  key={i}
-                  className="flex-shrink-0 px-6 py-3 bg-starteq-card border border-starteq-line rounded-lg text-starteq-muted hover:text-starteq-gold transition-colors font-space font-bold text-sm uppercase tracking-wider"
-                >
-                  {b}
-                </div>
-              ))}
-            </div>
+        </div>
+        <div className="overflow-hidden">
+          {/* duplicar a lista pra criar loop infinito · velocidade acelera no mobile via CSS */}
+          <div className="flex gap-12 lg:gap-16 marquee-brands whitespace-nowrap items-center">
+            {[...BRAND_LOGOS, ...BRAND_LOGOS, ...BRAND_LOGOS].map((b, i) => (
+              <div
+                key={i}
+                className="flex-shrink-0 flex items-center justify-center h-10 opacity-60 hover:opacity-100 transition-opacity"
+                title={b.name}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/brands/${b.slug}.svg`}
+                  alt={b.name}
+                  className="h-full w-auto max-w-[120px] object-contain"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -603,33 +625,48 @@ function PromoBadge({ icon, text }: { icon: IconName; text: string }) {
 function CategoryTile({
   href,
   label,
-  icon,
+  image,
   accent = false,
 }: {
   href: string;
   label: string;
-  icon: IconName;
+  image: string;
   accent?: boolean;
 }) {
   return (
     <Link
       href={href}
-      className={`group rounded-xl p-4 lg:p-5 border text-center transition-all hover:-translate-y-1 ${
+      className={`group relative rounded-xl border overflow-hidden transition-all hover:-translate-y-1 ${
         accent
-          ? "bg-starteq-gold/5 border-starteq-gold/40 hover:border-starteq-gold animate-pulse-glow"
+          ? "bg-starteq-gold/5 border-starteq-gold/40 hover:border-starteq-gold"
           : "bg-starteq-card border-starteq-line hover:border-starteq-gold/40"
       }`}
     >
-      <div className="w-10 h-10 rounded-lg bg-starteq-coal mx-auto mb-2 flex items-center justify-center">
-        <Icon name={icon} size={22} className={accent ? "text-starteq-gold" : "text-starteq-text group-hover:text-starteq-gold"} />
+      <div className="aspect-square overflow-hidden bg-starteq-black">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={image}
+          alt={label}
+          loading="lazy"
+          className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+        />
+        {/* Gradient bottom pra leitura do título */}
+        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-starteq-black via-starteq-black/70 to-transparent pointer-events-none" />
       </div>
-      <div
-        className={`font-space font-bold text-sm leading-tight ${
-          accent ? "text-starteq-gold" : "text-starteq-bone group-hover:text-starteq-gold"
-        }`}
-      >
-        {label}
+      <div className="absolute inset-x-0 bottom-0 p-3 lg:p-4">
+        <div
+          className={`font-space font-bold text-sm lg:text-base leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)] ${
+            accent ? "text-starteq-gold" : "text-starteq-bone group-hover:text-starteq-gold"
+          }`}
+        >
+          {label}
+        </div>
       </div>
+      {accent && (
+        <div className="absolute top-2 right-2 text-[10px] font-space font-bold uppercase tracking-wider text-starteq-gold bg-starteq-black/70 border border-starteq-gold/40 px-2 py-0.5 rounded backdrop-blur-sm">
+          Destaque
+        </div>
+      )}
     </Link>
   );
 }

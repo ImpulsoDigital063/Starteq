@@ -154,6 +154,19 @@
     to { transform: translateX(-50%); }
   }
 
+  /* Marquee brands · loop infinito com 3x duplicação · acelera no mobile */
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-33.333%); }
+  }
+  .marquee-brands {
+    animation: marquee 40s linear infinite;
+    width: max-content;
+  }
+  @media (max-width: 768px) {
+    .marquee-brands { animation-duration: 18s; }
+  }
+
   /* Line clamp utility (fallback) */
   .line-clamp-3 {
     display: -webkit-box;
