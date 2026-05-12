@@ -162,7 +162,7 @@ export default function PropostaPage() {
                 <span className="text-[11px] text-[#7A7A7A]">setup</span>
               </div>
               <div className="text-[11px] text-[#4A4A4A]">
-                ou 3× R$ 849 sem juros
+                50% na assinatura · 50% na entrega
               </div>
               <div className="mt-2 flex items-baseline gap-2 flex-wrap">
                 <span className="text-2xl font-black text-[#1A1A1A] font-mono">R$ 199</span>
@@ -191,7 +191,7 @@ export default function PropostaPage() {
                 <span className="text-[11px] text-[#7A7A7A]">setup único</span>
               </div>
               <div className="text-[11px] text-[#4A4A4A]">
-                ou 3× R$ 1.199 sem juros
+                50% na assinatura · 50% na entrega
               </div>
               <div className="mt-2 flex items-baseline gap-2 flex-wrap">
                 <span className="text-xl font-black text-[#1A1A1A] font-mono">Zero</span>
