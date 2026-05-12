@@ -1,14 +1,16 @@
-// Imagem do produto com fallback inteligente
-// 1. Se tiver image_url externa, usa
-// 2. Senão, renderiza SVG estilizado por categoria (sempre profissional)
+// Imagem do produto com fallback inteligente:
+// 1. url explícita (image_url em specs) ← prioridade
+// 2. Foto local /products/photos/* mapeada por categoria+SKU ← padrão (real)
+// 3. SVG estilizado ← fallback final se foto local quebrar
 
-import type { Category } from "@/lib/catalog";
+import type { Category, Product } from "@/lib/catalog";
 
 type ProductImageProps = {
   url?: string;
   category: Category;
   alt: string;
   className?: string;
+  product?: Pick<Product, "sku" | "slug" | "category" | "brand">;
 };
 
 const CATEGORY_GRADIENTS: Record<Category, [string, string]> = {
@@ -47,17 +49,23 @@ const CATEGORY_ICONS: Record<Category, string> = {
   computadores: "M3 3h18a1 1 0 011 1v12a1 1 0 01-1 1h-8v2h2v2H9v-2h2v-2H3a1 1 0 01-1-1V4a1 1 0 011-1zm1 2v10h16V5H4z",
 };
 
-export function ProductImage({ url, category, alt, className = "" }: ProductImageProps) {
-  if (url) {
+import { getProductPhoto } from "@/lib/product-images";
+
+export function ProductImage({ url, category, alt, className = "", product }: ProductImageProps) {
+  const photoUrl = url ?? (product ? getProductPhoto(product) : undefined);
+
+  if (photoUrl) {
     return (
-      <div className={`relative overflow-hidden ${className}`}>
+      <div className={`relative overflow-hidden bg-starteq-black ${className}`}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={url}
+          src={photoUrl}
           alt={alt}
           loading="lazy"
           className="w-full h-full object-cover"
         />
+        {/* Vinheta sutil pra dar acabamento Pichau-style */}
+        <div className="absolute inset-0 bg-gradient-to-t from-starteq-black/40 via-transparent to-transparent pointer-events-none" />
       </div>
     );
   }

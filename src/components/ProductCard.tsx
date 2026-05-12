@@ -34,6 +34,7 @@ export function ProductCard({ product, size = "default" }: ProductCardProps) {
           url={imageUrl}
           category={product.category}
           alt={product.name}
+          product={product}
           className={size === "large" ? "aspect-[4/3]" : "aspect-square"}
         />
         {product.badge && (

@@ -68,6 +68,7 @@ export default async function ProdutoPage({ params }: Params) {
               <div className="relative bg-starteq-card border border-starteq-line rounded-2xl overflow-hidden">
                 <ProductImage
                   category={product.category}
+                  product={product}
                   alt={product.name}
                   className="aspect-square"
                 />
@@ -85,7 +86,7 @@ export default async function ProdutoPage({ params }: Params) {
               <div className="grid grid-cols-4 gap-2 mt-3">
                 {[1, 2, 3, 4].map((i) => (
                   <div key={i} className={`aspect-square rounded-lg border ${i === 1 ? "border-starteq-gold" : "border-starteq-line"} bg-starteq-card overflow-hidden`}>
-                    <ProductImage category={product.category} alt={`${product.name} foto ${i}`} className="w-full h-full opacity-70 hover:opacity-100 transition-opacity" />
+                    <ProductImage category={product.category} product={product} alt={`${product.name} foto ${i}`} className="w-full h-full opacity-70 hover:opacity-100 transition-opacity" />
                   </div>
                 ))}
               </div>
