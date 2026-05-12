@@ -381,39 +381,44 @@ export default function Home() {
         {/* Gradient desktop · horizontal fade pra preto esquerda */}
         <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-starteq-black via-starteq-black/85 to-transparent pointer-events-none" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:items-start items-end justify-end md:justify-center min-h-[inherit] h-full pt-32 md:pt-0">
-          <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
-            <Icon name="wrench" size={14} className="inline mr-2" />
-            O jeito Starteq
-          </div>
-          <h2 className="font-space text-3xl lg:text-5xl font-black text-starteq-bone leading-tight mb-2 max-w-2xl drop-shadow-[0_2px_16px_rgba(0,0,0,0.85)]">
-            Comprou na Starteq,<br />
-            <span className="text-space-grad">levou tranquilidade.</span>
-          </h2>
-          <p className="text-starteq-text text-base max-w-xl mb-10 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
-            Cada PC sai da nossa bancada montado, certificado e embalado pra entrega segura.
-          </p>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[inherit] h-full grid md:grid-cols-2 gap-8 items-end md:items-center pt-32 md:pt-0">
+          {/* Coluna esquerda · texto + 3 cards stacked · imagem ocupa direita naturalmente */}
+          <div>
+            <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+              <Icon name="wrench" size={14} className="inline mr-2" />
+              O jeito Starteq
+            </div>
+            <h2 className="font-space text-3xl lg:text-5xl font-black text-starteq-bone leading-tight mb-3 drop-shadow-[0_2px_16px_rgba(0,0,0,0.85)]">
+              Comprou na Starteq,<br />
+              <span className="text-space-grad">levou tranquilidade.</span>
+            </h2>
+            <p className="text-starteq-text text-base mb-8 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+              Cada PC sai da nossa bancada montado, certificado e embalado pra entrega segura.
+            </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6 w-full max-w-4xl">
-            <ProcessStep
-              num="01"
-              title="Montagem"
-              stat="2.300+ PCs montados"
-              text="BIOS e drivers atualizados · cabos pela parte de trás · acabamento de fábrica."
-            />
-            <ProcessStep
-              num="02"
-              title="Entrega"
-              stat="Same-day em Palmas"
-              text="Caixa de ondas duplas com fitas de segurança · motoboy próprio mesmo dia."
-            />
-            <ProcessStep
-              num="03"
-              title="Garantia"
-              stat="0% lacre · 100% honrada"
-              text="Garantia por peça com prazo na NF · você pode abrir e modificar como quiser."
-            />
+            <div className="space-y-3">
+              <ProcessStep
+                num="01"
+                title="Montagem"
+                stat="2.300+ PCs montados"
+                text="BIOS e drivers atualizados · cabos pela parte de trás · acabamento de fábrica."
+              />
+              <ProcessStep
+                num="02"
+                title="Entrega"
+                stat="Same-day em Palmas"
+                text="Caixa de ondas duplas com fitas de segurança · motoboy próprio mesmo dia."
+              />
+              <ProcessStep
+                num="03"
+                title="Garantia"
+                stat="0% lacre · 100% honrada"
+                text="Garantia por peça com prazo na NF · você pode abrir e modificar como quiser."
+              />
+            </div>
           </div>
+          {/* Coluna direita vazia · imagem do engenheiro flui aqui naturalmente como background */}
+          <div className="hidden md:block" aria-hidden />
         </div>
       </section>
 
@@ -535,14 +540,16 @@ function Seal({ iconName, title, text }: { iconName: IconName; title: string; te
 
 function ProcessStep({ num, title, stat, text }: { num: string; title: string; stat: string; text: string }) {
   return (
-    <div className="relative bg-starteq-black/70 backdrop-blur-sm border border-starteq-line hover:border-starteq-gold/40 rounded-xl p-5 transition-all hover:-translate-y-1">
-      <div className="absolute -top-3 -left-1 font-space text-5xl lg:text-6xl font-black text-starteq-gold/30 leading-none select-none pointer-events-none">
+    <div className="bg-starteq-black/70 backdrop-blur-sm border border-starteq-line hover:border-starteq-gold/40 rounded-xl p-5 transition-all hover:-translate-x-1 flex items-start gap-4">
+      <div className="font-space text-4xl lg:text-5xl font-black text-starteq-gold leading-none flex-shrink-0 w-14">
         {num}
       </div>
-      <div className="relative">
-        <h3 className="font-space font-bold text-xl text-starteq-bone mb-1 mt-6">{title}</h3>
-        <div className="inline-block text-[10px] font-space font-bold uppercase tracking-wider text-starteq-gold bg-starteq-gold/10 border border-starteq-gold/30 px-2 py-0.5 rounded mb-3">
-          {stat}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 flex-wrap mb-1">
+          <h3 className="font-space font-bold text-lg text-starteq-bone">{title}</h3>
+          <span className="text-[10px] font-space font-bold uppercase tracking-wider text-starteq-gold bg-starteq-gold/10 border border-starteq-gold/30 px-2 py-0.5 rounded">
+            {stat}
+          </span>
         </div>
         <p className="text-sm text-starteq-muted leading-relaxed">{text}</p>
       </div>
