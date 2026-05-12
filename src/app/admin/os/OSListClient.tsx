@@ -4,6 +4,22 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Icon } from "@/components/Icon";
 import { SERVICE_STATUS_LABEL, SERVICE_STATUS_COLOR, TECHNICIANS, type ServiceOrder, type ServiceOrderStatus } from "@/lib/admin-mock";
+import { ImportButton } from "@/components/admin/ImportButton";
+
+const IMPORT_OS = {
+  entityName: "ordens de serviço",
+  entityLabel: "OS antigas",
+  entitySingular: "OS",
+  templateCsv: `id,customer_name,customer_phone,device,problem,diagnosis,status,service_value,parts_value,created_at,technician_name
+OS-2025-0001,João Silva,(63) 99888-1234,Notebook Acer,Tela não liga,Placa-mãe queimada,entregue,350.00,480.00,2025-08-15,Marcos Silva
+OS-2025-0002,Maria Souza,(63) 99777-5678,PC Gamer,Trava em jogos,Pasta térmica,entregue,180.00,45.00,2025-09-22,
+`,
+  templateFileName: "modelo-os-starteq.csv",
+  columnsHelp: "Colunas: id · customer · phone · device · problem · status · valores · data · técnico",
+  legendImport: "Importa OS antigas pra histórico do cliente · ficam com status \"entregue\" por padrão · valores e datas originais preservados.",
+  successHint: "Histórico de OS importado · clientes aparecem com total de OS atualizado.",
+  gestaoclickHint: true,
+};
 
 type QuickFilter = "todos" | "hoje" | "prontas" | "atrasadas";
 type StatusFilter = ServiceOrderStatus | "todos";
@@ -143,12 +159,15 @@ export function OSListClient({ initialOrders }: { initialOrders: ServiceOrder[] 
           <h1 className="font-space text-2xl lg:text-3xl font-black text-starteq-bone">Ordens de Serviço</h1>
           <p className="text-starteq-muted mt-1 text-sm">{orders.length} OS · {filtered.length} no filtro</p>
         </div>
-        <button
-          onClick={() => setShowNewModal(true)}
-          className="inline-flex items-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-xs px-5 py-3 rounded-lg transition-all"
-        >
-          <Icon name="wrench" size={16} /> Nova OS
-        </button>
+        <div className="flex gap-2 flex-wrap">
+          <ImportButton config={IMPORT_OS} />
+          <button
+            onClick={() => setShowNewModal(true)}
+            className="inline-flex items-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-xs px-5 py-3 rounded-lg transition-all"
+          >
+            <Icon name="wrench" size={16} /> Nova OS
+          </button>
+        </div>
       </header>
 
       {/* Filtros RÁPIDOS · destaque */}

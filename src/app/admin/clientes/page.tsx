@@ -2,6 +2,22 @@ import { Icon } from "@/components/Icon";
 import { CUSTOMERS, CUSTOMER_TAG_LABEL, CUSTOMER_TAG_COLOR, type Customer } from "@/lib/admin-mock";
 import Link from "next/link";
 import { requireSession } from "@/lib/admin-auth";
+import { ImportButton } from "@/components/admin/ImportButton";
+
+const IMPORT_CLIENTES = {
+  entityName: "clientes",
+  entityLabel: "clientes",
+  entitySingular: "cliente",
+  templateCsv: `name,phone,email,cpf,address,city,notes
+João Silva,(63) 99888-1234,joao@example.com,123.456.789-00,Quadra 104 Sul,Palmas,Cliente desde 2023
+Maria Souza,(63) 99777-5678,maria@example.com,987.654.321-00,Quadra 305 Norte,Palmas,
+`,
+  templateFileName: "modelo-clientes-starteq.csv",
+  columnsHelp: "Colunas: name · phone · email · cpf · address · city · notes",
+  legendImport: "Importação cria clientes novos e atualiza existentes pelo telefone/CPF. Histórico de compras anteriores é preservado se você já tiver as OS/pedidos importados.",
+  successHint: "Clientes adicionados ao CRM · busca por nome/CPF/telefone funciona imediatamente.",
+  gestaoclickHint: true,
+};
 
 
 const FILTERS: { slug: Customer["tag"] | "todos"; label: string }[] = [
@@ -20,9 +36,17 @@ export default async function ClientesPage({ searchParams }: { searchParams: Pro
 
   return (
     <>
-      <header className="mb-6">
-        <h1 className="font-space text-2xl lg:text-3xl font-black text-starteq-bone">Clientes</h1>
-        <p className="text-starteq-muted mt-1 text-sm">CRM · histórico · LTV · campanhas de reativação</p>
+      <header className="mb-6 flex items-end justify-between gap-3 flex-wrap">
+        <div>
+          <h1 className="font-space text-2xl lg:text-3xl font-black text-starteq-bone">Clientes</h1>
+          <p className="text-starteq-muted mt-1 text-sm">CRM · histórico · LTV · campanhas de reativação</p>
+        </div>
+        <div className="flex gap-2 flex-wrap">
+          <ImportButton config={IMPORT_CLIENTES} />
+          <button className="inline-flex items-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-xs px-4 py-2.5 rounded-lg transition-all">
+            <Icon name="plus" size={14} /> Novo cliente
+          </button>
+        </div>
       </header>
 
       <div className="flex gap-2 overflow-x-auto pb-2 mb-6">
