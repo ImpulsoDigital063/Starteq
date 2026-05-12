@@ -40,7 +40,7 @@ export default function Home() {
       <Header />
 
       {/* HERO · imagem cinematográfica full-bleed + texto sobre negative space */}
-      <section className="relative overflow-hidden bg-starteq-black min-h-[100svh] md:min-h-[88vh] flex items-end md:items-center">
+      <section className="relative overflow-hidden bg-starteq-black min-h-[85svh] md:min-h-[88vh] flex items-end md:items-center">
         {/* Mobile: astronauta vertical no topo · texto embaixo */}
         <Image
           src="/hero-mobile.jpg"
@@ -192,7 +192,7 @@ export default function Home() {
       )}
 
       {/* BANNER CTA MONTADOR · nave Starteq atravessando o fundo */}
-      <section className="relative overflow-hidden bg-starteq-black py-20 md:py-28 lg:py-36 border-y border-starteq-line min-h-[560px] md:min-h-[560px] lg:min-h-[640px]">
+      <section className="relative overflow-hidden bg-starteq-black py-12 md:py-24 lg:py-32 border-y border-starteq-line min-h-[460px] md:min-h-[520px] lg:min-h-[600px]">
         {/* Mobile: nave vertical no topo · texto embaixo */}
         <Image
           src="/nave-mobile.jpg"
@@ -229,7 +229,7 @@ export default function Home() {
           <Meteors className="opacity-60" />
         </div>
 
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[1fr_auto] gap-6 lg:gap-8 items-end lg:items-center h-full pt-32 md:pt-0">
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[1fr_auto] gap-6 lg:gap-8 items-end lg:items-center h-full pt-20 md:pt-0">
           <div className="max-w-xl">
             <div className="flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
               <Icon name="cpu" size={16} />
@@ -374,7 +374,7 @@ export default function Home() {
       </section>
 
       {/* SELOS · O jeito Starteq · engenheiro espacial no fundo + 3 etapas numeradas */}
-      <section className="relative overflow-hidden bg-starteq-black py-20 md:py-24 lg:py-28 min-h-[600px] md:min-h-[640px]">
+      <section className="relative overflow-hidden bg-starteq-black py-12 md:py-20 lg:py-24 min-h-[480px] md:min-h-[560px]">
         {/* Mobile: engenheiro vertical no topo */}
         <Image
           src="/engenheiro-mobile.jpg"
@@ -404,7 +404,7 @@ export default function Home() {
         {/* Gradient desktop · cobre 55% da esquerda pra texto+cards lerem · imagem brilha na direita */}
         <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-starteq-black via-starteq-black/90 via-45% to-transparent pointer-events-none" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[inherit] h-full grid md:grid-cols-2 gap-8 items-end md:items-center pt-32 md:pt-0">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[inherit] h-full grid md:grid-cols-2 gap-8 items-end md:items-center pt-16 md:pt-0">
           {/* Coluna esquerda · texto + 3 cards stacked · imagem ocupa direita naturalmente */}
           <div>
             <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
@@ -446,7 +446,7 @@ export default function Home() {
       </section>
 
       {/* NEWSLETTER · centro de comando Starteq · cockpit ao fundo */}
-      <section className="relative overflow-hidden bg-starteq-black py-20 md:py-24 lg:py-28 border-y border-starteq-line min-h-[560px] md:min-h-[520px] lg:min-h-[560px]">
+      <section className="relative overflow-hidden bg-starteq-black py-12 md:py-20 lg:py-24 border-y border-starteq-line min-h-[460px] md:min-h-[480px] lg:min-h-[520px]">
         {/* Mobile: cockpit vertical com STARTEQ COMMAND no topo · console + waveforms */}
         <Image
           src="/cockpit-mobile.jpg"
@@ -477,7 +477,7 @@ export default function Home() {
           <Meteors className="opacity-50" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[inherit] h-full grid md:grid-cols-2 gap-8 items-end md:items-center pt-32 md:pt-0">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[inherit] h-full grid md:grid-cols-2 gap-8 items-end md:items-center pt-16 md:pt-0">
           <div>
             <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
               <Icon name="radio" size={14} />
@@ -525,7 +525,7 @@ export default function Home() {
       </section>
 
       {/* CTA FINAL · linha direta WhatsApp · satélite Starteq comunica com Palmas */}
-      <section className="relative overflow-hidden bg-starteq-black py-20 md:py-24 lg:py-32 min-h-[560px] md:min-h-[560px] lg:min-h-[620px]">
+      <section className="relative overflow-hidden bg-starteq-black py-12 md:py-24 lg:py-32 min-h-[460px] md:min-h-[520px] lg:min-h-[580px]">
         {/* Mobile: satélite vertical com laser gold descendo pra Terra */}
         <Image
           src="/satelite-mobile.jpg"
@@ -556,7 +556,7 @@ export default function Home() {
           <Meteors className="opacity-50" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[inherit] h-full grid md:grid-cols-2 gap-8 items-end md:items-center pt-32 md:pt-0">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[inherit] h-full grid md:grid-cols-2 gap-8 items-end md:items-center pt-16 md:pt-0">
           <div>
             <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
               <span className="relative flex h-2 w-2">

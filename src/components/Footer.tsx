@@ -230,14 +230,23 @@ export function Footer() {
         </div>
       </div>
 
+      {/* VERSÍCULO · trecho bíblico final */}
+      <div className="border-t border-starteq-line bg-starteq-black/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 text-center">
+          <p className="font-space font-bold tracking-[0.15em] uppercase text-xs sm:text-sm text-starteq-gold/90">
+            Toda honra e toda glória seja dada a Deus
+          </p>
+        </div>
+      </div>
+
       {/* COPYRIGHT */}
       <div className="border-t border-starteq-line">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row justify-between gap-4 text-xs text-starteq-muted">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row justify-between gap-4 text-xs text-starteq-muted text-center md:text-left">
           <div>
             © {new Date().getFullYear()} <strong className="text-starteq-bone">Starteq Tocantins</strong>
             · CNPJ XX.XXX.XXX/0001-XX · Todos os direitos reservados
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center md:justify-end gap-2">
             Site desenvolvido por
             <a
               href="https://impulsodigital063.com"
