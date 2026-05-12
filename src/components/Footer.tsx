@@ -7,20 +7,20 @@ import { OpenNowBadge } from "./OpenNowBadge";
 export function Footer() {
   return (
     <footer className="relative bg-starteq-coal border-t border-starteq-line overflow-hidden">
-      {/* Background · Terra vista do espaço com Palmas em destaque
-         (sutil · opacity 0.18 · pra não competir com texto) */}
+      {/* Background · Terra vista do espaço com Palmas pulsando em destaque (6ª peça do universo)
+         opacity 0.35 · pulso Palmas + horizonte gold permanecem visíveis · texto lê via overlay */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden>
         <Image
           src="/terra-footer.jpg"
           alt=""
           fill
-          quality={80}
+          quality={85}
           sizes="100vw"
-          className="object-cover opacity-20"
-          style={{ objectPosition: "center 30%" }}
+          className="object-cover opacity-35"
+          style={{ objectPosition: "center 40%" }}
         />
-        {/* Overlay escuro pra garantir contraste */}
-        <div className="absolute inset-0 bg-gradient-to-b from-starteq-black via-starteq-coal/85 to-starteq-coal" />
+        {/* Overlay gradiente · escuro nas bordas pra texto ler · centro deixa Terra brilhar */}
+        <div className="absolute inset-0 bg-gradient-to-b from-starteq-black via-starteq-coal/70 to-starteq-coal/95" />
       </div>
 
       <div className="relative">
