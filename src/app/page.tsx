@@ -177,7 +177,7 @@ export default function Home() {
       )}
 
       {/* BANNER CTA MONTADOR · nave Starteq atravessando o fundo */}
-      <section className="relative overflow-hidden bg-starteq-black py-20 md:py-24 lg:py-28 border-y border-starteq-line min-h-[560px] md:min-h-[420px] lg:min-h-[460px]">
+      <section className="relative overflow-hidden bg-starteq-black py-20 md:py-28 lg:py-36 border-y border-starteq-line min-h-[560px] md:min-h-[560px] lg:min-h-[640px]">
         {/* Mobile: nave vertical no topo · texto embaixo */}
         <Image
           src="/nave-mobile.jpg"
@@ -187,24 +187,26 @@ export default function Home() {
           sizes="(max-width: 768px) 100vw, 1px"
           className="object-cover object-top md:hidden animate-nave-glide"
         />
-        {/* Desktop: nave wide na direita · texto na esquerda */}
+        {/* Desktop: nave wide centralizada · STARTEQ visível na fuselagem */}
         <Image
           src="/nave-desktop.jpg"
           alt="Nave Starteq atravessando o espaço com propulsores dourados"
           fill
-          quality={90}
+          quality={92}
           sizes="(min-width: 768px) 100vw, 1px"
           className="hidden md:block object-cover animate-nave-glide"
           style={{
-            objectPosition: "right center",
-            filter: "brightness(1.05) saturate(1.05)",
+            objectPosition: "60% center",
+            transform: "scale(1.15)",
+            transformOrigin: "65% center",
+            filter: "brightness(1.08) saturate(1.08) contrast(1.03)",
           }}
         />
 
         {/* Gradient overlay mobile · vertical fade pra preto na metade inferior */}
         <div className="md:hidden absolute inset-0 bg-gradient-to-b from-transparent via-starteq-black/30 to-starteq-black pointer-events-none" />
-        {/* Gradient overlay desktop · horizontal fade pra preto na esquerda */}
-        <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-starteq-black via-starteq-black/90 to-starteq-black/30 lg:to-transparent pointer-events-none" />
+        {/* Gradient overlay desktop · horizontal fade pra preto na esquerda (mais agressivo no canto pra texto ler) */}
+        <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-starteq-black via-starteq-black/70 via-50% to-transparent pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-b from-starteq-black/40 via-transparent to-starteq-black/60 pointer-events-none" />
 
         {/* Meteoros sutis · mix-blend-screen pra passar atrás da nave */}
