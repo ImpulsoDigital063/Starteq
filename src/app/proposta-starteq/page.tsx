@@ -137,58 +137,84 @@ export default function PropostaPage() {
           </div>
         </section>
 
-        {/* BLOCO · INVESTIMENTO · página 2 idealmente */}
+        {/* BLOCO · INVESTIMENTO · 2 caminhos */}
         <section className="mb-6 page-break-inside-avoid">
           <h2 className="text-base font-bold uppercase tracking-wider text-[#1A1A1A] border-b border-[#E0E0E0] pb-1 mb-3">
-            Investimento
+            Investimento · dois caminhos
           </h2>
 
+          <p className="text-sm leading-relaxed text-[#2A2A2A] mb-4">
+            Pensei em duas formas de você fechar isso. Os dois caminhos entregam o <strong>mesmo
+            sistema completo, no seu nome</strong>. O que muda é quem cuida dele depois da entrega.
+          </p>
+
           <div className="grid grid-cols-2 gap-3 mb-4">
-            {/* SETUP */}
-            <div className="border-2 border-[#F5C518] rounded-md p-4">
-              <div className="text-[10px] uppercase tracking-wider font-bold text-[#7A7A7A]">
-                Setup único · à vista
+            {/* OPÇÃO A · OPERAÇÃO */}
+            <div className="border-2 border-[#F5C518] rounded-md p-4 relative">
+              <div className="absolute -top-2.5 left-3 bg-[#F5C518] text-[#1A1A1A] text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded">
+                Recomendado
               </div>
-              <div className="text-3xl font-black mt-1 text-[#1A1A1A] font-mono">R$ 3.497</div>
-              <div className="text-[11px] text-[#4A4A4A] mt-1">
-                ou 3× R$ 1.199 sem juros no cartão
+              <div className="text-[10px] uppercase tracking-wider font-bold text-[#7A7A7A] mt-1">
+                Opção A · Impulso opera pra você
               </div>
+              <div className="mt-1 flex items-baseline gap-2 flex-wrap">
+                <span className="text-2xl font-black text-[#1A1A1A] font-mono">R$ 2.497</span>
+                <span className="text-[11px] text-[#7A7A7A]">setup</span>
+              </div>
+              <div className="text-[11px] text-[#4A4A4A]">
+                ou 3× R$ 849 sem juros
+              </div>
+              <div className="mt-2 flex items-baseline gap-2 flex-wrap">
+                <span className="text-2xl font-black text-[#1A1A1A] font-mono">R$ 199</span>
+                <span className="text-[11px] text-[#7A7A7A]">/mês · sem fidelidade</span>
+              </div>
+
               <ul className="text-xs text-[#2A2A2A] mt-3 space-y-1 leading-relaxed">
-                <li>✓ Sistema completo entregue</li>
-                <li>✓ Provisionamento contas próprias</li>
-                <li>✓ Migração dos seus dados do GestãoClick</li>
+                <li>✓ Sistema completo entregue + contas próprias</li>
+                <li>✓ Migração dos dados do GestãoClick</li>
                 <li>✓ Treinamento 4h (você + técnico)</li>
-                <li>✓ Domínio configurado</li>
+                <li>✓ Suporte WhatsApp humano (mesmo dia)</li>
+                <li>✓ Correções de bugs ilimitadas</li>
+                <li>✓ 4h/mês de evolução (features novas)</li>
+                <li>✓ Monitoramento + backup diário</li>
                 <li>✓ NFe + WhatsApp + Asaas plugados</li>
               </ul>
             </div>
 
-            {/* MENSALIDADE */}
+            {/* OPÇÃO B · SISTEMA SEU */}
             <div className="border-2 border-[#1A1A1A] rounded-md p-4">
               <div className="text-[10px] uppercase tracking-wider font-bold text-[#7A7A7A]">
-                Mensalidade · sem fidelidade
+                Opção B · Sistema 100% seu · zero amarra
               </div>
-              <div className="text-3xl font-black mt-1 text-[#1A1A1A] font-mono">
-                R$ 397<span className="text-base font-normal text-[#7A7A7A]">/mês</span>
+              <div className="mt-1 flex items-baseline gap-2 flex-wrap">
+                <span className="text-2xl font-black text-[#1A1A1A] font-mono">R$ 3.497</span>
+                <span className="text-[11px] text-[#7A7A7A]">setup único</span>
               </div>
-              <div className="text-[11px] text-[#4A4A4A] mt-1">
-                Inclui hospedagem · sem custo extra de servidor
+              <div className="text-[11px] text-[#4A4A4A]">
+                ou 3× R$ 1.199 sem juros
               </div>
+              <div className="mt-2 flex items-baseline gap-2 flex-wrap">
+                <span className="text-xl font-black text-[#1A1A1A] font-mono">Zero</span>
+                <span className="text-[11px] text-[#7A7A7A]">mensalidade</span>
+              </div>
+
               <ul className="text-xs text-[#2A2A2A] mt-3 space-y-1 leading-relaxed">
-                <li>✓ Hospedagem Vercel + Supabase</li>
-                <li>✓ Suporte WhatsApp humano (mesmo dia)</li>
-                <li>✓ Correções de bugs ilimitadas</li>
-                <li>✓ 4h/mês de evolução (features novas)</li>
-                <li>✓ Monitoramento + uptime garantido</li>
-                <li>✓ Backup automático diário</li>
+                <li>✓ Sistema completo entregue + contas próprias</li>
+                <li>✓ Migração dos dados do GestãoClick</li>
+                <li>✓ Treinamento 4h (você + técnico)</li>
+                <li>✓ Documentação técnica completa</li>
+                <li>✓ Garantia 30 dias · bugs do entregue</li>
+                <li>✓ NFe + WhatsApp + Asaas plugados</li>
+                <li className="text-[#7A7A7A]">— Depois você opera sozinho ou contrata outro</li>
+                <li className="text-[#7A7A7A]">— Impulso fica disponível por hora avulsa (R$ 150/h)</li>
               </ul>
             </div>
           </div>
 
-          {/* COMPARATIVO */}
+          {/* COMPARATIVO SÓ DA OPÇÃO A */}
           <div className="border border-[#E0E0E0] rounded-md p-3 bg-[#FAFAFA]">
             <div className="text-[10px] uppercase tracking-wider font-bold text-[#7A7A7A] mb-2">
-              O que sai por R$ 397/mês equivale a contratar
+              Por que a Opção A faz sentido · R$ 199/mês equivale a contratar
             </div>
             <div className="grid grid-cols-4 gap-3 text-xs">
               <Comparativo name="Bling (ERP)" price="R$ 145/mês" />
@@ -197,80 +223,11 @@ export default function PropostaPage() {
               <Comparativo name="RD Station (CRM)" price="R$ 250/mês" />
             </div>
             <div className="text-xs text-[#2A2A2A] mt-2 leading-relaxed">
-              Soma de equivalentes: <strong className="font-mono">R$ 593/mês</strong> · sem integração entre eles ·
-              sem identidade própria · sem suporte humano local.
+              Soma de equivalentes: <strong className="font-mono">R$ 593/mês</strong> ·
+              cada um isolado, sem integração, sem identidade própria, sem suporte humano local.
+              Por <strong className="font-mono">R$ 199/mês</strong> você tem tudo isso integrado + Impulso operando junto.
             </div>
           </div>
-        </section>
-
-        {/* BLOCO · INFRAESTRUTURA GRATUITA */}
-        <section className="mb-6 page-break-inside-avoid">
-          <h2 className="text-base font-bold uppercase tracking-wider text-[#1A1A1A] border-b border-[#E0E0E0] pb-1 mb-3">
-            Infraestrutura · zero custo até a Starteq escalar
-          </h2>
-          <p className="text-sm leading-relaxed text-[#2A2A2A] mb-3">
-            A stack que escolhemos roda no <strong>plano gratuito</strong> da GitHub, Vercel
-            e Supabase — três das maiores plataformas de tecnologia do mundo.
-            <strong> Toda a operação atual da Starteq cabe dentro do free tier delas.</strong> Você
-            só começa a pagar essas ferramentas quando o negócio crescer para escalas bem maiores
-            que a atual — e mesmo aí, são valores baixos.
-          </p>
-
-          <div className="grid grid-cols-3 gap-3 mb-3">
-            <Infra
-              name="GitHub Free"
-              role="Código-fonte"
-              capacity="Repositórios privados ilimitados · 2.000 min/mês de automação"
-              limit="Praticamente nunca paga"
-              cost="—"
-            />
-            <Infra
-              name="Vercel Hobby"
-              role="Servidor + site"
-              capacity="100 GB de tráfego/mês · ~50.000 visitas/mês"
-              limit="Quando passar de 50k visitas/mês"
-              cost="US$ 20/mês (~R$ 110)"
-            />
-            <Infra
-              name="Supabase Free"
-              role="Banco de dados + login"
-              capacity="500 MB de dados · 50.000 usuários · backup diário"
-              limit="Quando passar de ~3.000 clientes ativos"
-              cost="US$ 25/mês (~R$ 137)"
-            />
-          </div>
-
-          <div className="border border-[#E0E0E0] rounded-md p-3 bg-[#FAFAFA] text-xs leading-relaxed">
-            <div className="font-bold text-[#1A1A1A] text-[11px] uppercase tracking-wider mb-1.5">
-              Custos reais que aparecem no caixa da Starteq
-            </div>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[#2A2A2A]">
-              <div>
-                <strong>Domínio (Registro.br):</strong> <span className="font-mono">R$ 40/ano</span> <span className="text-[#7A7A7A]">(~R$ 3,33/mês)</span>
-              </div>
-              <div>
-                <strong>NFe (Focus NFe):</strong> <span className="font-mono">R$ 39/mês</span> <span className="text-[#7A7A7A]">(até 100 NFes/mês)</span>
-              </div>
-              <div>
-                <strong>Asaas (PIX/cartão):</strong> <span className="font-mono">% por venda</span> <span className="text-[#7A7A7A]">(zero mensalidade)</span>
-              </div>
-              <div>
-                <strong>WhatsApp Business:</strong> <span className="font-mono">grátis</span> <span className="text-[#7A7A7A]">(API que você já tem)</span>
-              </div>
-            </div>
-            <div className="mt-2 pt-2 border-t border-[#E0E0E0] text-[#2A2A2A]">
-              <strong>Total fixo mensal de infra:</strong> <span className="font-mono text-[#1A1A1A] font-bold">R$ 42/mês</span> ·
-              vendas pagam o Asaas como % (taxa de cartão/PIX normal de mercado).
-            </div>
-          </div>
-
-          <p className="text-xs text-[#4A4A4A] mt-3 leading-relaxed">
-            <strong className="text-[#1A1A1A]">Quando vai precisar pagar mais?</strong> Vercel Pro entra quando
-            o site passar de <strong>~50.000 visitas/mês</strong>. Supabase Pro entra quando o cadastro passar
-            de <strong>~3.000 clientes ativos</strong>. Hoje a loja roda em escala bem abaixo disso, então
-            a infra continua gratuita por bastante tempo. Quando crescer ao ponto de precisar dos planos
-            pagos, o faturamento já vai sustentar com folga (~R$ 250/mês de infra total).
-          </p>
         </section>
 
         {/* BLOCO · WHITE LABEL */}
@@ -376,34 +333,3 @@ function AddOn({ name, price }: { name: string; price: string }) {
   );
 }
 
-function Infra({
-  name,
-  role,
-  capacity,
-  limit,
-  cost,
-}: {
-  name: string;
-  role: string;
-  capacity: string;
-  limit: string;
-  cost: string;
-}) {
-  return (
-    <div className="border border-[#E0E0E0] rounded p-2.5">
-      <div className="flex items-center gap-1.5 mb-1">
-        <span className="text-[9px] uppercase tracking-wider font-bold text-[#F5C518] bg-[#1A1A1A] px-1.5 py-0.5 rounded">
-          GRÁTIS
-        </span>
-        <h3 className="font-bold text-[12px] text-[#1A1A1A]">{name}</h3>
-      </div>
-      <div className="text-[10px] uppercase tracking-wider text-[#7A7A7A] font-bold mb-1.5">{role}</div>
-      <div className="text-[11px] text-[#2A2A2A] leading-snug mb-2">{capacity}</div>
-      <div className="border-t border-[#E0E0E0] pt-1.5">
-        <div className="text-[9px] uppercase tracking-wider text-[#7A7A7A] font-bold">Quando paga</div>
-        <div className="text-[10px] text-[#4A4A4A] leading-snug">{limit}</div>
-        <div className="text-[11px] font-mono font-bold text-[#1A1A1A] mt-0.5">{cost}</div>
-      </div>
-    </div>
-  );
-}
