@@ -34,7 +34,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-starteq-bone font-display font-semibold tracking-wide uppercase text-xs mb-4">
+            <h4 className="text-starteq-bone font-space font-bold tracking-wide uppercase text-xs mb-4">
               Loja
             </h4>
             <ul className="space-y-2 text-sm">
@@ -42,19 +42,24 @@ export function Footer() {
               <li><Link href="/produtos" className="text-starteq-muted hover:text-starteq-gold">Todos os produtos</Link></li>
               <li><Link href="/produtos/categoria/computadores" className="text-starteq-muted hover:text-starteq-gold">PCs prontos</Link></li>
               <li><Link href="/produtos/categoria/perifericos" className="text-starteq-muted hover:text-starteq-gold">Periféricos</Link></li>
+              <li><Link href="/blog" className="text-starteq-muted hover:text-starteq-gold">Blog</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-starteq-bone font-display font-semibold tracking-wide uppercase text-xs mb-4">
-              Contato
+            <h4 className="text-starteq-bone font-space font-bold tracking-wide uppercase text-xs mb-4">
+              Ajuda
             </h4>
-            <ul className="space-y-2 text-sm text-starteq-muted">
-              <li>104 Sul, SE 05, Lt. 19, Sala 07</li>
-              <li>Plano Diretor Sul · Palmas-TO</li>
-              <li>CEP 77020-018</li>
-              <li className="pt-2">Horário comercial</li>
+            <ul className="space-y-2 text-sm">
+              <li><Link href="/como-comprar" className="text-starteq-muted hover:text-starteq-gold">Como comprar</Link></li>
+              <li><Link href="/trocas-devolucoes" className="text-starteq-muted hover:text-starteq-gold">Trocas e devoluções</Link></li>
+              <li><Link href="/quem-somos" className="text-starteq-muted hover:text-starteq-gold">Quem somos</Link></li>
+              <li><a href="https://wa.me/5563992528619" target="_blank" rel="noreferrer" className="text-starteq-muted hover:text-starteq-gold">WhatsApp</a></li>
             </ul>
+            <div className="mt-4 pt-3 border-t border-starteq-line text-xs text-starteq-muted">
+              <div>104 Sul, SE 05, Lt. 19, Sala 07</div>
+              <div>Palmas-TO · 77020-018</div>
+            </div>
           </div>
         </div>
 

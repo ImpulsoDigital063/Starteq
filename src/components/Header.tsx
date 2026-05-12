@@ -10,7 +10,7 @@ export function Header() {
             <Logo />
           </Link>
 
-          <nav className="hidden md:flex items-center gap-8 font-display text-sm font-semibold tracking-wide uppercase">
+          <nav className="hidden md:flex items-center gap-6 font-space text-xs font-bold tracking-wider uppercase">
             <Link href="/montador" className="text-starteq-gold hover:text-starteq-bone transition-colors">
               Monte Seu PC
             </Link>
@@ -20,8 +20,8 @@ export function Header() {
             <Link href="/produtos/categoria/computadores" className="text-starteq-text hover:text-starteq-gold transition-colors">
               PCs Prontos
             </Link>
-            <Link href="/produtos/categoria/perifericos" className="text-starteq-text hover:text-starteq-gold transition-colors">
-              Periféricos
+            <Link href="/blog" className="text-starteq-text hover:text-starteq-gold transition-colors">
+              Blog
             </Link>
           </nav>
 

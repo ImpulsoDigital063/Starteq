@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Rajdhani, JetBrains_Mono } from "next/font/google";
+import { Inter, Rajdhani, JetBrains_Mono, Orbitron } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -18,6 +18,13 @@ const rajdhani = Rajdhani({
 const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const orbitron = Orbitron({
+  variable: "--font-orbitron",
+  subsets: ["latin"],
+  weight: ["500", "700", "900"],
   display: "swap",
 });
 
@@ -40,7 +47,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${inter.variable} ${rajdhani.variable} ${jetbrains.variable}`}
+      className={`${inter.variable} ${rajdhani.variable} ${jetbrains.variable} ${orbitron.variable}`}
     >
       <body className="min-h-screen flex flex-col">{children}</body>
     </html>
