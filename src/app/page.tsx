@@ -423,33 +423,83 @@ export default function Home() {
         </div>
       </section>
 
-      {/* NEWSLETTER */}
-      <section className="bg-starteq-coal py-16 border-y border-starteq-line">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3">
-            <Icon name="radio" size={14} />
-            Conexão direta
+      {/* NEWSLETTER · centro de comando Starteq · cockpit ao fundo */}
+      <section className="relative overflow-hidden bg-starteq-black py-20 md:py-24 lg:py-28 border-y border-starteq-line min-h-[560px] md:min-h-[520px] lg:min-h-[560px]">
+        {/* Mobile: cockpit no topo (usa desktop por enquanto · mobile dedicada chega depois) */}
+        <Image
+          src="/cockpit-desktop.jpg"
+          alt="Centro de comando Starteq · displays gold transmitindo sinais"
+          fill
+          quality={88}
+          sizes="(max-width: 768px) 100vw, 1px"
+          className="md:hidden object-cover"
+          style={{ objectPosition: "center top" }}
+        />
+        {/* Desktop: cockpit panorâmico full-bleed */}
+        <Image
+          src="/cockpit-desktop.jpg"
+          alt="Centro de comando Starteq · displays gold transmitindo sinais"
+          fill
+          quality={90}
+          sizes="(min-width: 768px) 100vw, 1px"
+          className="hidden md:block object-cover"
+          style={{ objectPosition: "center center", filter: "brightness(1.05) saturate(1.05)" }}
+        />
+
+        {/* Gradient mobile · vertical fade pra preto inferior · texto+form aterrissam na zona escura */}
+        <div className="md:hidden absolute inset-0 bg-gradient-to-b from-transparent via-starteq-black/50 to-starteq-black pointer-events-none" />
+        {/* Gradient desktop · horizontal fade pra preto na esquerda · texto+form na zona escura */}
+        <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-starteq-black via-starteq-black/85 via-50% to-transparent pointer-events-none" />
+
+        {/* Meteoros sutis com mix-blend-screen */}
+        <div className="absolute inset-0 pointer-events-none" style={{ mixBlendMode: "screen" }}>
+          <Meteors className="opacity-50" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[inherit] h-full grid md:grid-cols-2 gap-8 items-end md:items-center pt-32 md:pt-0">
+          <div>
+            <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+              <Icon name="radio" size={14} />
+              Transmissão Starteq
+            </div>
+            <h2 className="font-space text-3xl lg:text-5xl font-black text-starteq-bone leading-tight mb-3 drop-shadow-[0_2px_16px_rgba(0,0,0,0.95)]">
+              Lançamentos<br />
+              <span className="text-space-grad">antes da galera.</span>
+            </h2>
+            <p className="text-starteq-text text-base max-w-lg mb-6 drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+              Entra na lista e recebe drop de RTX nova, promo relâmpago e dicas de build · 1 email por semana, zero spam.
+            </p>
+
+            {/* Isca · cupom 5% off na primeira compra */}
+            <div className="inline-flex items-center gap-3 mb-6 bg-starteq-gold/10 border border-starteq-gold/40 backdrop-blur-sm rounded-lg px-4 py-3">
+              <Icon name="tag" size={20} className="text-starteq-gold flex-shrink-0" />
+              <div>
+                <div className="text-starteq-gold font-space font-bold text-sm uppercase tracking-wider">Ganha 5% off já no cadastro</div>
+                <div className="text-xs text-starteq-text mt-0.5">Cupom enviado no seu email · vale na primeira compra</div>
+              </div>
+            </div>
+
+            <form className="flex flex-col sm:flex-row gap-2 max-w-md">
+              <input
+                type="email"
+                name="email"
+                required
+                autoComplete="email"
+                placeholder="seu@email.com.br"
+                className="flex-1 px-4 py-3.5 rounded-lg bg-starteq-black/80 backdrop-blur-sm border border-starteq-line focus:border-starteq-gold focus:outline-none text-starteq-bone placeholder:text-starteq-muted font-sans text-sm"
+              />
+              <button
+                type="submit"
+                className="inline-flex items-center justify-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-sm px-6 py-3.5 rounded-lg transition-all whitespace-nowrap shadow-lg shadow-starteq-gold/20"
+              >
+                Receber cupom <Icon name="arrow-right" size={14} strokeWidth={2.5} />
+              </button>
+            </form>
+            <p className="text-[10px] text-starteq-muted mt-3 uppercase tracking-wider font-space font-bold">
+              Sem spam · cancela quando quiser · LGPD compliance
+            </p>
           </div>
-          <h2 className="font-space text-3xl lg:text-4xl font-black text-starteq-bone mb-3">
-            Receba lançamentos antes da galáxia
-          </h2>
-          <p className="text-starteq-muted mb-8">
-            Cupons exclusivos, lançamentos em primeira mão, e dicas de build · uma vez por semana no email. Sem spam.
-          </p>
-          <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input
-              type="email"
-              required
-              placeholder="seuemail@galaxia.com"
-              className="flex-1 px-4 py-3 rounded-lg bg-starteq-black border border-starteq-line focus:border-starteq-gold focus:outline-none text-starteq-bone font-sans"
-            />
-            <button
-              type="submit"
-              className="bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-sm px-6 py-3 rounded-lg transition-all"
-            >
-              Inscrever
-            </button>
-          </form>
+          <div className="hidden md:block" aria-hidden />
         </div>
       </section>
 
