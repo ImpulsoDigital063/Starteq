@@ -1,6 +1,8 @@
 import { Icon } from "@/components/Icon";
 import { CUSTOMERS, CUSTOMER_TAG_LABEL, CUSTOMER_TAG_COLOR, type Customer } from "@/lib/admin-mock";
 import Link from "next/link";
+import { requireSession } from "@/lib/admin-auth";
+
 
 const FILTERS: { slug: Customer["tag"] | "todos"; label: string }[] = [
   { slug: "todos", label: "Todos" },

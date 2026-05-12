@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { Icon } from "@/components/Icon";
 import { SERVICE_ORDERS, SERVICE_STATUS_LABEL, SERVICE_STATUS_COLOR } from "@/lib/admin-mock";
 import { NFeActions } from "../../nfe/NFeActions";
+import { requireSession } from "@/lib/admin-auth";
+
 
 type Params = { params: Promise<{ id: string }> };
 

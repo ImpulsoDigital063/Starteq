@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Icon, type IconName } from "@/components/Icon";
 import { getKPIs, getFocusItems, SERVICE_ORDERS, ORDERS, SERVICE_STATUS_LABEL, SERVICE_STATUS_COLOR, ORDER_STATUS_LABEL, ORDER_STATUS_COLOR } from "@/lib/admin-mock";
+import { requireSession } from "@/lib/admin-auth";
+
 
 export default function AdminDashboard() {
   const kpis = getKPIs();

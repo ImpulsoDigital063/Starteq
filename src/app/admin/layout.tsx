@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { Logo } from "@/components/Logo";
 import { Icon, type IconName } from "@/components/Icon";
@@ -7,6 +8,10 @@ import { getServerSession } from "@/lib/admin-auth";
 export const metadata = {
   title: "Painel · Starteq Tocantins",
 };
+
+// Force dynamic · garante que cada navegação reavalia session
+// (Next 16 tinha race condition com middleware Edge · agora valido no layout Node)
+export const dynamic = "force-dynamic";
 
 const NAV: { href: string; label: string; icon: IconName }[] = [
   { href: "/admin", label: "Dashboard", icon: "rocket" },
@@ -34,11 +39,8 @@ const BOTTOM_NAV: { href: string; label: string; icon: IconName }[] = [
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession();
-
-  // /admin/login não precisa de session · mas as outras sim
-  // O middleware já redireciona · este é fallback
-  // Se for /admin/login, session pode ser null
-  // Pra todas as outras rotas, middleware garante session
+  // Proteção feita pelo proxy.ts · este layout apenas renderiza condicional
+  // ao status da session (mostra sidebar se logado, sem sidebar se /admin/login)
 
   return (
     <div className="min-h-screen bg-starteq-black flex flex-col lg:flex-row">

@@ -1,5 +1,7 @@
 import { Icon } from "@/components/Icon";
 import { TECHNICIANS } from "@/lib/admin-mock";
+import { requireSession } from "@/lib/admin-auth";
+
 
 // Configurações simplificadas · 3 cards principais (era 6 · auditoria λ.logica-primeiro)
 export default function ConfiguracoesPage() {

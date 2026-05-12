@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { getServerSession } from "@/lib/admin-auth";
+import { getServerSession, requireSession } from "@/lib/admin-auth";
 import { SERVICE_ORDERS, TECHNICIANS, SERVICE_STATUS_LABEL, SERVICE_STATUS_COLOR } from "@/lib/admin-mock";
 import { Icon } from "@/components/Icon";
 import { TecnicoActions } from "./TecnicoActions";

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Icon } from "@/components/Icon";
 import { ORDERS, ORDER_STATUS_LABEL, ORDER_STATUS_COLOR, type OrderStatus } from "@/lib/admin-mock";
+import { requireSession } from "@/lib/admin-auth";
+
 
 const FILTERS: { slug: OrderStatus | "todos"; label: string }[] = [
   { slug: "todos", label: "Todos" },

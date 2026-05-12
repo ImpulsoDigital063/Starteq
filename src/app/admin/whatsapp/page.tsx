@@ -1,5 +1,7 @@
 import { Icon } from "@/components/Icon";
 import { SERVICE_ORDERS } from "@/lib/admin-mock";
+import { requireSession } from "@/lib/admin-auth";
+
 
 // 3 templates ATIVOS por default · outros ocultos · simplificação após auditoria
 const ACTIVE_TEMPLATES = [

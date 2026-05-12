@@ -1,6 +1,8 @@
 import { PRODUCTS, type Category } from "@/lib/catalog";
 import { Icon } from "@/components/Icon";
 import { ImportarCSVButton } from "./ImportarCSVButton";
+import { requireSession } from "@/lib/admin-auth";
+
 
 const CATEGORY_LABEL: Record<Category, string> = {
   cpu: "Processadores",

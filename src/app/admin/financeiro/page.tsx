@@ -1,5 +1,7 @@
 import { Icon } from "@/components/Icon";
 import { ACCOUNT_ENTRIES, getKPIs } from "@/lib/admin-mock";
+import { requireSession } from "@/lib/admin-auth";
+
 
 const STATUS_LABEL: Record<string, string> = {
   pago: "Pago", pendente: "Pendente", atrasado: "Atrasado",

@@ -115,6 +115,19 @@ export async function getServerSession(): Promise<SessionPayload | null> {
   return verifySessionToken(c.value);
 }
 
+/**
+ * Use no início de cada page admin (exceto /admin/login).
+ * Redireciona pra login se sem session válida.
+ */
+export async function requireSession(): Promise<SessionPayload> {
+  const session = await getServerSession();
+  if (!session) {
+    const { redirect } = await import("next/navigation");
+    redirect("/admin/login");
+  }
+  return session as SessionPayload;
+}
+
 export const ADMIN_COOKIE = {
   name: COOKIE_NAME,
   maxAge: MAX_AGE,

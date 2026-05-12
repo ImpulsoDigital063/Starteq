@@ -1,6 +1,8 @@
 import { Icon } from "@/components/Icon";
 import { ORDERS, SERVICE_ORDERS } from "@/lib/admin-mock";
 import { NFeActions } from "./NFeActions";
+import { requireSession } from "@/lib/admin-auth";
+
 
 export const metadata = {
   title: "Notas Fiscais · Painel Starteq",

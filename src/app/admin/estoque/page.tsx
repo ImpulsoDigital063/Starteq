@@ -1,6 +1,8 @@
 import { Icon } from "@/components/Icon";
 import { STOCK_MOVEMENTS } from "@/lib/admin-mock";
 import { PRODUCTS } from "@/lib/catalog";
+import { requireSession } from "@/lib/admin-auth";
+
 
 const TYPE_LABEL: Record<string, string> = {
   entrada: "Entrada", saida: "Saída", ajuste: "Ajuste", perda: "Perda",

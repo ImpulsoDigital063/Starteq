@@ -1,6 +1,8 @@
 import { Icon } from "@/components/Icon";
 import { getKPIs, TECHNICIANS, CUSTOMERS, SERVICE_ORDERS } from "@/lib/admin-mock";
 import { PRODUCTS } from "@/lib/catalog";
+import { requireSession } from "@/lib/admin-auth";
+
 
 export default function RelatoriosPage() {
   const kpis = getKPIs();
