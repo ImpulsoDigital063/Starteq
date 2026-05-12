@@ -100,6 +100,13 @@
   .animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
   .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
 
+  /* Nave glide · oscilação sutil pra dar sensação de voo */
+  @keyframes nave-glide {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(-12px, -6px, 0); }
+  }
+  .animate-nave-glide { animation: nave-glide 9s ease-in-out infinite; }
+
   .star {
     position: absolute;
     background: #FAFAFA;

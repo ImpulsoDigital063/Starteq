@@ -176,28 +176,59 @@ export default function Home() {
         />
       )}
 
-      {/* BANNER CTA MONTADOR */}
-      <section className="relative overflow-hidden bg-starteq-black py-16 lg:py-20 border-y border-starteq-line">
-        <StarField className="opacity-40" />
-        <Meteors className="opacity-50" />
-        <div className="absolute inset-0 nebula-bg opacity-70" />
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[1fr_auto] gap-8 items-center">
-          <div>
-            <div className="flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3">
+      {/* BANNER CTA MONTADOR · nave Starteq atravessando o fundo */}
+      <section className="relative overflow-hidden bg-starteq-black py-20 md:py-24 lg:py-28 border-y border-starteq-line min-h-[560px] md:min-h-[420px] lg:min-h-[460px]">
+        {/* Mobile: nave vertical no topo · texto embaixo */}
+        <Image
+          src="/nave-mobile.jpg"
+          alt="Nave Starteq atravessando o espaço com propulsores dourados"
+          fill
+          quality={90}
+          sizes="(max-width: 768px) 100vw, 1px"
+          className="object-cover object-top md:hidden animate-nave-glide"
+        />
+        {/* Desktop: nave wide na direita · texto na esquerda */}
+        <Image
+          src="/nave-desktop.jpg"
+          alt="Nave Starteq atravessando o espaço com propulsores dourados"
+          fill
+          quality={90}
+          sizes="(min-width: 768px) 100vw, 1px"
+          className="hidden md:block object-cover animate-nave-glide"
+          style={{
+            objectPosition: "right center",
+            filter: "brightness(1.05) saturate(1.05)",
+          }}
+        />
+
+        {/* Gradient overlay mobile · vertical fade pra preto na metade inferior */}
+        <div className="md:hidden absolute inset-0 bg-gradient-to-b from-transparent via-starteq-black/30 to-starteq-black pointer-events-none" />
+        {/* Gradient overlay desktop · horizontal fade pra preto na esquerda */}
+        <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-starteq-black via-starteq-black/90 to-starteq-black/30 lg:to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-starteq-black/40 via-transparent to-starteq-black/60 pointer-events-none" />
+
+        {/* Meteoros sutis · mix-blend-screen pra passar atrás da nave */}
+        <div className="absolute inset-0 pointer-events-none" style={{ mixBlendMode: "screen" }}>
+          <Meteors className="opacity-60" />
+        </div>
+
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[1fr_auto] gap-6 lg:gap-8 items-end lg:items-center h-full pt-32 md:pt-0">
+          <div className="max-w-xl">
+            <div className="flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
               <Icon name="cpu" size={16} />
               Configurador inteligente
             </div>
-            <h2 className="font-space text-3xl lg:text-5xl font-black text-starteq-bone leading-tight mb-3">
+            <h2 className="font-space text-3xl lg:text-5xl font-black text-starteq-bone leading-tight mb-3 drop-shadow-[0_2px_16px_rgba(0,0,0,0.85)]">
               Monte seu PC <span className="text-space-grad">do seu jeito.</span>
             </h2>
-            <p className="text-starteq-muted text-base lg:text-lg max-w-xl">
+            <p className="text-starteq-text text-base lg:text-lg max-w-xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
               8 passos · compatibilidade validada · orçamento direto no WhatsApp.
               A IA cuida pra você não comprar peça errada.
             </p>
           </div>
           <Link
             href="/montador"
-            className="inline-flex items-center justify-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-base px-8 py-5 rounded-lg transition-all animate-pulse-glow whitespace-nowrap"
+            className="inline-flex items-center justify-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-base px-8 py-5 rounded-lg transition-all animate-pulse-glow whitespace-nowrap shadow-2xl shadow-starteq-gold/30"
           >
             Iniciar montador <Icon name="arrow-right" size={20} strokeWidth={2.5} />
           </Link>
