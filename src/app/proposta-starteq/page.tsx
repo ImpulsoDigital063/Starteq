@@ -117,7 +117,7 @@ export default function PropostaPage() {
             <Etapa
               when="Primeira semana"
               what="Setup de produção · contas próprias da Starteq"
-              detail="GitHub, Vercel, Supabase, Asaas, Focus NFe · tudo no seu nome. Banco de dados real plugado. Importa cadastro do GestãoClick."
+              detail="GitHub, Vercel, Supabase, Focus NFe · tudo no seu nome. Banco de dados real plugado. Importa cadastro do GestãoClick."
             />
             <Etapa
               when="2ª e 3ª semanas"
@@ -127,7 +127,7 @@ export default function PropostaPage() {
             <Etapa
               when="30 dias"
               what="Pagamento + Frete + NFe ao vivo"
-              detail="Asaas (PIX, cartão 10x) operando · Melhor Envio integrado · NFe automática com seu certificado A1."
+              detail="Checkout PIX + cartão operando · gateway escolhido junto com você (Mercado Pago, Pagar.me, Stripe ou similar) · Melhor Envio integrado · NFe automática com seu certificado A1."
             />
             <Etapa
               when="90 dias"
@@ -177,7 +177,7 @@ export default function PropostaPage() {
                 <li>✓ Correções de bugs ilimitadas</li>
                 <li>✓ 4h/mês de evolução (features novas)</li>
                 <li>✓ Monitoramento + backup diário</li>
-                <li>✓ NFe + WhatsApp + Asaas plugados</li>
+                <li>✓ NFe + WhatsApp + checkout (gateway à sua escolha)</li>
               </ul>
             </div>
 
@@ -204,7 +204,7 @@ export default function PropostaPage() {
                 <li>✓ Treinamento 4h (você + técnico)</li>
                 <li>✓ Documentação técnica completa</li>
                 <li>✓ Garantia 30 dias · bugs do entregue</li>
-                <li>✓ NFe + WhatsApp + Asaas plugados</li>
+                <li>✓ NFe + WhatsApp + checkout (gateway à sua escolha)</li>
                 <li className="text-[#7A7A7A]">— Depois você opera sozinho ou contrata outro</li>
                 <li className="text-[#7A7A7A]">— Impulso fica disponível por hora avulsa (R$ 150/h)</li>
               </ul>
