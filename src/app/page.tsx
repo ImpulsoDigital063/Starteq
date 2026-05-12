@@ -351,22 +351,68 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SELOS · Montagem · Entrega · Garantia */}
-      <section className="bg-starteq-black py-16 lg:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-2">
-              O jeito Starteq
-            </div>
-            <h2 className="font-space text-3xl lg:text-4xl font-black text-starteq-bone">
-              Comprou na Starteq, levou tranquilidade
-            </h2>
-          </div>
+      {/* SELOS · O jeito Starteq · engenheiro espacial no fundo + 3 etapas numeradas */}
+      <section className="relative overflow-hidden bg-starteq-black py-20 md:py-24 lg:py-28 min-h-[600px] md:min-h-[640px]">
+        {/* Mobile: engenheiro vertical no topo */}
+        <Image
+          src="/engenheiro-mobile.jpg"
+          alt="Engenheiro Starteq montando PC com placa-mãe holográfica"
+          fill
+          quality={88}
+          sizes="(max-width: 768px) 100vw, 1px"
+          className="md:hidden object-cover object-top"
+        />
+        {/* Desktop: engenheiro wide na direita */}
+        <Image
+          src="/engenheiro-desktop.jpg"
+          alt="Engenheiro Starteq montando PC com placa-mãe holográfica"
+          fill
+          quality={90}
+          sizes="(min-width: 768px) 100vw, 1px"
+          className="hidden md:block object-cover"
+          style={{
+            objectPosition: "right center",
+            filter: "brightness(1.05) saturate(1.05)",
+          }}
+        />
 
-          <div className="grid md:grid-cols-3 gap-4">
-            <Seal iconName="wrench" title="Montagem" text="PC enviado MONTADO e certificado · BIOS e drivers atualizados · cabos pela parte de trás · acabamento de fábrica." />
-            <Seal iconName="package" title="Entrega" text="Caixa de papelão de ondas duplas exclusiva · fitas de segurança com cola ativa · motoboy mesmo dia em Palmas." />
-            <Seal iconName="shield" title="Garantia" text="Garantia por peça · prazo na nota fiscal · sem lacre · você pode abrir e modificar como quiser." />
+        {/* Gradient mobile · vertical fade pra preto inferior */}
+        <div className="md:hidden absolute inset-0 bg-gradient-to-b from-transparent via-starteq-black/50 to-starteq-black pointer-events-none" />
+        {/* Gradient desktop · horizontal fade pra preto esquerda */}
+        <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-starteq-black via-starteq-black/85 to-transparent pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:items-start items-end justify-end md:justify-center min-h-[inherit] h-full pt-32 md:pt-0">
+          <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+            <Icon name="wrench" size={14} className="inline mr-2" />
+            O jeito Starteq
+          </div>
+          <h2 className="font-space text-3xl lg:text-5xl font-black text-starteq-bone leading-tight mb-2 max-w-2xl drop-shadow-[0_2px_16px_rgba(0,0,0,0.85)]">
+            Comprou na Starteq,<br />
+            <span className="text-space-grad">levou tranquilidade.</span>
+          </h2>
+          <p className="text-starteq-text text-base max-w-xl mb-10 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
+            Cada PC sai da nossa bancada montado, certificado e embalado pra entrega segura.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6 w-full max-w-4xl">
+            <ProcessStep
+              num="01"
+              title="Montagem"
+              stat="2.300+ PCs montados"
+              text="BIOS e drivers atualizados · cabos pela parte de trás · acabamento de fábrica."
+            />
+            <ProcessStep
+              num="02"
+              title="Entrega"
+              stat="Same-day em Palmas"
+              text="Caixa de ondas duplas com fitas de segurança · motoboy próprio mesmo dia."
+            />
+            <ProcessStep
+              num="03"
+              title="Garantia"
+              stat="0% lacre · 100% honrada"
+              text="Garantia por peça com prazo na NF · você pode abrir e modificar como quiser."
+            />
           </div>
         </div>
       </section>
@@ -483,6 +529,23 @@ function Seal({ iconName, title, text }: { iconName: IconName; title: string; te
       </div>
       <h3 className="font-space font-bold text-2xl text-starteq-bone mb-3">{title}</h3>
       <p className="text-sm text-starteq-muted leading-relaxed">{text}</p>
+    </div>
+  );
+}
+
+function ProcessStep({ num, title, stat, text }: { num: string; title: string; stat: string; text: string }) {
+  return (
+    <div className="relative bg-starteq-black/70 backdrop-blur-sm border border-starteq-line hover:border-starteq-gold/40 rounded-xl p-5 transition-all hover:-translate-y-1">
+      <div className="absolute -top-3 -left-1 font-space text-5xl lg:text-6xl font-black text-starteq-gold/30 leading-none select-none pointer-events-none">
+        {num}
+      </div>
+      <div className="relative">
+        <h3 className="font-space font-bold text-xl text-starteq-bone mb-1 mt-6">{title}</h3>
+        <div className="inline-block text-[10px] font-space font-bold uppercase tracking-wider text-starteq-gold bg-starteq-gold/10 border border-starteq-gold/30 px-2 py-0.5 rounded mb-3">
+          {stat}
+        </div>
+        <p className="text-sm text-starteq-muted leading-relaxed">{text}</p>
+      </div>
     </div>
   );
 }
