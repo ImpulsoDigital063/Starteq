@@ -42,18 +42,23 @@ export default function Home() {
           alt="Astronauta Starteq · capacete dourado refletindo o eclipse Phoenix"
           fill
           priority
-          quality={88}
+          quality={92}
           sizes="(min-width: 768px) 100vw, 1px"
           className="hidden md:block object-cover"
-          style={{ objectPosition: "right center" }}
+          style={{
+            objectPosition: "right center",
+            transform: "scale(1.18)",
+            transformOrigin: "right center",
+            filter: "brightness(1.18) saturate(1.12) contrast(1.05)",
+          }}
         />
 
         {/* Gradient overlay mobile: vertical fade pra preto na metade inferior · esconde watermark AI */}
         <div className="md:hidden absolute inset-0 bg-gradient-to-b from-transparent via-starteq-black/20 to-starteq-black pointer-events-none" />
         {/* Gradient overlay desktop: horizontal fade pra preto na esquerda */}
         <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-starteq-black via-starteq-black/85 to-transparent pointer-events-none" />
-        {/* Gradient fino topo+base · fade pra preto puro */}
-        <div className="absolute inset-0 bg-gradient-to-b from-starteq-black/40 via-transparent to-starteq-black/60 pointer-events-none" />
+        {/* Gradient fino topo+base · fade pra preto puro · sutil pra preservar brilho */}
+        <div className="absolute inset-0 bg-gradient-to-b from-starteq-black/25 via-transparent to-starteq-black/50 pointer-events-none" />
 
         {/* Meteoros sutis sobre a imagem · mantém movimento */}
         <Meteors />
