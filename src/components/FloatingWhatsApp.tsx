@@ -7,7 +7,8 @@ export function FloatingWhatsApp() {
       target="_blank"
       rel="noreferrer"
       aria-label="Falar no WhatsApp"
-      className="fixed bottom-5 right-5 z-40 group inline-flex items-center gap-2 bg-starteq-pix hover:bg-starteq-pix/90 text-white px-4 py-3 rounded-full shadow-lg shadow-starteq-pix/30 transition-all hover:scale-105 print:hidden"
+      className="fixed right-5 z-40 group inline-flex items-center gap-2 bg-starteq-pix hover:bg-starteq-pix/90 text-white px-4 py-3 rounded-full shadow-lg shadow-starteq-pix/30 transition-all hover:scale-105 print:hidden"
+      style={{ bottom: "max(1.25rem, env(safe-area-inset-bottom))" }}
     >
       <span className="relative">
         <Icon name="whatsapp" size={22} strokeWidth={2.2} />

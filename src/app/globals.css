@@ -175,6 +175,37 @@
     overflow: hidden;
   }
 
+  /* Mobile · previne overflow horizontal global (causa zoom-out e scroll lateral em iOS) */
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  /* iOS · scroll suave + sem bounce na borda */
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* iOS Safari · força font-size >= 16px em inputs pra evitar zoom automático no focus
+     · regra global · vale pra qualquer input/textarea/select da app */
+  @media (max-width: 768px) {
+    input[type="text"],
+    input[type="email"],
+    input[type="search"],
+    input[type="password"],
+    input[type="tel"],
+    input[type="number"],
+    input[type="url"],
+    textarea,
+    select {
+      font-size: 16px !important;
+    }
+  }
+
+  /* Safe-area do iPhone notch · respeita inset bottom/top em elementos fixos */
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+  .safe-top { padding-top: env(safe-area-inset-top); }
+
   /* Performance · suprimir animações decorativas em mobile e em prefers-reduced-motion
      · CIC apontou 100 animações simultâneas degradando scroll em celular */
   @media (prefers-reduced-motion: reduce) {

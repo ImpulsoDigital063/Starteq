@@ -257,8 +257,8 @@ export default async function ProdutoPage({ params }: Params) {
         </div>
       </main>
 
-      {/* Sticky CTA mobile · garante preço + WhatsApp sempre visíveis */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-starteq-black/95 backdrop-blur border-t border-starteq-line px-3 py-2.5 flex items-center gap-2">
+      {/* Sticky CTA mobile · garante preço + WhatsApp sempre visíveis · respeita safe-area iPhone */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-starteq-black/95 backdrop-blur border-t border-starteq-line px-3 pt-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] flex items-center gap-2">
         <div className="flex-1 min-w-0">
           <div className="text-[10px] uppercase tracking-wider font-space font-bold text-starteq-pix leading-none">PIX</div>
           <div className="font-mono font-black text-lg text-starteq-pix leading-tight truncate">

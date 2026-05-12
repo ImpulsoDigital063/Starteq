@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Rajdhani, JetBrains_Mono, Orbitron } from "next/font/google";
 import "./globals.css";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
@@ -70,6 +70,16 @@ export const metadata: Metadata = {
     description: "Hardware gamer em Palmas-TO · monte seu PC · entrega same-day",
     images: ["/og-image.png"],
   },
+};
+
+// Viewport · Next.js 16 não adiciona meta viewport por padrão · sem isso iOS Safari
+// renderiza assumindo width 980px e miniaturiza tudo
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+  themeColor: "#0A0A0A",
 };
 
 export default function RootLayout({
