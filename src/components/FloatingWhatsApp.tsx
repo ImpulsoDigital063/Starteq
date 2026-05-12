@@ -1,6 +1,14 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { Icon } from "./Icon";
 
 export function FloatingWhatsApp() {
+  const pathname = usePathname();
+
+  // Não aparece em /admin/* (admin tem seu próprio fluxo de WhatsApp interno)
+  if (pathname?.startsWith("/admin")) return null;
+
   return (
     <a
       href="https://wa.me/5563992528619?text=Oi%21%20Cheguei%20pelo%20site%20da%20Starteq%2C%20preciso%20de%20uma%20ajuda%20pra%20escolher%20um%20produto."
