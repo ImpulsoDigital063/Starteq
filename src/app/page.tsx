@@ -541,18 +541,18 @@ function Seal({ iconName, title, text }: { iconName: IconName; title: string; te
 
 function ProcessStep({ num, title, stat, text }: { num: string; title: string; stat: string; text: string }) {
   return (
-    <div className="bg-starteq-black/70 backdrop-blur-sm border border-starteq-line hover:border-starteq-gold/40 rounded-xl p-5 transition-all hover:-translate-x-1 flex items-start gap-4">
-      <div className="font-space text-4xl lg:text-5xl font-black text-starteq-gold leading-none flex-shrink-0 w-14">
+    <div className="group relative rounded-xl p-4 transition-all hover:-translate-x-1 flex items-start gap-4 border-l-2 border-starteq-gold/30 hover:border-starteq-gold">
+      <div className="font-space text-4xl lg:text-5xl font-black text-starteq-gold leading-none flex-shrink-0 w-14 drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
         {num}
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap mb-1">
-          <h3 className="font-space font-bold text-lg text-starteq-bone">{title}</h3>
-          <span className="text-[10px] font-space font-bold uppercase tracking-wider text-starteq-gold bg-starteq-gold/10 border border-starteq-gold/30 px-2 py-0.5 rounded">
+          <h3 className="font-space font-bold text-lg text-starteq-bone drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">{title}</h3>
+          <span className="text-[10px] font-space font-bold uppercase tracking-wider text-starteq-gold bg-starteq-black/60 backdrop-blur-sm border border-starteq-gold/40 px-2 py-0.5 rounded">
             {stat}
           </span>
         </div>
-        <p className="text-sm text-starteq-muted leading-relaxed">{text}</p>
+        <p className="text-sm text-starteq-text leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">{text}</p>
       </div>
     </div>
   );
