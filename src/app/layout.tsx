@@ -62,13 +62,38 @@ const orbitron = Orbitron({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Starteq Tocantins · Hardware Gamer e Assistência Técnica · Palmas-TO",
   description:
     "Loja gamer especializada em Palmas. Monte seu PC com peças validadas, retire na hora ou receba no mesmo dia. Atendimento humano + IA + PIX nativo.",
+  keywords: [
+    "PC gamer Palmas",
+    "loja de computador Palmas",
+    "assistência técnica PC Palmas",
+    "montar PC gamer Tocantins",
+    "hardware gamer Palmas TO",
+    "Starteq Tocantins",
+  ],
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Starteq Tocantins",
-    description: "Hardware gamer em Palmas-TO · monte seu PC · entrega same-day",
+    type: "website",
+    locale: "pt_BR",
+    url: SITE_URL,
+    siteName: "Starteq Tocantins",
+    title: "Starteq Tocantins · Hardware Gamer em Palmas-TO",
+    description: "Hardware gamer em Palmas-TO · monte seu PC · entrega same-day · assistência técnica.",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Starteq Tocantins" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Starteq Tocantins · Hardware Gamer em Palmas-TO",
+    description: "Monte seu PC com peças validadas · entrega same-day em Palmas.",
     images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
 };
 

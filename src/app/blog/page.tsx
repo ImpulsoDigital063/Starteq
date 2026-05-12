@@ -6,8 +6,16 @@ import { Icon } from "@/components/Icon";
 import { POSTS } from "@/lib/posts";
 
 export const metadata = {
-  title: "Blog · Starteq Tocantins",
-  description: "Hardware gamer, builds, tutoriais e setup. Transmissões diretas da tripulação Starteq em Palmas-TO.",
+  title: "Blog · Hardware Gamer e Builds em Palmas-TO · Starteq",
+  description: "Hardware gamer, builds, tutoriais e setup. Conteúdo prático da tripulação Starteq em Palmas-TO · onde comprar PC, montar, assistência técnica.",
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    type: "website",
+    title: "Blog Starteq · Hardware Gamer em Palmas-TO",
+    description: "Builds, tutoriais e mercado de PC gamer · direto de Palmas-TO.",
+    url: "/blog",
+    images: ["/og-image.png"],
+  },
 };
 
 const CATEGORY_COLORS: Record<string, string> = {

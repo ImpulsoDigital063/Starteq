@@ -15,9 +15,29 @@ export async function generateMetadata({ params }: Params) {
   const { slug } = await params;
   const post = findPost(slug);
   if (!post) return { title: "Post não encontrado" };
+  const url = `/blog/${post.slug}`;
   return {
     title: `${post.title} · Blog Starteq`,
     description: post.excerpt,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      title: post.title,
+      description: post.excerpt,
+      url,
+      siteName: "Starteq Tocantins",
+      locale: "pt_BR",
+      publishedTime: post.date,
+      authors: [post.author],
+      tags: [post.category, "Palmas-TO", "PC gamer", "hardware"],
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: ["/og-image.png"],
+    },
   };
 }
 
@@ -35,8 +55,53 @@ export default async function PostPage({ params }: Params) {
   if (!post) notFound();
   const related = getRelatedPosts(slug, 3);
 
+  const SITE_URL = "https://starteq.vercel.app";
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.excerpt,
+    image: `${SITE_URL}/og-image.png`,
+    datePublished: post.date,
+    dateModified: post.date,
+    author: {
+      "@type": "Organization",
+      name: post.author,
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Starteq Tocantins",
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/og-image.png` },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/blog/${post.slug}`,
+    },
+    articleSection: post.category,
+    inLanguage: "pt-BR",
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Início", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+      { "@type": "ListItem", position: 3, name: post.title, item: `${SITE_URL}/blog/${post.slug}` },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Header />
       <main className="flex-1 bg-starteq-black">
         <article>
