@@ -39,13 +39,12 @@ export default function Home() {
                 Estação Palmas · Tocantins
               </div>
               <h1 className="font-space text-4xl sm:text-5xl lg:text-7xl font-black leading-[0.95] text-starteq-bone mb-6">
-                Sua build<br />
-                <span className="text-space-grad">em órbita.</span>
+                Sua build pronta<br />
+                <span className="text-space-grad">em Palmas. Hoje.</span>
               </h1>
               <p className="text-base sm:text-lg text-starteq-muted leading-relaxed max-w-lg mb-8">
-                Hardware gamer com compatibilidade validada peça a peça.
-                Atendimento humano · IA no WhatsApp · entrega no mesmo dia em Palmas.
-                Quem joga em Palmas joga conosco.
+                PC gamer montado, testado e entregue no mesmo dia.
+                Compatibilidade validada peça a peça · atendimento no WhatsApp em até 30 minutos.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link
@@ -65,27 +64,27 @@ export default function Home() {
 
               <div className="mt-12 grid grid-cols-3 gap-6 max-w-md">
                 <div>
-                  <div className="text-2xl sm:text-3xl font-space font-black text-starteq-gold">9k+</div>
-                  <div className="text-[10px] sm:text-xs text-starteq-muted uppercase tracking-wider mt-1">Tripulação Insta</div>
-                </div>
-                <div>
                   <div className="text-2xl sm:text-3xl font-space font-black text-starteq-gold flex items-center gap-1">
                     4.6 <Icon name="star" size={20} className="text-starteq-gold" />
                   </div>
                   <div className="text-[10px] sm:text-xs text-starteq-muted uppercase tracking-wider mt-1">67 reviews Google</div>
                 </div>
                 <div>
-                  <div className="text-2xl sm:text-3xl font-space font-black text-starteq-gold">Same</div>
-                  <div className="text-[10px] sm:text-xs text-starteq-muted uppercase tracking-wider mt-1">Day Palmas</div>
+                  <div className="text-2xl sm:text-3xl font-space font-black text-starteq-gold">6+</div>
+                  <div className="text-[10px] sm:text-xs text-starteq-muted uppercase tracking-wider mt-1">Anos em Palmas</div>
+                </div>
+                <div>
+                  <div className="text-2xl sm:text-3xl font-space font-black text-starteq-gold">9k+</div>
+                  <div className="text-[10px] sm:text-xs text-starteq-muted uppercase tracking-wider mt-1">No Instagram</div>
                 </div>
               </div>
             </div>
 
-            <div className="relative h-[400px] sm:h-[500px] hidden lg:flex items-center justify-center">
-              <AstroPhoenix size={420} />
+            <div className="relative h-[360px] sm:h-[460px] hidden md:flex items-center justify-center">
+              <AstroPhoenix size={360} />
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div
-                  className="w-[480px] h-[480px] rounded-full border border-starteq-gold/15"
+                  className="w-[420px] h-[420px] rounded-full border border-starteq-gold/15"
                   style={{ animation: "orbit 18s linear infinite" }}
                 />
               </div>

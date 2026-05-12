@@ -30,6 +30,15 @@ const PC_VARIANTS = [
   `${BASE}/pc-pro.jpg`,
 ];
 
+// GPU usa rotação entre 4 fotos pra cada SKU ter visual distinto
+// (CIC apontou: todas as 8 GPUs com mesma imagem = quebra confiança)
+const GPU_VARIANTS = [
+  `${BASE}/pc-pro.jpg`,
+  `${BASE}/pc-build.jpg`,
+  `${BASE}/pc-rgb.jpg`,
+  `${BASE}/mobo.jpg`,
+];
+
 export function getProductPhoto(product: Pick<Product, "sku" | "slug" | "category" | "brand">): string {
   const slug = product.slug.toLowerCase();
   const sku = product.sku.toLowerCase();
@@ -56,6 +65,11 @@ export function getProductPhoto(product: Pick<Product, "sku" | "slug" | "categor
       return `${BASE}/pc-rgb.jpg`;
     }
     return `${BASE}/cooler.jpg`;
+  }
+
+  // GPU: rotação entre 4 variantes — cada SKU pega uma foto distinta
+  if (product.category === "gpu") {
+    return GPU_VARIANTS[simpleHash(product.sku) % GPU_VARIANTS.length];
   }
 
   // SSD: rotação entre 2 variantes pra dar variação visual

@@ -59,8 +59,11 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           <h1 className="font-space text-2xl font-black text-starteq-bone text-center">
             Painel Starteq
           </h1>
-          <p className="text-center text-starteq-muted text-sm mt-2 mb-6">
-            Entre pra gerenciar pedidos, OS, estoque e clientes
+          <p className="text-center text-starteq-muted text-sm mt-2 mb-2">
+            Acesso restrito · equipe Starteq
+          </p>
+          <p className="text-center text-starteq-muted/70 text-xs mb-6">
+            Pedidos · OS · estoque · clientes · financeiro
           </p>
 
           {error && (
@@ -82,8 +85,8 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
                   name="email"
                   type="email"
                   required
-                  defaultValue="junior@starteq.com.br"
-                  placeholder="seu@email.com"
+                  autoComplete="email"
+                  placeholder="seu@email.com.br"
                   className="w-full pl-10 pr-4 py-3 rounded-lg bg-starteq-black border border-starteq-line focus:border-starteq-gold focus:outline-none text-starteq-bone text-sm"
                 />
               </div>
@@ -100,7 +103,8 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
                   name="password"
                   type="password"
                   required
-                  placeholder="••••••••"
+                  autoComplete="current-password"
+                  placeholder="sua senha"
                   className="w-full pl-10 pr-4 py-3 rounded-lg bg-starteq-black border border-starteq-line focus:border-starteq-gold focus:outline-none text-starteq-bone text-sm"
                 />
               </div>
