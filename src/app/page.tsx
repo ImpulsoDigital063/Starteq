@@ -425,15 +425,14 @@ export default function Home() {
 
       {/* NEWSLETTER · centro de comando Starteq · cockpit ao fundo */}
       <section className="relative overflow-hidden bg-starteq-black py-20 md:py-24 lg:py-28 border-y border-starteq-line min-h-[560px] md:min-h-[520px] lg:min-h-[560px]">
-        {/* Mobile: cockpit no topo (usa desktop por enquanto · mobile dedicada chega depois) */}
+        {/* Mobile: cockpit vertical com STARTEQ COMMAND no topo · console + waveforms */}
         <Image
-          src="/cockpit-desktop.jpg"
+          src="/cockpit-mobile.jpg"
           alt="Centro de comando Starteq · displays gold transmitindo sinais"
           fill
           quality={88}
           sizes="(max-width: 768px) 100vw, 1px"
-          className="md:hidden object-cover"
-          style={{ objectPosition: "center top" }}
+          className="md:hidden object-cover object-top"
         />
         {/* Desktop: cockpit panorâmico full-bleed */}
         <Image
