@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { getServerSession, requireSession } from "@/lib/admin-auth";
-import { SERVICE_ORDERS, TECHNICIANS, SERVICE_STATUS_LABEL, SERVICE_STATUS_COLOR } from "@/lib/admin-mock";
+import { getServerSession } from "@/lib/admin-auth";
+import { SERVICE_ORDERS, TECHNICIANS, SERVICE_STATUS_LABEL, SERVICE_STATUS_COLOR, COMMISSIONS } from "@/lib/admin-mock";
 import { Icon } from "@/components/Icon";
 import { TecnicoActions } from "./TecnicoActions";
 
@@ -21,9 +21,18 @@ export default async function TecnicoPage() {
   const ativas = minhasOS.filter((o) => ["aguardando", "em_reparo", "pronto"].includes(o.status));
   const concluidas = minhasOS.filter((o) => o.status === "entregue");
 
-  // KPIs mensais
-  const totalServico = minhasOS.reduce((s, o) => s + o.service_value, 0);
-  const comissaoMes = totalServico * (tec.commission_default / 100);
+  // Comissão lida da tabela Commission · regra cravada 13/05
+  // Nasce quando OS quita (payment_status=quitada) · não antes.
+  const minhasComissoes = COMMISSIONS.filter((c) => c.technician_id === tec.id);
+  const apurada = minhasComissoes.filter((c) => c.status === "apurada");
+  const pagas = minhasComissoes.filter((c) => c.status === "paga");
+  const comissaoReceber = apurada.reduce((s, c) => s + c.amount, 0);
+  const comissaoPaga = pagas.reduce((s, c) => s + c.amount, 0);
+
+  // Potencial · só pra ele saber o piso teórico das OS abertas
+  // Marcado como CINZA · não-bonificável até cliente pagar.
+  const potencial = ativas.reduce((s, o) => s + o.service_value * (tec.commission_default / 100), 0);
+
   const osPendentes = ativas.length;
   const osAtrasadas = ativas.filter(
     (o) => o.estimated_at && new Date(o.estimated_at).getTime() < Date.now() && o.status !== "pronto",
@@ -43,12 +52,12 @@ export default async function TecnicoPage() {
         </p>
       </header>
 
-      {/* KPIs do mês */}
+      {/* KPIs do mês · comissão lida da tabela Commission · regra cravada 13/05 */}
       <section className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
         <KPI label="OS Ativas" value={String(osPendentes)} icon="wrench" accent="gold" />
-        <KPI label="Concluídas" value={String(concluidas.length)} sub="este mês" icon="check" accent="pix" />
-        <KPI label="Comissão %" value={`${tec.commission_default}%`} sub="sobre serviço" icon="trophy" />
-        <KPI label="A receber" value={`R$ ${comissaoMes.toFixed(2)}`} sub="comissão mês" icon="credit-card" accent="gold" />
+        <KPI label="Apurada · a receber" value={`R$ ${comissaoReceber.toFixed(2)}`} sub={`${apurada.length} OS quitada(s)`} icon="trophy" accent="gold" />
+        <KPI label="Já paga" value={`R$ ${comissaoPaga.toFixed(2)}`} sub={`${pagas.length} OS no histórico`} icon="check" accent="pix" />
+        <KPI label="Potencial em aberto" value={`R$ ${potencial.toFixed(2)}`} sub="só conta após pagamento" icon="credit-card" />
       </section>
 
       {/* OS ATIVAS · principal */}
@@ -86,10 +95,11 @@ export default async function TecnicoPage() {
                       <div className="text-xs text-starteq-text mt-1.5 line-clamp-2">{os.problem}</div>
                     </div>
                     <div className="text-right flex-shrink-0">
-                      <div className="text-[10px] text-starteq-muted uppercase tracking-wider font-space font-bold">Comissão</div>
-                      <div className="font-mono text-sm text-starteq-gold font-bold">
+                      <div className="text-[10px] text-starteq-muted uppercase tracking-wider font-space font-bold">Potencial</div>
+                      <div className="font-mono text-sm text-starteq-muted">
                         R$ {(os.service_value * tec.commission_default / 100).toFixed(2)}
                       </div>
+                      <div className="text-[9px] text-starteq-muted/70 mt-0.5">só após pgto</div>
                     </div>
                   </div>
 
@@ -109,21 +119,33 @@ export default async function TecnicoPage() {
           </h2>
           <div className="bg-starteq-card border border-starteq-line rounded-xl overflow-hidden">
             <div className="divide-y divide-starteq-line">
-              {concluidas.slice(0, 5).map((os) => (
-                <Link
-                  key={os.id}
-                  href={`/admin/os/${os.id}`}
-                  className="flex items-center justify-between gap-3 px-4 py-3 hover:bg-starteq-coal/50"
-                >
-                  <div className="flex-1 min-w-0">
-                    <div className="font-mono text-xs text-starteq-muted">{os.id}</div>
-                    <div className="text-sm text-starteq-bone truncate">{os.customer_name} · {os.device}</div>
-                  </div>
-                  <div className="text-right text-xs text-starteq-pix font-space font-bold">
-                    +R$ {(os.service_value * tec.commission_default / 100).toFixed(2)}
-                  </div>
-                </Link>
-              ))}
+              {concluidas.slice(0, 5).map((os) => {
+                const com = minhasComissoes.find((c) => c.os_id === os.id);
+                // Apurada (OS quitada, aguardando pagamento da comissão) · gold
+                // Paga (Júnior já pagou o técnico) · pix
+                // Sem commission (OS entregue mas cliente não pagou ainda) · cinza
+                const colorClass = com?.status === "paga" ? "text-starteq-pix" : com?.status === "apurada" ? "text-starteq-gold" : "text-starteq-muted";
+                const label = com?.status === "paga" ? "Paga" : com?.status === "apurada" ? "Apurada" : "Pendente quitação";
+                const amount = com?.amount ?? os.service_value * tec.commission_default / 100;
+                return (
+                  <Link
+                    key={os.id}
+                    href={`/admin/os/${os.id}`}
+                    className="flex items-center justify-between gap-3 px-4 py-3 hover:bg-starteq-coal/50"
+                  >
+                    <div className="flex-1 min-w-0">
+                      <div className="font-mono text-xs text-starteq-muted">{os.id}</div>
+                      <div className="text-sm text-starteq-bone truncate">{os.customer_name} · {os.device}</div>
+                    </div>
+                    <div className="text-right">
+                      <div className={`text-[10px] font-space font-bold uppercase tracking-wider ${colorClass}`}>{label}</div>
+                      <div className={`text-xs ${colorClass} font-space font-bold font-mono`}>
+                        R$ {amount.toFixed(2)}
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>

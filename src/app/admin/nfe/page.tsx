@@ -1,7 +1,7 @@
 import { Icon } from "@/components/Icon";
 import { ORDERS, SERVICE_ORDERS } from "@/lib/admin-mock";
 import { NFeActions } from "./NFeActions";
-import { requireSession } from "@/lib/admin-auth";
+import { NFeBatchActions } from "./NFeBatchActions";
 
 
 export const metadata = {
@@ -22,6 +22,8 @@ export default function NFePage() {
   const pedidosPagosSemNFe = ORDERS.filter((o) => o.status === "paid" || o.status === "delivered" || o.status === "shipped").slice(0, 4);
   const osPendentes = SERVICE_ORDERS.filter((o) => o.status === "entregue" || o.status === "pronto").slice(0, 3);
 
+  const totalPendentes = pedidosPagosSemNFe.length + osPendentes.length;
+  const valorPendente = pedidosPagosSemNFe.reduce((s, p) => s + p.total, 0) + osPendentes.reduce((s, o) => s + o.total, 0);
   const valorMes = NFES_EMITIDAS.filter((n) => n.status === "autorizada").reduce((s, n) => s + n.value, 0);
 
   return (
@@ -54,9 +56,12 @@ export default function NFePage() {
 
       {/* Pendentes · pedidos + OS sem NFe */}
       <section className="mb-8">
-        <h2 className="font-space text-xs font-bold uppercase tracking-[0.2em] text-starteq-gold mb-3 inline-flex items-center gap-2">
-          <Icon name="alert" size={14} /> Pendente de emissão ({pedidosPagosSemNFe.length + osPendentes.length})
-        </h2>
+        <div className="flex items-center justify-between flex-wrap gap-3 mb-3">
+          <h2 className="font-space text-xs font-bold uppercase tracking-[0.2em] text-starteq-gold inline-flex items-center gap-2">
+            <Icon name="alert" size={14} /> Pendente de emissão ({totalPendentes})
+          </h2>
+          <NFeBatchActions count={totalPendentes} totalValue={valorPendente} />
+        </div>
 
         <div className="bg-starteq-card border border-starteq-line rounded-xl overflow-hidden">
           <div className="divide-y divide-starteq-line">

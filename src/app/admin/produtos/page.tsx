@@ -1,7 +1,7 @@
+import Link from "next/link";
 import { PRODUCTS, type Category } from "@/lib/catalog";
 import { Icon } from "@/components/Icon";
 import { ImportarCSVButton } from "./ImportarCSVButton";
-import { requireSession } from "@/lib/admin-auth";
 
 
 const CATEGORY_LABEL: Record<Category, string> = {
@@ -32,9 +32,12 @@ export default function AdminProdutos() {
         </div>
         <div className="flex flex-wrap gap-2">
           <ImportarCSVButton />
-          <button className="inline-flex items-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-display font-bold tracking-wide uppercase text-sm px-6 py-3 rounded-lg transition-all">
+          <Link
+            href="/admin/produtos/novo"
+            className="inline-flex items-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-display font-bold tracking-wide uppercase text-sm px-6 py-3 rounded-lg transition-all"
+          >
             <Icon name="plus" size={14} /> Novo produto
-          </button>
+          </Link>
         </div>
       </header>
 
@@ -71,9 +74,12 @@ export default function AdminProdutos() {
                   </span>
                 </td>
                 <td className="p-4 text-right">
-                  <button className="text-xs text-starteq-gold hover:text-starteq-bone font-display font-semibold uppercase tracking-wider">
+                  <Link
+                    href={`/admin/produtos/${p.sku}`}
+                    className="text-xs text-starteq-gold hover:text-starteq-bone font-display font-semibold uppercase tracking-wider"
+                  >
                     Editar
-                  </button>
+                  </Link>
                 </td>
               </tr>
             ))}

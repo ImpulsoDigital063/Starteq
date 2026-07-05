@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Icon } from "@/components/Icon";
-import { SERVICE_STATUS_LABEL, SERVICE_STATUS_COLOR, TECHNICIANS, type ServiceOrder, type ServiceOrderStatus } from "@/lib/admin-mock";
+import { SERVICE_STATUS_LABEL, SERVICE_STATUS_COLOR, TECHNICIANS, CUSTOMERS, type ServiceOrder, type ServiceOrderStatus } from "@/lib/admin-mock";
 import { ImportButton } from "@/components/admin/ImportButton";
 
 const IMPORT_OS = {
@@ -133,6 +133,7 @@ export function OSListClient({ initialOrders }: { initialOrders: ServiceOrder[] 
         service_value: 0,
         parts_value: 0,
         total: 0,
+        payment_status: "aberta",
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
         warranty_days: 90,
@@ -302,10 +303,31 @@ export function OSListClient({ initialOrders }: { initialOrders: ServiceOrder[] 
 
 function NewOSModal({ onClose, onSubmit }: { onClose: () => void; onSubmit: (data: { customer_name: string; customer_phone: string; device: string; problem: string }) => void }) {
   const [form, setForm] = useState({ customer_name: "", customer_phone: "", device: "", problem: "" });
+  const [customerSearch, setCustomerSearch] = useState("");
+  const [showResults, setShowResults] = useState(false);
+  const [mode, setMode] = useState<"search" | "novo">("search");
+
+  const matches = useMemo(() => {
+    if (!customerSearch.trim()) return [];
+    const q = customerSearch.toLowerCase();
+    return CUSTOMERS.filter((c) =>
+      c.name.toLowerCase().includes(q) || c.phone.includes(q),
+    ).slice(0, 5);
+  }, [customerSearch]);
+
+  function pickCustomer(c: typeof CUSTOMERS[number]) {
+    setForm({ ...form, customer_name: c.name, customer_phone: c.phone });
+    setCustomerSearch("");
+    setShowResults(false);
+  }
+
+  function clearCustomer() {
+    setForm({ ...form, customer_name: "", customer_phone: "" });
+  }
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
-      <div className="bg-starteq-card border border-starteq-gold/40 rounded-2xl w-full max-w-md p-6">
+    <div className="fixed inset-0 z-50 bg-black/80 flex items-start lg:items-center justify-center p-4 overflow-y-auto">
+      <div className="bg-starteq-card border border-starteq-gold/40 rounded-2xl w-full max-w-md p-6 my-8">
         <div className="flex items-center justify-between mb-5">
           <h2 className="font-space font-bold text-xl text-starteq-bone inline-flex items-center gap-2">
             <Icon name="wrench" size={20} className="text-starteq-gold" /> Nova OS rápida
@@ -323,8 +345,72 @@ function NewOSModal({ onClose, onSubmit }: { onClose: () => void; onSubmit: (dat
           }}
           className="space-y-3"
         >
-          <Field label="Nome do cliente" value={form.customer_name} onChange={(v) => setForm({ ...form, customer_name: v })} placeholder="Pedro Macedo" required />
-          <Field label="WhatsApp" value={form.customer_phone} onChange={(v) => setForm({ ...form, customer_phone: v })} placeholder="(63) 99111-2233" required />
+          {/* Cliente: busca existente OU digita novo */}
+          {form.customer_name && form.customer_phone && mode === "search" ? (
+            <div className="bg-starteq-coal border border-starteq-pix/40 rounded-lg px-3 py-2 flex items-center justify-between">
+              <div>
+                <div className="text-[10px] uppercase tracking-wider font-space font-bold text-starteq-pix">Cliente</div>
+                <div className="text-sm text-starteq-bone">{form.customer_name}</div>
+                <div className="text-xs text-starteq-muted font-mono">{form.customer_phone}</div>
+              </div>
+              <button type="button" onClick={clearCustomer} className="text-starteq-muted hover:text-starteq-red">
+                <Icon name="x" size={14} />
+              </button>
+            </div>
+          ) : mode === "search" ? (
+            <div>
+              <label className="block text-[10px] font-space font-bold uppercase tracking-wider text-starteq-muted mb-1">
+                Cliente *
+              </label>
+              <div className="relative">
+                <input
+                  value={customerSearch}
+                  onChange={(e) => {
+                    setCustomerSearch(e.target.value);
+                    setShowResults(true);
+                  }}
+                  onFocus={() => setShowResults(true)}
+                  placeholder="Buscar por nome ou telefone…"
+                  className="w-full px-3 py-2.5 rounded-lg bg-starteq-black border border-starteq-line focus:border-starteq-gold focus:outline-none text-starteq-bone text-sm"
+                />
+                {showResults && matches.length > 0 && (
+                  <div className="absolute z-10 top-full left-0 right-0 mt-1 bg-starteq-coal border border-starteq-line rounded-lg shadow-xl max-h-48 overflow-y-auto">
+                    {matches.map((c) => (
+                      <button
+                        key={c.id}
+                        type="button"
+                        onClick={() => pickCustomer(c)}
+                        className="w-full text-left px-3 py-2 hover:bg-starteq-card border-b border-starteq-line last:border-0"
+                      >
+                        <div className="text-sm text-starteq-bone">{c.name}</div>
+                        <div className="text-xs text-starteq-muted font-mono">{c.phone}</div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={() => setMode("novo")}
+                className="text-[10px] text-starteq-gold hover:text-starteq-bone uppercase tracking-wider font-space font-bold mt-1.5"
+              >
+                + Cadastrar cliente novo
+              </button>
+            </div>
+          ) : (
+            <>
+              <Field label="Nome do cliente" value={form.customer_name} onChange={(v) => setForm({ ...form, customer_name: v })} placeholder="Pedro Macedo" required />
+              <Field label="WhatsApp" value={form.customer_phone} onChange={(v) => setForm({ ...form, customer_phone: v })} placeholder="(63) 99111-2233" required />
+              <button
+                type="button"
+                onClick={() => setMode("search")}
+                className="text-[10px] text-starteq-gold hover:text-starteq-bone uppercase tracking-wider font-space font-bold"
+              >
+                ← Voltar pra busca
+              </button>
+            </>
+          )}
+
           <Field label="Equipamento" value={form.device} onChange={(v) => setForm({ ...form, device: v })} placeholder="Notebook Acer Nitro 5" required />
           <Field label="Problema relatado" value={form.problem} onChange={(v) => setForm({ ...form, problem: v })} placeholder="Não liga · tela preta" textarea />
 

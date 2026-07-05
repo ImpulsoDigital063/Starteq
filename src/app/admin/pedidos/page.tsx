@@ -1,7 +1,5 @@
 import Link from "next/link";
-import { Icon } from "@/components/Icon";
 import { ORDERS, ORDER_STATUS_LABEL, ORDER_STATUS_COLOR, type OrderStatus } from "@/lib/admin-mock";
-import { requireSession } from "@/lib/admin-auth";
 
 
 const FILTERS: { slug: OrderStatus | "todos"; label: string }[] = [
@@ -56,7 +54,7 @@ export default async function PedidosPage({ searchParams }: { searchParams: Prom
 
         <div className="divide-y divide-starteq-line">
           {items.map((o) => (
-            <div key={o.id} className="grid grid-cols-[1fr_auto] lg:grid-cols-[1.2fr_1.5fr_120px_100px_140px_100px] gap-3 px-5 py-4 items-center">
+            <Link key={o.id} href={`/admin/pedidos/${o.id}`} className="grid grid-cols-[1fr_auto] lg:grid-cols-[1.2fr_1.5fr_120px_100px_140px_100px] gap-3 px-5 py-4 items-center hover:bg-starteq-coal/40 transition-colors">
               <div>
                 <div className="font-mono text-xs text-starteq-gold">{o.id}</div>
                 <div className="text-[10px] text-starteq-muted">{o.items_count} item{o.items_count > 1 ? "s" : ""}</div>
@@ -82,7 +80,7 @@ export default async function PedidosPage({ searchParams }: { searchParams: Prom
                   R$ {o.total.toFixed(2)} · {o.payment_method.toUpperCase()}
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

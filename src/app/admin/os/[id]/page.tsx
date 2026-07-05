@@ -80,6 +80,7 @@ export default async function OSDetail({ params }: Params) {
           <Field label="Comissão" value={`${os.commission_pct}%`} />
           <Field label="Serviço" value={`R$ ${os.service_value.toFixed(2)}`} />
           <Field label="Peças" value={`R$ ${os.parts_value.toFixed(2)}`} />
+          <Field label="Pagamento" value={os.payment_status === "quitada" ? `Quitada${os.payment_method ? ` · ${os.payment_method.toUpperCase()}` : ""}` : os.payment_status === "parcial" ? "Parcial" : "Aberta"} />
           <div className="border-t border-starteq-line mt-2 pt-2">
             <div className="flex items-center justify-between font-space font-black">
               <span className="text-starteq-bone">Total</span>
@@ -91,6 +92,35 @@ export default async function OSDetail({ params }: Params) {
             </div>
           </div>
         </Card>
+
+        {os.parts_used && os.parts_used.length > 0 && (
+          <Card title="Peças utilizadas" icon="package">
+            <div className="divide-y divide-starteq-line">
+              {os.parts_used.map((p) => (
+                <div key={p.sku} className="py-2 flex items-start justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="font-display font-semibold text-sm text-starteq-bone">{p.name}</div>
+                    <div className="text-[10px] text-starteq-muted font-mono">{p.sku} · {p.qty} un · R$ {p.unit_cost.toFixed(2)} cada</div>
+                  </div>
+                  <div className="font-mono text-sm text-starteq-gold font-bold flex-shrink-0">
+                    R$ {(p.qty * p.unit_cost).toFixed(2)}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 pt-3 border-t border-starteq-line text-[10px] uppercase tracking-wider font-space font-bold flex items-center gap-2">
+              {os.payment_status === "quitada" ? (
+                <span className="text-starteq-pix inline-flex items-center gap-1.5">
+                  <Icon name="check" size={12} /> Baixa de estoque já realizada
+                </span>
+              ) : (
+                <span className="text-starteq-muted inline-flex items-center gap-1.5">
+                  <Icon name="info" size={12} /> Baixa ocorre na quitação da OS
+                </span>
+              )}
+            </div>
+          </Card>
+        )}
 
         <Card title="Datas" icon="info">
           <Field label="Criada em" value={new Date(os.created_at).toLocaleString("pt-BR")} />

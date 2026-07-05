@@ -1,5 +1,5 @@
 import { Icon } from "@/components/Icon";
-import { getKPIs, TECHNICIANS, CUSTOMERS, SERVICE_ORDERS } from "@/lib/admin-mock";
+import { getKPIs, TECHNICIANS, CUSTOMERS, SERVICE_ORDERS, COMMISSIONS } from "@/lib/admin-mock";
 import { PRODUCTS } from "@/lib/catalog";
 import { requireSession } from "@/lib/admin-auth";
 
@@ -11,11 +11,28 @@ export default function RelatoriosPage() {
   const topStock = [...PRODUCTS].sort((a, b) => b.stock - a.stock).slice(0, 5);
   // Top clientes por LTV
   const topCustomers = [...CUSTOMERS].sort((a, b) => b.total_spent - a.total_spent).slice(0, 5);
-  // OS por técnico
-  const osByTech = TECHNICIANS.map((t) => ({
-    ...t,
-    count: SERVICE_ORDERS.filter((s) => s.technician_id === t.id).length,
-  })).sort((a, b) => b.count - a.count);
+
+  // OS por técnico · comissão lida de COMMISSIONS · regra cravada 13/05
+  // paga (pix · histórico do mês) vs apurada (gold · pendente de pagamento)
+  const monthStart = new Date();
+  monthStart.setDate(1);
+  monthStart.setHours(0, 0, 0, 0);
+
+  const osByTech = TECHNICIANS.map((t) => {
+    const tecCommissions = COMMISSIONS.filter((c) => c.technician_id === t.id);
+    const pagaMes = tecCommissions
+      .filter((c) => c.status === "paga" && c.paid_at && new Date(c.paid_at) >= monthStart)
+      .reduce((s, c) => s + c.amount, 0);
+    const apurada = tecCommissions
+      .filter((c) => c.status === "apurada")
+      .reduce((s, c) => s + c.amount, 0);
+    return {
+      ...t,
+      count: SERVICE_ORDERS.filter((s) => s.technician_id === t.id).length,
+      pagaMes,
+      apurada,
+    };
+  }).sort((a, b) => b.count - a.count);
 
   return (
     <>
@@ -90,10 +107,15 @@ export default function RelatoriosPage() {
                   <div className="text-xs text-starteq-muted">{t.email}</div>
                 </div>
                 <div className="text-right flex-shrink-0">
-                  <div className="font-mono text-sm text-starteq-gold font-bold">{t.count} OS</div>
-                  {t.total_commission_month > 0 && (
-                    <div className="text-xs text-starteq-muted font-mono">
-                      Comissão: R$ {t.total_commission_month.toFixed(0)}
+                  <div className="font-mono text-sm text-starteq-bone font-bold">{t.count} OS</div>
+                  {t.pagaMes > 0 && (
+                    <div className="text-xs text-starteq-pix font-mono">
+                      Paga mês: R$ {t.pagaMes.toFixed(0)}
+                    </div>
+                  )}
+                  {t.apurada > 0 && (
+                    <div className="text-xs text-starteq-gold font-mono">
+                      A pagar: R$ {t.apurada.toFixed(0)}
                     </div>
                   )}
                 </div>

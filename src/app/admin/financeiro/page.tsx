@@ -22,7 +22,7 @@ export default function FinanceiroPage() {
       <header className="mb-6 flex items-end justify-between flex-wrap gap-3">
         <div>
           <h1 className="font-space text-2xl lg:text-3xl font-black text-starteq-bone">Financeiro</h1>
-          <p className="text-starteq-muted mt-1 text-sm">DRE · contas a pagar/receber · comissões · fluxo de caixa</p>
+          <p className="text-starteq-muted mt-1 text-sm">DRE · contas a pagar e a receber · impostos</p>
         </div>
         <div className="flex gap-2">
           <button className="inline-flex items-center gap-2 bg-starteq-pix/10 text-starteq-pix border border-starteq-pix/40 hover:bg-starteq-pix/20 font-space font-bold uppercase text-xs px-4 py-2.5 rounded-lg">

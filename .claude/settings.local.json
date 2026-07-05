@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/Usuario/.claude/projects/C--Users-DELL-agendapro/**)",
+      "Read(//c/Users/Usuario/agendapro/**)",
+      "Bash(mv ~/.claude/projects/C--Users-DELL-agendapro ~/.claude/projects/C--Users-Usuario-agendapro)",
+      "Read(//c/Users/Usuario/.claude/projects/**)"
+    ]
+  }
+}

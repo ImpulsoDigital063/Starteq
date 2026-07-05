@@ -14,6 +14,19 @@ export type ServiceOrderStatus =
   | "entregue"       // entregue pro cliente · OS fechada
   | "cancelado";     // cliente desistiu ou cancelou
 
+// Status de pagamento separado do status da OS · regra cravada 13/05
+// Comissão só nasce com payment_status = "quitada"
+export type PaymentStatus = "aberta" | "parcial" | "quitada";
+export type PaymentMethod = "pix" | "dinheiro" | "cartao" | "misto";
+
+// Peça usada na OS · gera baixa de estoque automática quando OS quita
+export type OSPart = {
+  sku: string;
+  name: string;
+  qty: number;
+  unit_cost: number;
+};
+
 export type ServiceOrder = {
   id: string;             // OS-2026-0001
   customer_name: string;
@@ -27,7 +40,11 @@ export type ServiceOrder = {
   commission_pct: number; // 30 = 30%
   service_value: number;
   parts_value: number;
+  parts_used?: OSPart[];           // peças usadas · baixa do estoque na quitação
   total: number;
+  payment_status: PaymentStatus;   // aberta · parcial · quitada
+  payment_method?: PaymentMethod;  // só definido quando há ao menos 1 Payment
+  paid_at?: string;                // quando virou quitada
   created_at: string;
   updated_at: string;
   estimated_at?: string;  // prazo previsto
@@ -45,14 +62,23 @@ export type WhatsAppMessage = {
   status: "sent" | "delivered" | "read" | "failed";
 };
 
+export type OrderItem = {
+  sku: string;
+  name: string;
+  qty: number;
+  unit_price: number;
+};
+
 export type Order = {
   id: string;
   customer_name: string;
   customer_phone: string;
   total: number;
   status: OrderStatus;
-  payment_method: "pix" | "card" | "boleto";
+  payment_method: "pix" | "card" | "boleto" | "dinheiro";
   items_count: number;
+  items?: OrderItem[];           // populado em venda balcão
+  origin?: "site" | "balcao";    // default site
   created_at: string;
   paid_at?: string;
 };
@@ -108,6 +134,72 @@ export type AccountEntry = {
   reference_id?: string;
 };
 
+// =============== Caixa + Comissão · cravado 13/05 ===============
+// Modelo separa Venda (OS/Order) · Recebimento (Payment) · Caixa físico (CashSession)
+// PIX e cartão NÃO passam pelo caixa físico · só dinheiro. Cartão tem forecast D+30.
+
+export type Payment = {
+  id: string;
+  os_id?: string;             // OS-2026-XXXX OU
+  order_id?: string;          // ORD-2026-XXXX
+  method: PaymentMethod;      // pix · dinheiro · cartao
+  amount: number;
+  received_at: string;        // quando entrou (dinheiro/pix=instantâneo, cartão=quando captura)
+  forecast_at?: string;       // só cartão · quando cai na conta (D+30 padrão)
+  cash_session_id?: string;   // só dinheiro · amarra à sessão de caixa que recebeu
+  status: "recebido" | "previsto" | "estornado";
+  note?: string;
+};
+
+export type CashMovementType =
+  | "abertura"        // valor inicial colocado pra troco
+  | "venda"           // entrada por venda de produto (balcão)
+  | "recebimento_os"  // entrada por OS quitada em dinheiro
+  | "suprimento"      // entrada de dinheiro extra (Júnior repondo)
+  | "sangria"         // saída de dinheiro (deposito banco, despesa imediata)
+  | "fechamento";     // movimento que marca encerramento
+
+export type CashMovement = {
+  id: string;
+  session_id: string;
+  type: CashMovementType;
+  amount: number;             // sempre positivo · o type define se soma/subtrai
+  note?: string;
+  reference_id?: string;      // OS-XXX · ORD-XXX · payment-X
+  created_at: string;
+  created_by: string;
+};
+
+export type CashSession = {
+  id: string;                       // CX-2026-001
+  opened_at: string;
+  opened_by: string;
+  opening_amount: number;           // troco inicial
+  closed_at?: string;
+  closed_by?: string;
+  closing_amount_declared?: number; // o que o operador contou no fim
+  closing_amount_expected?: number; // o que o sistema calculou
+  diff?: number;                    // declared - expected (positivo=sobra · negativo=falta)
+  diff_note?: string;               // obrigatório se diff !== 0
+  status: "aberta" | "fechada";
+};
+
+export type CommissionStatus = "apurada" | "paga" | "estornada";
+
+export type Commission = {
+  id: string;
+  os_id: string;
+  technician_id: string;
+  technician_name: string;
+  base_value: number;       // = service_value
+  pct: number;              // ex: 30
+  amount: number;           // base × pct
+  generated_at: string;     // quando OS virou quitada
+  status: CommissionStatus;
+  paid_at?: string;
+  paid_entry_id?: string;   // amarra ao AccountEntry (despesa) que pagou
+};
+
 // ====================== MOCK DATA ======================
 
 const today = new Date();
@@ -137,7 +229,11 @@ export const SERVICE_ORDERS: ServiceOrder[] = [
     commission_pct: 30,
     service_value: 350.00,
     parts_value: 480.00,
+    parts_used: [
+      { sku: "RAM-CR-32-6000", name: "Corsair Vengeance 32GB DDR5 6000MHz", qty: 1, unit_cost: 480.00 },
+    ],
     total: 830.00,
+    payment_status: "aberta",
     created_at: iso(3),
     updated_at: iso(1),
     estimated_at: iso(-4),
@@ -162,6 +258,7 @@ export const SERVICE_ORDERS: ServiceOrder[] = [
     service_value: 180.00,
     parts_value: 45.00,
     total: 225.00,
+    payment_status: "aberta",
     created_at: iso(5),
     updated_at: iso(0),
     estimated_at: iso(-2),
@@ -183,6 +280,7 @@ export const SERVICE_ORDERS: ServiceOrder[] = [
     service_value: 200.00,
     parts_value: 650.00,
     total: 850.00,
+    payment_status: "aberta",
     created_at: iso(2),
     updated_at: iso(1),
     estimated_at: iso(-1),
@@ -201,7 +299,13 @@ export const SERVICE_ORDERS: ServiceOrder[] = [
     commission_pct: 30,
     service_value: 120.00,
     parts_value: 249.00,
+    parts_used: [
+      { sku: "SSD-KS-NV2-1TB", name: "Kingston NV2 1TB NVMe PCIe 4.0", qty: 1, unit_cost: 249.00 },
+    ],
     total: 369.00,
+    payment_status: "quitada",
+    payment_method: "dinheiro",
+    paid_at: iso(0),
     created_at: iso(8),
     updated_at: iso(5),
     delivered_at: iso(5),
@@ -221,6 +325,7 @@ export const SERVICE_ORDERS: ServiceOrder[] = [
     service_value: 0,
     parts_value: 0,
     total: 0,
+    payment_status: "aberta",
     created_at: iso(0),
     updated_at: iso(0),
     warranty_days: 90,
@@ -236,8 +341,54 @@ export const SERVICE_ORDERS: ServiceOrder[] = [
     service_value: 0,
     parts_value: 0,
     total: 0,
+    payment_status: "aberta",
     created_at: iso(0),
     updated_at: iso(0),
+    warranty_days: 90,
+  },
+  // Histórico · OS quitadas no mês passado (pra gerar commissions já pagas)
+  {
+    id: "OS-2026-0035",
+    customer_name: "Helena Ribeiro",
+    customer_phone: "(63) 99777-1122",
+    device: "Notebook Samsung Book",
+    problem: "Bateria não segura carga",
+    status: "entregue",
+    technician_id: "tec-2",
+    technician_name: "Marcos Silva",
+    commission_pct: 30,
+    service_value: 150.00,
+    parts_value: 320.00,
+    total: 470.00,
+    payment_status: "quitada",
+    payment_method: "pix",
+    paid_at: iso(28),
+    created_at: iso(32),
+    updated_at: iso(28),
+    delivered_at: iso(28),
+    estimated_at: iso(29),
+    warranty_days: 90,
+  },
+  {
+    id: "OS-2026-0034",
+    customer_name: "Diego Martins",
+    customer_phone: "(63) 99777-3344",
+    device: "PC Gamer Intel i5",
+    problem: "Fonte queimou · não liga",
+    status: "entregue",
+    technician_id: "tec-2",
+    technician_name: "Marcos Silva",
+    commission_pct: 30,
+    service_value: 220.00,
+    parts_value: 380.00,
+    total: 600.00,
+    payment_status: "quitada",
+    payment_method: "cartao",
+    paid_at: iso(34),
+    created_at: iso(38),
+    updated_at: iso(34),
+    delivered_at: iso(34),
+    estimated_at: iso(35),
     warranty_days: 90,
   },
 ];
@@ -279,10 +430,153 @@ export const ACCOUNT_ENTRIES: AccountEntry[] = [
   { id: "ae-5", type: "despesa", category: "Aluguel", description: "Aluguel loja 104 Sul · maio/2026", amount: 1800.00, status: "pago", due_date: iso(2), paid_at: iso(2) },
   { id: "ae-6", type: "despesa", category: "Energia", description: "Energisa · maio/2026", amount: 380.00, status: "pendente", due_date: iso(-5) },
   { id: "ae-7", type: "despesa", category: "Internet", description: "Algar Telecom · maio/2026", amount: 220.00, status: "pago", due_date: iso(3), paid_at: iso(3) },
-  { id: "ae-8", type: "despesa", category: "Comissão Técnico", description: "Marcos Silva · 8 OS · 30%", amount: 1240.00, status: "pendente", due_date: iso(-3) },
-  { id: "ae-9", type: "despesa", category: "Comissão Técnico", description: "Lucas Pereira · 5 OS · 30%", amount: 720.00, status: "pendente", due_date: iso(-3) },
+  // ae-8 e ae-9 removidos · comissões pendentes agora vêm de COMMISSIONS (status=apurada) em /admin/comissoes
   { id: "ae-10", type: "despesa", category: "Imposto", description: "Simples Nacional · DAS abril/2026", amount: 890.00, status: "atrasado", due_date: iso(15) },
+  { id: "ae-11", type: "despesa", category: "Comissão Técnico", description: "Marcos Silva · abril/2026 · 2 OS quitadas", amount: 111.00, status: "pago", due_date: iso(28), paid_at: iso(28), reference_id: "com-paid-marcos-abril" },
 ];
+
+// =============== Caixa + Comissão · mock data ===============
+
+// Tempo "agora" pro mock (h:mm relativos)
+const hour = (h: number, m = 0) => {
+  const d = new Date();
+  d.setHours(h, m, 0, 0);
+  return d.toISOString();
+};
+const hourYesterday = (h: number, m = 0) => {
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  d.setHours(h, m, 0, 0);
+  return d.toISOString();
+};
+
+export const CASH_SESSIONS: CashSession[] = [
+  // Sessão de HOJE · aberta
+  {
+    id: "CX-2026-003",
+    opened_at: hour(8, 30),
+    opened_by: "Júnior",
+    opening_amount: 150.00,
+    status: "aberta",
+  },
+  // Ontem · fechada COM diferença (mostra fluxo de falta)
+  {
+    id: "CX-2026-002",
+    opened_at: hourYesterday(8, 15),
+    opened_by: "Júnior",
+    opening_amount: 100.00,
+    closed_at: hourYesterday(18, 30),
+    closed_by: "Júnior",
+    closing_amount_declared: 280.00,
+    closing_amount_expected: 300.00,
+    diff: -20.00,
+    diff_note: "Falta de R$ 20 · diferença em moedas de troco · sem identificação clara",
+    status: "fechada",
+  },
+  // Anteontem · fechada certa
+  {
+    id: "CX-2026-001",
+    opened_at: iso(2).replace(/T.*/, "T08:00:00.000Z"),
+    opened_by: "Júnior",
+    opening_amount: 100.00,
+    closed_at: iso(2).replace(/T.*/, "T18:15:00.000Z"),
+    closed_by: "Júnior",
+    closing_amount_declared: 450.00,
+    closing_amount_expected: 450.00,
+    diff: 0,
+    status: "fechada",
+  },
+];
+
+export const CASH_MOVEMENTS: CashMovement[] = [
+  // Sessão de HOJE
+  { id: "cm-1", session_id: "CX-2026-003", type: "abertura", amount: 150.00, note: "Troco inicial", created_at: hour(8, 30), created_by: "Júnior" },
+  { id: "cm-2", session_id: "CX-2026-003", type: "venda", amount: 50.00, note: "Pasta térmica balcão", reference_id: "venda-balcao-1", created_at: hour(11, 12), created_by: "Júnior" },
+  { id: "cm-3", session_id: "CX-2026-003", type: "sangria", amount: 200.00, note: "Depósito banco Bradesco", created_at: hour(14, 5), created_by: "Júnior" },
+  { id: "cm-4", session_id: "CX-2026-003", type: "recebimento_os", amount: 369.00, note: "Beatriz Souza · OS quitada", reference_id: "OS-2026-0039", created_at: hour(16, 55), created_by: "Lucas Pereira" },
+  // Sessão ONTEM (resumida)
+  { id: "cm-5", session_id: "CX-2026-002", type: "abertura", amount: 100.00, created_at: hourYesterday(8, 15), created_by: "Júnior" },
+  { id: "cm-6", session_id: "CX-2026-002", type: "venda", amount: 200.00, note: "Cabo HDMI + adaptador", created_at: hourYesterday(11, 30), created_by: "Júnior" },
+  { id: "cm-7", session_id: "CX-2026-002", type: "fechamento", amount: 280.00, note: "Diff -20 · troco", created_at: hourYesterday(18, 30), created_by: "Júnior" },
+];
+
+// Payments derivados das OS quitadas + ORDERS pagos
+export const PAYMENTS: Payment[] = [
+  // OS-2026-0039 quitada em dinheiro hoje · linkada à sessão de caixa aberta
+  { id: "pay-1", os_id: "OS-2026-0039", method: "dinheiro", amount: 369.00, received_at: hour(16, 55), cash_session_id: "CX-2026-003", status: "recebido" },
+  // OS histórico
+  { id: "pay-2", os_id: "OS-2026-0035", method: "pix", amount: 470.00, received_at: iso(28), status: "recebido" },
+  { id: "pay-3", os_id: "OS-2026-0034", method: "cartao", amount: 600.00, received_at: iso(34), forecast_at: iso(34 - 30), status: "recebido" },
+  // ORDERS · venda do site
+  { id: "pay-4", order_id: "ORD-2026-1234", method: "pix", amount: 6997.54, received_at: iso(0), status: "recebido" },
+  { id: "pay-5", order_id: "ORD-2026-1233", method: "cartao", amount: 2390.00, received_at: iso(1), forecast_at: iso(1 - 30), status: "previsto" },
+  { id: "pay-6", order_id: "ORD-2026-1232", method: "pix", amount: 419.99, received_at: iso(1), status: "recebido" },
+  { id: "pay-7", order_id: "ORD-2026-1231", method: "pix", amount: 4690.00, received_at: iso(2), status: "recebido" },
+  { id: "pay-8", order_id: "ORD-2026-1228", method: "cartao", amount: 7190.00, received_at: iso(4), forecast_at: iso(4 - 30), status: "previsto" },
+];
+
+// Commissions · 1 por OS quitada · regra cravada
+export const COMMISSIONS: Commission[] = [
+  // OS-2026-0039 (Lucas · serviço 120 · 30%) · QUITADA hoje → apurada, ainda não paga
+  { id: "com-1", os_id: "OS-2026-0039", technician_id: "tec-3", technician_name: "Lucas Pereira", base_value: 120.00, pct: 30, amount: 36.00, generated_at: iso(0), status: "apurada" },
+  // OS-2026-0035 (Marcos · serviço 150) · quitada e PAGA mês passado
+  { id: "com-2", os_id: "OS-2026-0035", technician_id: "tec-2", technician_name: "Marcos Silva", base_value: 150.00, pct: 30, amount: 45.00, generated_at: iso(28), status: "paga", paid_at: iso(28), paid_entry_id: "ae-11" },
+  // OS-2026-0034 (Marcos · serviço 220) · quitada e PAGA mês passado
+  { id: "com-3", os_id: "OS-2026-0034", technician_id: "tec-2", technician_name: "Marcos Silva", base_value: 220.00, pct: 30, amount: 66.00, generated_at: iso(34), status: "paga", paid_at: iso(28), paid_entry_id: "ae-11" },
+];
+
+// =============== Helpers caixa + comissão ===============
+
+export function getActiveCashSession(): CashSession | undefined {
+  return CASH_SESSIONS.find((s) => s.status === "aberta");
+}
+
+export function getMovementsBySession(sessionId: string): CashMovement[] {
+  return CASH_MOVEMENTS.filter((m) => m.session_id === sessionId).sort((a, b) => a.created_at.localeCompare(b.created_at));
+}
+
+/** Calcula o esperado em espécie · abertura + entradas em dinheiro − sangrias */
+export function computeExpected(session: CashSession): number {
+  const moves = getMovementsBySession(session.id);
+  return moves.reduce((acc, m) => {
+    if (m.type === "fechamento") return acc;
+    if (m.type === "sangria") return acc - m.amount;
+    // abertura · venda · recebimento_os · suprimento somam
+    return acc + m.amount;
+  }, 0);
+}
+
+/** Comissões apuradas (devidas mas não pagas) por técnico */
+export function getApuradaByTec(technicianId: string): Commission[] {
+  return COMMISSIONS.filter((c) => c.technician_id === technicianId && c.status === "apurada");
+}
+
+/** Soma de comissões apuradas pra todos os técnicos */
+export function getTotalApurada(): number {
+  return COMMISSIONS.filter((c) => c.status === "apurada").reduce((s, c) => s + c.amount, 0);
+}
+
+/**
+ * Computa os StockMovements que devem ser gerados quando uma OS quita.
+ * Cravado 13/05 · regra D · estoque é fonte da verdade, baixa automática evita
+ * o erro do GestãoClick de "vendeu peça mas estoque não saiu".
+ * Idempotente · chame em transição payment_status: aberta → quitada.
+ */
+export function buildStockMovementsForOS(os: ServiceOrder): Omit<StockMovement, "id">[] {
+  if (!os.parts_used || os.parts_used.length === 0) return [];
+  return os.parts_used.map((p) => ({
+    sku: p.sku,
+    product_name: p.name,
+    type: "saida" as const,
+    qty: -p.qty,
+    unit_cost: p.unit_cost,
+    total_cost: p.unit_cost * p.qty,
+    reason: `Uso ${os.id}`,
+    reference_id: os.id,
+    created_at: os.paid_at ?? new Date().toISOString(),
+    created_by: os.technician_name ?? "Sistema",
+  }));
+}
 
 // ====================== KPIs computados ======================
 
@@ -335,16 +629,17 @@ export function getFocusItems(): FocusItem[] {
   const pagamentoPendente = ORDERS.filter((o) => o.status === "pending").length;
   const atrasados = ACCOUNT_ENTRIES.filter((e) => e.status === "atrasado" && e.type === "despesa").length;
   const sumidos = CUSTOMERS.filter((c) => c.tag === "sumido").length;
-  const comissaoPendente = ACCOUNT_ENTRIES.filter((e) => e.status === "pendente" && e.category === "Comissão Técnico").length;
+  // Comissão pendente · lê de COMMISSIONS apurada · não de AccountEntry
+  const comissaoApurada = COMMISSIONS.filter((c) => c.status === "apurada").length;
 
   const items: FocusItem[] = [];
 
   if (osPronto > 0) items.push({ type: "os_pronta", title: `${osPronto} OS pronta${osPronto > 1 ? "s" : ""} pra retirada · avise cliente`, count: osPronto, href: "/admin/os?status=pronto", urgency: "high" });
   if (osAtrasada > 0) items.push({ type: "os_atrasada", title: `${osAtrasada} OS passou do prazo previsto`, count: osAtrasada, href: "/admin/os?status=atrasada", urgency: "high" });
   if (pagamentoPendente > 0) items.push({ type: "pagamento_pendente", title: `${pagamentoPendente} pedido${pagamentoPendente > 1 ? "s" : ""} aguardando pagamento`, count: pagamentoPendente, href: "/admin/pedidos?status=pending", urgency: "med" });
-  if (atrasados > 0) items.push({ type: "comissao_pendente", title: `${atrasados} despesa${atrasados > 1 ? "s atrasadas" : " atrasada"}`, count: atrasados, href: "/admin/financeiro", urgency: "high" });
+  if (atrasados > 0) items.push({ type: "pagamento_pendente", title: `${atrasados} despesa${atrasados > 1 ? "s atrasadas" : " atrasada"}`, count: atrasados, href: "/admin/financeiro", urgency: "high" });
   if (sumidos > 0) items.push({ type: "cliente_sumido", title: `${sumidos} cliente${sumidos > 1 ? "s VIP sumido" : " VIP sumido"} · campanha de reativação`, count: sumidos, href: "/admin/clientes?tag=sumido", urgency: "med" });
-  if (comissaoPendente > 0) items.push({ type: "comissao_pendente", title: `${comissaoPendente} comissão${comissaoPendente > 1 ? "s" : ""} pendente${comissaoPendente > 1 ? "s" : ""} de pagamento`, count: comissaoPendente, href: "/admin/financeiro?cat=comissao", urgency: "low" });
+  if (comissaoApurada > 0) items.push({ type: "comissao_pendente", title: `${comissaoApurada} comissão${comissaoApurada > 1 ? "s" : ""} apurada${comissaoApurada > 1 ? "s" : ""} aguardando pagamento`, count: comissaoApurada, href: "/admin/comissoes", urgency: "low" });
 
   return items;
 }

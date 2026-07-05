@@ -13,31 +13,65 @@ export const metadata = {
 // (Next 16 tinha race condition com middleware Edge · agora valido no layout Node)
 export const dynamic = "force-dynamic";
 
-const NAV: { href: string; label: string; icon: IconName }[] = [
+type NavItem = { href: string; label: string; icon: IconName };
+
+// Ordem por uso · cravado pela auditoria λ.menos-cliques (13/05)
+// Diário (top) · gestão (meio) · configuração (bottom)
+const NAV_DIARIO: NavItem[] = [
   { href: "/admin", label: "Dashboard", icon: "rocket" },
-  { href: "/admin/tecnico", label: "Minha área (técnico)", icon: "wrench" },
   { href: "/admin/os", label: "Ordens de Serviço", icon: "wrench" },
+  { href: "/admin/caixa", label: "Caixa do dia", icon: "credit-card" },
   { href: "/admin/pedidos", label: "Pedidos", icon: "shopping-cart" },
+  { href: "/admin/tecnico", label: "Minha área (técnico)", icon: "wrench" },
+  { href: "/admin/clientes", label: "Clientes", icon: "user" },
+  { href: "/admin/estoque", label: "Estoque", icon: "memory" },
+];
+
+const NAV_GESTAO: NavItem[] = [
+  { href: "/admin/comissoes", label: "Comissões", icon: "trophy" },
+  { href: "/admin/financeiro", label: "Financeiro", icon: "credit-card" },
   { href: "/admin/nfe", label: "Notas Fiscais", icon: "file" },
   { href: "/admin/produtos", label: "Produtos", icon: "package" },
-  { href: "/admin/estoque", label: "Estoque", icon: "memory" },
-  { href: "/admin/clientes", label: "Clientes", icon: "user" },
-  { href: "/admin/financeiro", label: "Financeiro", icon: "credit-card" },
   { href: "/admin/whatsapp", label: "WhatsApp", icon: "whatsapp" },
-  { href: "/admin/campanhas", label: "Campanhas · Reativação", icon: "radio" },
-  { href: "/admin/site", label: "Editar Site", icon: "sparkles" },
+  { href: "/admin/campanhas", label: "Campanhas", icon: "radio" },
   { href: "/admin/relatorios", label: "Relatórios", icon: "trophy" },
+];
+
+const NAV_CONFIG: NavItem[] = [
+  { href: "/admin/site", label: "Editar Site", icon: "sparkles" },
   { href: "/admin/api-ia", label: "API · IA", icon: "bot" },
   { href: "/admin/configuracoes", label: "Configurações", icon: "info" },
 ];
 
-const BOTTOM_NAV: { href: string; label: string; icon: IconName }[] = [
+const BOTTOM_NAV: NavItem[] = [
   { href: "/admin", label: "Início", icon: "rocket" },
   { href: "/admin/os", label: "OS", icon: "wrench" },
+  { href: "/admin/caixa", label: "Caixa", icon: "credit-card" },
   { href: "/admin/pedidos", label: "Vendas", icon: "shopping-cart" },
-  { href: "/admin/estoque", label: "Estoque", icon: "memory" },
-  { href: "/admin/financeiro", label: "$", icon: "credit-card" },
+  { href: "/admin/comissoes", label: "Comis.", icon: "trophy" },
 ];
+
+function NavGroup({ label, items }: { label: string; items: NavItem[] }) {
+  return (
+    <div className="mb-2">
+      <div className="px-3 pt-3 pb-1.5 text-[10px] uppercase tracking-[0.2em] font-space font-bold text-starteq-muted">
+        {label}
+      </div>
+      <div className="space-y-0.5">
+        {items.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-starteq-text hover:bg-starteq-card hover:text-starteq-gold transition-colors font-space font-semibold group"
+          >
+            <Icon name={item.icon} size={18} className="text-starteq-muted group-hover:text-starteq-gold flex-shrink-0" />
+            {item.label}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession();
@@ -59,17 +93,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               </div>
             </div>
 
-            <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto">
-              {NAV.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-starteq-text hover:bg-starteq-card hover:text-starteq-gold transition-colors font-space font-semibold group"
-                >
-                  <Icon name={item.icon} size={18} className="text-starteq-muted group-hover:text-starteq-gold flex-shrink-0" />
-                  {item.label}
-                </Link>
-              ))}
+            <nav className="flex-1 p-3 overflow-y-auto">
+              <NavGroup label="Diário" items={NAV_DIARIO} />
+              <NavGroup label="Gestão" items={NAV_GESTAO} />
+              <NavGroup label="Configuração" items={NAV_CONFIG} />
             </nav>
 
             <div className="p-3 border-t border-starteq-line space-y-2">
