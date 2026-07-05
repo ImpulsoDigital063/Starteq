@@ -29,6 +29,7 @@ const NAV_DIARIO: NavItem[] = [
 
 const NAV_GESTAO: NavItem[] = [
   { href: "/admin/comissoes", label: "Comissões", icon: "trophy" },
+  { href: "/admin/cupons", label: "Cupons", icon: "tag" },
   { href: "/admin/financeiro", label: "Financeiro", icon: "credit-card" },
   { href: "/admin/nfe", label: "Notas Fiscais", icon: "file" },
   { href: "/admin/produtos", label: "Produtos", icon: "package" },

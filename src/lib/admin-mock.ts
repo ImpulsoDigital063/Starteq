@@ -41,7 +41,8 @@ export type ServiceOrder = {
   service_value: number;
   parts_value: number;
   parts_used?: OSPart[];           // peças usadas · baixa do estoque na quitação
-  total: number;
+  total: number;                   // LÍQUIDO · service_value + parts_value − desconto do cupom
+  discount?: DiscountBreakdown;    // cupom aplicado · NÃO afeta base de comissão (loja absorve)
   payment_status: PaymentStatus;   // aberta · parcial · quitada
   payment_method?: PaymentMethod;  // só definido quando há ao menos 1 Payment
   paid_at?: string;                // quando virou quitada
@@ -73,7 +74,8 @@ export type Order = {
   id: string;
   customer_name: string;
   customer_phone: string;
-  total: number;
+  total: number;                 // LÍQUIDO · subtotal − desconto do cupom
+  discount?: DiscountBreakdown;  // cupom aplicado (venda balcão/site)
   status: OrderStatus;
   payment_method: "pix" | "card" | "boleto" | "dinheiro";
   items_count: number;
@@ -200,6 +202,96 @@ export type Commission = {
   paid_entry_id?: string;   // amarra ao AccountEntry (despesa) que pagou
 };
 
+// =============== Cupom / Desconto · cravado 05/07 ===============
+// REGRAS DURAS (Eduardo 05/07):
+//  1. Desconto NUNCA reduz a base de comissão. Commission.base_value = service_value BRUTO.
+//     A loja absorve o desconto na margem; o técnico recebe cheio.
+//  2. Incidência configurável por cupom: servico | produto | total (rateado serv/peça pro fiscal).
+// O breakdown alimenta 3 agregadores: total líquido (caixa/DRE) · base fiscal por nota · e
+// NUNCA a comissão. Nunca guardar só o "total já descontado" sem o breakdown (bug Palace: desconto some).
+
+export type CouponKind = "percentual" | "valor";        // % ou R$ fixo
+export type CouponTarget = "servico" | "produto" | "total";
+
+export type Coupon = {
+  id: string;
+  code: string;                 // "VOLTA10" · sempre comparar em UPPER
+  description: string;
+  kind: CouponKind;
+  value: number;                // 10 (=10% se percentual) ou 20 (=R$20 se valor)
+  target: CouponTarget;         // sobre o que incide
+  min_subtotal?: number;        // exige subtotal mínimo pra valer
+  max_discount?: number;        // teto de desconto em R$ (útil pra percentual)
+  valid_from?: string;
+  valid_until?: string;
+  usage_limit?: number;         // undefined = ilimitado
+  used_count: number;
+  active: boolean;
+  created_at: string;
+};
+
+// O que a aplicação de um cupom produz · vai gravado na OS/Order
+export type DiscountBreakdown = {
+  coupon_code: string;
+  target: CouponTarget;
+  total: number;                // desconto total em R$ (positivo)
+  on_service: number;           // parte que abate serviço → base NFS-e/ISS · NÃO afeta comissão
+  on_parts: number;             // parte que abate peça/produto → base NFC-e/ICMS
+};
+
+const r2 = (n: number) => Math.round(n * 100) / 100;
+
+// Valida e calcula o desconto de um cupom sobre uma base serviço/peça.
+// Retorna o breakdown pronto pra gravar, ou o motivo da recusa (mostrar pro operador).
+export function computeCouponDiscount(
+  coupon: Coupon,
+  serviceValue: number,
+  partsValue: number,
+  now: Date = new Date(),
+): { ok: true; discount: DiscountBreakdown } | { ok: false; reason: string } {
+  const subtotal = serviceValue + partsValue;
+  if (!coupon.active) return { ok: false, reason: "Cupom inativo" };
+  if (coupon.valid_from && new Date(coupon.valid_from) > now) return { ok: false, reason: "Cupom ainda não vigente" };
+  if (coupon.valid_until && new Date(coupon.valid_until) < now) return { ok: false, reason: "Cupom expirado" };
+  if (coupon.usage_limit != null && coupon.used_count >= coupon.usage_limit) return { ok: false, reason: "Cupom esgotado" };
+  if (coupon.min_subtotal && subtotal < coupon.min_subtotal) return { ok: false, reason: `Exige mínimo de R$ ${coupon.min_subtotal.toFixed(2)}` };
+
+  // base sobre a qual o cupom incide
+  const base = coupon.target === "servico" ? serviceValue
+    : coupon.target === "produto" ? partsValue
+    : subtotal;
+  if (base <= 0) return { ok: false, reason: "Sem valor pra descontar nesse alvo (serviço/produto)" };
+
+  let total = coupon.kind === "percentual" ? base * (coupon.value / 100) : coupon.value;
+  if (coupon.max_discount != null) total = Math.min(total, coupon.max_discount);
+  total = r2(Math.min(total, base));  // nunca desconta mais que a base
+
+  // rateio serviço/peça — só o target "total" divide; os outros vão direto
+  let on_service = 0;
+  let on_parts = 0;
+  if (coupon.target === "servico") on_service = total;
+  else if (coupon.target === "produto") on_parts = total;
+  else {
+    on_service = subtotal > 0 ? r2(total * (serviceValue / subtotal)) : 0;
+    on_parts = r2(total - on_service);  // o resto, pra não perder centavo no arredondamento
+  }
+  return { ok: true, discount: { coupon_code: coupon.code, target: coupon.target, total, on_service, on_parts } };
+}
+
+// Total líquido da OS (o que o cliente paga) = bruto − desconto. É o valor que vai pro caixa/DRE.
+export function osNetTotal(os: ServiceOrder): number {
+  return r2(os.service_value + os.parts_value - (os.discount?.total ?? 0));
+}
+
+// Base de cada nota fiscal · bruto do bucket − desconto do respectivo bucket.
+// Comissão NÃO usa isso: comissão é sobre service_value BRUTO.
+export function osFiscalBase(os: ServiceOrder): { nfse: number; nfce: number } {
+  return {
+    nfse: r2(os.service_value - (os.discount?.on_service ?? 0)),  // ISS · mão de obra
+    nfce: r2(os.parts_value - (os.discount?.on_parts ?? 0)),      // ICMS · peça
+  };
+}
+
 // ====================== MOCK DATA ======================
 
 const today = new Date();
@@ -208,6 +300,15 @@ const iso = (daysAgo = 0) => {
   d.setDate(d.getDate() - daysAgo);
   return d.toISOString();
 };
+
+export const COUPONS: Coupon[] = [
+  // 10% na mão de obra pra cliente que volta · incide só no serviço (não mexe em peça)
+  { id: "cup-1", code: "VOLTA10", description: "10% na mão de obra (cliente recorrente)", kind: "percentual", value: 10, target: "servico", used_count: 3, active: true, created_at: iso(20) },
+  // R$20 off em peça, exige subtotal ≥ R$150 · incide só no produto
+  { id: "cup-2", code: "PECA20", description: "R$20 off em peça (mínimo R$150)", kind: "valor", value: 20, target: "produto", min_subtotal: 150, usage_limit: 50, used_count: 12, active: true, created_at: iso(15) },
+  // 15% no total (campanha), teto R$80 · rateia serviço/peça pro fiscal
+  { id: "cup-3", code: "BLACK15", description: "15% no total · teto R$80 (campanha)", kind: "percentual", value: 15, target: "total", max_discount: 80, valid_until: iso(-15), used_count: 0, active: true, created_at: iso(3) },
+];
 
 export const TECHNICIANS: Technician[] = [
   { id: "tec-1", name: "Júnior (você)", email: "junior@starteq.com.br", phone: "(63) 99252-8619", commission_default: 0, active: true, os_count: 12, total_commission_month: 0 },
