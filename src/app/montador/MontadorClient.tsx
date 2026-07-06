@@ -2,7 +2,8 @@
 
 import { useState, useMemo } from "react";
 import { Icon } from "@/components/Icon";
-import { PRODUCTS, type Product, type Category } from "@/lib/catalog";
+import { type Product, type Category } from "@/lib/catalog";
+import { postMontagem } from "@/lib/comandapro";
 import {
   filterCompatible,
   validateBuild,
@@ -36,10 +37,24 @@ const STEPS: Step[] = [
   { cat: "fonte", label: "Fonte", hint: "Wattagem calculada pela sua build" },
 ];
 
-export function MontadorClient() {
+export function MontadorClient({ products }: { products: Product[] }) {
   const [build, setBuild] = useState<Build>({});
   const [activeStep, setActiveStep] = useState(0);
   const [showIgpuModal, setShowIgpuModal] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sentOs, setSentOs] = useState<string | null>(null);
+  const [nome, setNome] = useState("");
+
+  async function enviarPraLoja() {
+    if (sending) return;
+    setSending(true);
+    try {
+      const skus = Object.values(build).filter((p): p is Product => !!p).map((p) => p.sku);
+      const d = await postMontagem(skus, nome.trim() || undefined);
+      if (d.ok && d.osId) setSentOs(d.osId);
+      else alert(d.error || "Não consegui enviar. Tente de novo.");
+    } finally { setSending(false); }
+  }
 
   const issues = useMemo(() => validateBuild(build), [build]);
   const errors = useMemo(() => issues.filter((i) => i.type === "error"), [issues]);
@@ -118,7 +133,7 @@ export function MontadorClient() {
             const isPrevDone = idx === 0 || build[STEPS[idx - 1].cat] || STEPS[idx - 1].optional?.(build);
             const isOptional = step.optional?.(build);
 
-            const baseCandidates = PRODUCTS.filter(
+            const baseCandidates = products.filter(
               (p) => p.category === step.cat && p.stock > 0
             );
             const candidates = filterCompatible(baseCandidates, build, step.cat);
@@ -356,21 +371,42 @@ export function MontadorClient() {
             </div>
           )}
 
-          {/* CTA WhatsApp */}
-          <a
-            href={buildWhatsAppLink(build)}
-            target="_blank"
-            rel="noreferrer"
-            className={`w-full inline-flex items-center justify-center gap-2 font-display font-bold tracking-wide uppercase text-sm px-6 py-4 rounded-lg transition-all ${
-              allRequiredSelected
-                ? "bg-starteq-pix text-white hover:opacity-90"
-                : "bg-starteq-line text-starteq-muted cursor-not-allowed pointer-events-none"
-            }`}
-          >
-            {allRequiredSelected
-              ? "Finalizar no WhatsApp"
-              : `Faltam ${status.required - status.filled} componente${status.required - status.filled > 1 ? "s" : ""}`}
-          </a>
+          {/* CTA · envia pra loja → cria a OS de montagem no ComandaPRO */}
+          {sentOs ? (
+            <div className="rounded-lg border border-starteq-pix/40 bg-starteq-pix/10 p-4 text-center">
+              <div className="font-display font-bold text-starteq-pix">✓ Enviado pra loja!</div>
+              <p className="text-xs text-starteq-muted mt-1">Sua montagem virou uma ordem de serviço. A Starteq vai montar e te chamar.</p>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              <input
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+                placeholder="Seu nome (pra loja saber quem é)"
+                className="w-full rounded-lg border border-starteq-line bg-starteq-coal px-3 py-3 text-sm text-starteq-bone outline-none focus:border-starteq-gold"
+              />
+              <button
+                type="button"
+                onClick={enviarPraLoja}
+                disabled={!allRequiredSelected || sending}
+                className={`w-full inline-flex items-center justify-center gap-2 font-display font-bold tracking-wide uppercase text-sm px-6 py-4 rounded-lg transition-all ${
+                  allRequiredSelected && !sending
+                    ? "bg-starteq-pix text-white hover:opacity-90"
+                    : "bg-starteq-line text-starteq-muted cursor-not-allowed"
+                }`}
+              >
+                {sending ? "Enviando…" : allRequiredSelected ? "Enviar montagem pra loja" : `Faltam ${status.required - status.filled} componente${status.required - status.filled > 1 ? "s" : ""}`}
+              </button>
+              <a
+                href={buildWhatsAppLink(build)}
+                target="_blank"
+                rel="noreferrer"
+                className={`block text-center text-xs font-display font-semibold uppercase tracking-wider ${allRequiredSelected ? "text-starteq-gold hover:text-starteq-bone" : "text-starteq-muted pointer-events-none"}`}
+              >
+                ou finalizar no WhatsApp
+              </a>
+            </div>
+          )}
 
           <div className="text-xs text-starteq-muted leading-relaxed text-center">
             Junior responde em até 30min em horário comercial · retire na loja em Palmas no mesmo dia ou recebe motoboy.

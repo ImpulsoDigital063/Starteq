@@ -2,13 +2,17 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Icon } from "@/components/Icon";
 import { MontadorClient } from "./MontadorClient";
+import { getProducts } from "@/lib/comandapro";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Monte seu PC · Starteq Tocantins",
   description: "Monte um PC compatível em 5 passos. Compatibilidade validada peça a peça · orçamento no WhatsApp.",
 };
 
-export default function MontadorPage() {
+export default async function MontadorPage() {
+  const products = await getProducts();
   return (
     <>
       <Header />
@@ -26,7 +30,7 @@ export default function MontadorPage() {
               No final, leve o orçamento direto pro WhatsApp ou retire na loja em Palmas.
             </p>
           </header>
-          <MontadorClient />
+          <MontadorClient products={products} />
         </div>
       </main>
       <Footer />
