@@ -3,7 +3,7 @@
 // Base configurável: dev = localhost:3000; prod = https://comandapro.net.br (via env).
 import type { Product, Category } from "@/lib/catalog";
 
-const BASE = process.env.NEXT_PUBLIC_COMANDAPRO_API || "http://localhost:3000";
+const BASE = process.env.NEXT_PUBLIC_COMANDAPRO_API || "https://comandapro.net.br";
 const SLUG = process.env.NEXT_PUBLIC_STARTEQ_SLUG || "starteq";
 
 type ApiProduct = {
