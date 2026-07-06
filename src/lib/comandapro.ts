@@ -8,7 +8,7 @@ const SLUG = process.env.NEXT_PUBLIC_STARTEQ_SLUG || "starteq";
 
 type ApiProduct = {
   sku: string; name: string; category: string; brand: string | null;
-  priceCents: number; stock: number; specs: Record<string, unknown>;
+  priceCents: number; pixPriceCents?: number; stock: number; specs: Record<string, unknown>;
   badge?: Product["badge"]; highlight?: boolean;
 };
 
@@ -25,7 +25,7 @@ export async function getProducts(): Promise<Product[]> {
       category: p.category as Category,
       brand: p.brand ?? "",
       price: p.priceCents / 100,
-      pix_price: p.priceCents / 100,
+      pix_price: (p.pixPriceCents ?? p.priceCents) / 100,
       stock: p.stock,
       image: `/products/${p.category}.svg`,
       specs: p.specs as Product["specs"],
