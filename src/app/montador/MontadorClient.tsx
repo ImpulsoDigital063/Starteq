@@ -51,7 +51,7 @@ export function MontadorClient({ products }: { products: Product[] }) {
     try {
       const skus = Object.values(build).filter((p): p is Product => !!p).map((p) => p.sku);
       const d = await postMontagem(skus, nome.trim() || undefined);
-      if (d.ok && d.osId) setSentOs(d.osId);
+      if (d.ok) setSentOs(d.code ?? d.osId ?? "enviado");
       else alert(d.error || "Não consegui enviar. Tente de novo.");
     } finally { setSending(false); }
   }
@@ -376,6 +376,11 @@ export function MontadorClient({ products }: { products: Product[] }) {
             <div className="rounded-lg border border-starteq-pix/40 bg-starteq-pix/10 p-4 text-center">
               <div className="font-display font-bold text-starteq-pix">✓ Enviado pra loja!</div>
               <p className="text-xs text-starteq-muted mt-1">Sua montagem virou uma ordem de serviço. A Starteq vai montar e te chamar.</p>
+              {sentOs && sentOs !== "enviado" && (
+                <p className="text-xs text-starteq-muted mt-2">
+                  Código da OS: <span className="font-mono font-bold text-starteq-gold">{sentOs}</span>
+                </p>
+              )}
             </div>
           ) : (
             <div className="space-y-2">

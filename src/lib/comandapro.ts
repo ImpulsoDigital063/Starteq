@@ -56,7 +56,7 @@ export async function postMontagem(
   skus: string[],
   customerName?: string,
   customerPhone?: string,
-): Promise<{ ok: boolean; osId?: string; error?: string }> {
+): Promise<{ ok: boolean; osId?: string; code?: string; error?: string }> {
   try {
     const r = await fetch(`${BASE}/api/loja/${SLUG}/montagem`, {
       method: "POST",
