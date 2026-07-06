@@ -107,6 +107,8 @@ export const viewport: Viewport = {
   themeColor: "#0A0A0A",
 };
 
+import { CartProvider } from "@/lib/cart";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -118,7 +120,7 @@ export default function RootLayout({
       className={`${inter.variable} ${rajdhani.variable} ${jetbrains.variable} ${orbitron.variable}`}
     >
       <body className="min-h-screen flex flex-col">
-        {children}
+        <CartProvider>{children}</CartProvider>
         <FloatingWhatsApp />
         <script
           type="application/ld+json"

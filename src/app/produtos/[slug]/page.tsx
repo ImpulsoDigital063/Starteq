@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductImage } from "@/components/ProductImage";
+import { AddToCart } from "@/components/AddToCart";
 import { Icon, type IconName } from "@/components/Icon";
 import { getProducts, findProductBySlug } from "@/lib/comandapro";
 import { getProductGallery } from "@/lib/product-images";
@@ -193,12 +194,7 @@ export default async function ProdutoPage({ params }: Params) {
                 >
                   <Icon name="whatsapp" size={18} /> Comprar pelo WhatsApp
                 </a>
-                <Link
-                  href="/carrinho"
-                  className="flex-1 inline-flex items-center justify-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-sm px-6 py-4 rounded-lg transition-all"
-                >
-                  Adicionar ao carrinho
-                </Link>
+                <AddToCart sku={product.sku} name={product.name} price={product.price} />
               </div>
 
               {/* Selos institucionais compactos · padrão Pichau */}

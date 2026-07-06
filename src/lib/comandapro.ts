@@ -68,3 +68,22 @@ export async function postMontagem(
     return { ok: false, error: "sem conexão com o sistema" };
   }
 }
+
+// Carrinho → pedido: o cliente compra produtos avulsos; vira um pedido "recebido" no ComandaPRO
+// que o balcão confirma. Preço é resolvido no servidor (só mandamos sku + qty).
+export async function postPedido(
+  items: { sku: string; qty: number }[],
+  customerName?: string,
+  customerPhone?: string,
+): Promise<{ ok: boolean; display?: string; code?: string; error?: string }> {
+  try {
+    const r = await fetch(`${BASE}/api/loja/${SLUG}/pedido`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items, customerName, customerPhone }),
+    });
+    return await r.json();
+  } catch {
+    return { ok: false, error: "sem conexão com o sistema" };
+  }
+}
