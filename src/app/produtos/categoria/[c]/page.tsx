@@ -4,7 +4,10 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CategoryGrid } from "@/components/CategoryGrid";
 import { Icon, type IconName } from "@/components/Icon";
-import { PRODUCTS, type Category } from "@/lib/catalog";
+import { getProducts } from "@/lib/comandapro";
+import type { Category } from "@/lib/catalog";
+
+export const dynamic = "force-dynamic";
 
 const VALID: Record<string, { label: string; intro: string; icon: IconName }> = {
   computadores: { label: "PCs Prontos", intro: "Builds montadas, certificadas e prontas pra decolar", icon: "monitor" },
@@ -42,6 +45,7 @@ export default async function CategoriaPage({ params }: Params) {
   const meta = VALID[c];
   if (!meta) notFound();
 
+  const PRODUCTS = await getProducts();
   const items = PRODUCTS.filter((p) => p.category === (c as Category));
 
   return (

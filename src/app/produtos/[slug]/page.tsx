@@ -5,18 +5,20 @@ import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductImage } from "@/components/ProductImage";
 import { Icon, type IconName } from "@/components/Icon";
-import { PRODUCTS } from "@/lib/catalog";
+import { getProducts, findProductBySlug } from "@/lib/comandapro";
 import { getProductGallery } from "@/lib/product-images";
+
+export const dynamic = "force-dynamic";
 
 type Params = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
-  return PRODUCTS.map((p) => ({ slug: p.slug }));
+  return []; // catálogo é dinâmico (vem do ComandaPRO) — renderiza sob demanda
 }
 
 export async function generateMetadata({ params }: Params) {
   const { slug } = await params;
-  const p = PRODUCTS.find((x) => x.slug === slug);
+  const p = await findProductBySlug(slug);
   if (!p) return { title: "Produto não encontrado" };
   return {
     title: `${p.name} · Starteq Tocantins`,
@@ -33,10 +35,11 @@ const BADGE_STYLES: Record<string, string> = {
 
 export default async function ProdutoPage({ params }: Params) {
   const { slug } = await params;
-  const product = PRODUCTS.find((p) => p.slug === slug);
+  const all = await getProducts();
+  const product = all.find((p) => p.slug === slug);
   if (!product) notFound();
 
-  const related = PRODUCTS.filter(
+  const related = all.filter(
     (p) => p.category === product.category && p.sku !== product.sku
   ).slice(0, 4);
 

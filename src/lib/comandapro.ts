@@ -9,6 +9,7 @@ const SLUG = process.env.NEXT_PUBLIC_STARTEQ_SLUG || "starteq";
 type ApiProduct = {
   sku: string; name: string; category: string; brand: string | null;
   priceCents: number; stock: number; specs: Record<string, unknown>;
+  badge?: Product["badge"]; highlight?: boolean;
 };
 
 /** Catálogo da loja, lido do ComandaPRO. Mapeia pro shape Product do site. */
@@ -28,10 +29,26 @@ export async function getProducts(): Promise<Product[]> {
       stock: p.stock,
       image: `/products/${p.category}.svg`,
       specs: p.specs as Product["specs"],
+      highlight: p.highlight,
+      badge: p.badge,
     }));
   } catch {
     return [];
   }
+}
+
+// Helpers async (espelham os do catalog.ts, mas leem do ComandaPRO). Cada página busca 1x.
+export async function productsByBadge(badge: Product["badge"]): Promise<Product[]> {
+  return (await getProducts()).filter((p) => p.badge === badge && p.stock > 0);
+}
+export async function productsByCategory(c: Category): Promise<Product[]> {
+  return (await getProducts()).filter((p) => p.category === c && p.stock > 0);
+}
+export async function productsHighlight(): Promise<Product[]> {
+  return (await getProducts()).filter((p) => p.highlight && p.stock > 0);
+}
+export async function findProductBySlug(slug: string): Promise<Product | undefined> {
+  return (await getProducts()).find((p) => p.slug === slug);
 }
 
 /** Envia o build do cliente pro ComandaPRO → vira uma OS de montagem (pendente). */

@@ -3,7 +3,10 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/ProductCard";
 import { Icon, type IconName } from "@/components/Icon";
-import { PRODUCTS, type Category } from "@/lib/catalog";
+import { getProducts } from "@/lib/comandapro";
+import type { Category } from "@/lib/catalog";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Produtos · Starteq Tocantins",
@@ -34,6 +37,7 @@ export default async function ProdutosPage({ searchParams }: { searchParams: Pro
   const query = (sp.q ?? "").trim().toLowerCase();
   const ordem = sp.ordem ?? "destaque";
 
+  const PRODUCTS = await getProducts();
   let items = PRODUCTS;
 
   if (query) {

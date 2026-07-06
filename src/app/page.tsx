@@ -6,7 +6,10 @@ import { StarField } from "@/components/StarField";
 import { Meteors } from "@/components/Meteors";
 import { ProductShelf } from "@/components/ProductShelf";
 import { Icon, type IconName } from "@/components/Icon";
-import { PRODUCTS, productsByBadge } from "@/lib/catalog";
+import { getProducts } from "@/lib/comandapro";
+import type { Product } from "@/lib/catalog";
+
+export const dynamic = "force-dynamic";
 
 // Marcas com SVG logo local · ordenadas por relevância pro nicho gamer
 const BRAND_LOGOS = [
@@ -23,10 +26,12 @@ const BRAND_LOGOS = [
   { slug: "lg", name: "LG" },
 ];
 
-export default function Home() {
-  const lancamentos = productsByBadge("Lançamento");
-  const maisVendidos = productsByBadge("Mais Vendido");
-  const promos = [...productsByBadge("Promo"), ...productsByBadge("OpenBox")];
+export default async function Home() {
+  const PRODUCTS = await getProducts();
+  const byBadge = (b: Product["badge"]) => PRODUCTS.filter((p) => p.badge === b && p.stock > 0);
+  const lancamentos = byBadge("Lançamento");
+  const maisVendidos = byBadge("Mais Vendido");
+  const promos = [...byBadge("Promo"), ...byBadge("OpenBox")];
   const pcsProntos = PRODUCTS.filter((p) => p.category === "computadores");
   const perifericos = PRODUCTS.filter((p) =>
     ["mouse", "teclado", "monitor", "headset", "mousepad", "cadeira"].includes(p.category)
