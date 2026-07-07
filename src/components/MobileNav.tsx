@@ -109,14 +109,6 @@ export function MobileNav() {
                 <Icon name="whatsapp" size={16} />
                 Atendimento WhatsApp
               </a>
-              <Link
-                href="/admin/login"
-                onClick={() => setOpen(false)}
-                className="flex items-center justify-center gap-2 w-full bg-starteq-card border border-starteq-line text-starteq-bone font-space font-bold uppercase text-xs tracking-wider px-4 py-3 rounded-lg"
-              >
-                <Icon name="user" size={16} />
-                Painel da equipe
-              </Link>
             </div>
           </aside>
         </div>

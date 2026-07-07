@@ -75,16 +75,6 @@ export function Header() {
                 WhatsApp
               </a>
               <Link
-                href="/admin/login"
-                className="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-starteq-card transition-colors text-starteq-text"
-                aria-label="Entrar"
-              >
-                <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                <span className="text-xs font-space font-bold uppercase tracking-wider">Entrar</span>
-              </Link>
-              <Link
                 href="/carrinho"
                 className="relative p-2 rounded-lg hover:bg-starteq-card transition-colors flex items-center gap-2"
                 aria-label="Carrinho"
