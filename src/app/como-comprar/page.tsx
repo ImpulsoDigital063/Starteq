@@ -31,7 +31,7 @@ const STEPS = [
   {
     n: "05",
     title: "Receba ou retire",
-    text: "Em Palmas via motoboy próprio (prazo combinado no WhatsApp). Pra fora, frete calculado por transportadora. Tudo montado, com NF, garantia por peça.",
+    text: "Em Palmas, entrega ou retirada combinada no WhatsApp. Pra fora, frete calculado por transportadora. Tudo montado, com NF, garantia por peça.",
   },
 ];
 

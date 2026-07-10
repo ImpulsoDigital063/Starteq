@@ -231,7 +231,7 @@ export default async function ProdutoPage({ params }: Params) {
             <BigSeal
               icon="package"
               title="Entrega"
-              text="Embalado com caixa de papelão de ondas duplas exclusiva e fitas de segurança com cola quimicamente ativa. Motoboy próprio em Palmas."
+              text="Embalado com caixa de papelão de ondas duplas exclusiva e fitas de segurança com cola quimicamente ativa. Entrega em Palmas combinada no WhatsApp."
             />
             <BigSeal
               icon="shield"

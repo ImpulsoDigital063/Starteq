@@ -154,7 +154,7 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
       subtitle: "Cada PC sai da nossa bancada montado, certificado e embalado pra entrega segura.",
       steps: [
         { num: "01", title: "Montagem", stat: "2.300+ PCs montados", text: "BIOS e drivers atualizados · cabos pela parte de trás · acabamento de fábrica." },
-        { num: "02", title: "Entrega", stat: "Motoboy próprio em Palmas", text: "Caixa de ondas duplas com fitas de segurança · entrega cuidada na cidade." },
+        { num: "02", title: "Entrega", stat: "Entrega em Palmas", text: "Caixa de ondas duplas com fitas de segurança · prazo e forma combinados no WhatsApp." },
         { num: "03", title: "Garantia", stat: "0% lacre · 100% honrada", text: "Garantia por peça com prazo na NF · você pode abrir e modificar como quiser." },
       ],
     },
