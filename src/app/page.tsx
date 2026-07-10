@@ -3,6 +3,8 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StarField } from "@/components/StarField";
 import HeroParallax from "@/components/hero3d/HeroParallax";
+import { getSiteConfig } from "@/lib/site-config";
+import type { Metadata } from "next";
 import { ProductShelf } from "@/components/ProductShelf";
 import { Icon, type IconName } from "@/components/Icon";
 import { getProducts } from "@/lib/comandapro";
@@ -25,8 +27,14 @@ const BRAND_LOGOS = [
   { slug: "lg", name: "LG" },
 ];
 
+export async function generateMetadata(): Promise<Metadata> {
+  const site = await getSiteConfig();
+  return { title: site.seo.title, description: site.seo.description };
+}
+
 export default async function Home() {
   const PRODUCTS = await getProducts();
+  const site = await getSiteConfig();
   const byBadge = (b: Product["badge"]) => PRODUCTS.filter((p) => p.badge === b && p.stock > 0);
   const lancamentos = byBadge("Lançamento");
   const maisVendidos = byBadge("Mais Vendido");
@@ -66,30 +74,30 @@ export default async function Home() {
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-starteq-gold/40 bg-starteq-black/60 backdrop-blur-sm text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-6">
               <span className="w-1.5 h-1.5 rounded-full bg-starteq-gold animate-pulse" />
-              Estação Palmas · Tocantins
+              {site.hero.eyebrow}
             </div>
             <h1 data-glitch className="font-space text-4xl sm:text-5xl lg:text-7xl font-black leading-[0.95] text-starteq-bone mb-6 drop-shadow-[0_2px_20px_rgba(0,0,0,0.85)]">
-              Monte seu PC gamer<br />
-              <span className="text-space-grad">do seu jeito.</span>
+              {site.hero.titleLine1}<br />
+              <span className="text-space-grad">{site.hero.titleLine2}</span>
             </h1>
             <p className="text-base sm:text-lg text-starteq-text leading-relaxed max-w-lg mb-8 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
-              Você escolhe as peças, a Starteq valida a compatibilidade, monta à mão e testa rodando de verdade. Sem risco de montar errado — e com gente de Palmas pra te ajudar.
+              {site.hero.subtitle}
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
-                href="/montador"
+                href={site.hero.ctaPrimary.href}
                 data-magnetic
                 className="inline-flex items-center justify-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-sm px-8 py-4 rounded-lg transition-all animate-pulse-glow shadow-2xl shadow-starteq-gold/30"
               >
-                Montar meu PC
+                {site.hero.ctaPrimary.label}
                 <Icon name="arrow-right" size={18} strokeWidth={2.5} />
               </Link>
               <Link
-                href="/produtos/categoria/computadores"
+                href={site.hero.ctaSecondary.href}
                 data-magnetic
                 className="inline-flex items-center justify-center gap-2 bg-starteq-black/60 backdrop-blur-sm border border-starteq-line hover:border-starteq-gold/40 text-starteq-bone hover:text-starteq-gold font-space font-bold tracking-wide uppercase text-sm px-8 py-4 rounded-lg transition-all"
               >
-                PCs prontos
+                {site.hero.ctaSecondary.label}
               </Link>
             </div>
           </div>
@@ -101,17 +109,10 @@ export default async function Home() {
       {/* FAIXA PROMO · marquee */}
       <section className="bg-starteq-gold text-starteq-black py-3 overflow-hidden">
         <div className="flex items-center justify-center gap-12 whitespace-nowrap animate-[scroll_30s_linear_infinite] font-space font-bold uppercase tracking-wider text-sm">
-          <PromoBadge icon="wrench" text="Montado à mão em Palmas" />
-          <span>·</span>
-          <PromoBadge icon="credit-card" text="10x sem juros no cartão" />
-          <span>·</span>
-          <PromoBadge icon="zap" text="15% off no PIX à vista" />
-          <span>·</span>
-          <PromoBadge icon="shield" text="Garantia por peça sem lacre" />
-          <span>·</span>
-          <PromoBadge icon="bot" text="IA + atendimento humano no WhatsApp" />
-          <span>·</span>
-          <PromoBadge icon="rocket" text="Build com compatibilidade validada" />
+          {site.marquee.flatMap((m, i) => [
+            i > 0 ? <span key={`sep-${i}`}>·</span> : null,
+            <PromoBadge key={`badge-${i}`} icon={m.icon} text={m.text} />,
+          ])}
         </div>
       </section>
 
@@ -124,10 +125,9 @@ export default async function Home() {
           </div>
           <h2 data-glitch className="font-space text-3xl lg:text-4xl font-black text-starteq-bone mb-8">Qual PC você procura?</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <ObjectiveTile icon="flame" title="Jogar pesado" desc="Os lançamentos AAA no ultra, sem engasgo." />
-            <ObjectiveTile icon="zap" title="Competitivo" desc="Valorant, CS e LoL voando, FPS alto e estável." />
-            <ObjectiveTile icon="monitor" title="Trabalho + jogo" desc="Edita, faz live e joga na mesma máquina." />
-            <ObjectiveTile icon="rocket" title="Começar bem" desc="Seu primeiro PC gamer, montado sem erro." />
+            {site.objectives.map((o, i) => (
+              <ObjectiveTile key={i} icon={o.icon} title={o.title} desc={o.desc} href={o.href} />
+            ))}
           </div>
         </div>
       </section>
@@ -456,16 +456,15 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-2">
             <Icon name="shield" size={16} />
-            Por que a Starteq
+            {site.trust.eyebrow}
           </div>
           <h2 data-glitch className="font-space text-3xl lg:text-4xl font-black text-starteq-bone mb-8">
-            Aqui você <span className="text-space-grad">fala com quem monta.</span>
+            {site.trust.title} <span className="text-space-grad">{site.trust.titleAccent}</span>
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <TrustCard icon="map-pin" title="Loja física em Palmas" lines={["104 Sul, SE 05, Lt. 19 · Sala 07", "Seg–Sex 8h–18h · Sáb 9h–13h"]} />
-            <TrustCard icon="whatsapp" title="Fala com quem monta" lines={["Atendimento humano no WhatsApp", "Gente de Palmas, não robô impessoal"]} />
-            <TrustCard icon="shield" title="Garantia dobrada" lines={["Peça: garantia do fabricante", "Montagem: coberta pela Starteq"]} />
-            <TrustCard icon="credit-card" title="PIX & parcelado" lines={["Mais barato à vista no PIX", "Ou parcelado sem juros no cartão"]} />
+            {site.trust.cards.map((c, i) => (
+              <TrustCard key={i} icon={c.icon} title={c.title} lines={c.lines} />
+            ))}
           </div>
         </div>
       </section>
@@ -603,10 +602,10 @@ function CategoryTile({
   );
 }
 
-function ObjectiveTile({ icon, title, desc }: { icon: IconName; title: string; desc: string }) {
+function ObjectiveTile({ icon, title, desc, href }: { icon: IconName; title: string; desc: string; href: string }) {
   return (
     <Link
-      href="/montador"
+      href={href}
       data-tilt
       className="group relative bg-starteq-card border border-starteq-line hover:border-starteq-gold/50 rounded-xl p-5 flex flex-col gap-3 overflow-hidden hover:shadow-2xl hover:shadow-starteq-gold/10 transition-colors"
     >
