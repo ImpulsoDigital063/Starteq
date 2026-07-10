@@ -124,7 +124,7 @@ export function MontadorClient({ products }: { products: Product[] }) {
 
   return (
     <>
-      <div className="grid lg:grid-cols-[1fr_400px] gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8">
         {/* COLUNA ESQUERDA · STEPS */}
         <div className="space-y-3">
           {STEPS.map((step, idx) => {
