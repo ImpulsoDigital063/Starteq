@@ -13,8 +13,14 @@ type ApiProduct = {
   badge?: Product["badge"]; highlight?: boolean;
 };
 
+// INTERINO: mostra o catálogo REAL (231 do starteqpalmas.com + webp) até os produtos
+// serem importados no ComandaPRO. Trocar pra false depois do import (aí volta a ler do ERP).
+// ⚠️ Enquanto true, o carrinho/pedido pode falhar pra SKU que o ComandaPRO ainda não tem.
+const USE_STATIC_CATALOG = true;
+
 /** Catálogo da loja, lido do ComandaPRO. Mapeia pro shape Product do site. */
 export async function getProducts(): Promise<Product[]> {
+  if (USE_STATIC_CATALOG) return PRODUCTS;
   try {
     const r = await fetch(`${BASE}/api/loja/${SLUG}/produtos`, { cache: "no-store" });
     if (!r.ok) return PRODUCTS; // backend fora → catálogo estático (nunca vitrine vazia)
