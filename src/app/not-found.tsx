@@ -49,7 +49,7 @@ export default function NotFound() {
               Montar PC
             </Link>
             <a
-              href="https://wa.me/5563992528619"
+              href="https://wa.me/5563992988916"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-starteq-pix text-white hover:opacity-90 font-space font-bold tracking-wide uppercase text-sm px-8 py-4 rounded-lg transition-all"

@@ -221,7 +221,7 @@ export function buildWhatsAppLink(build: Build): string {
     .join("\n");
   const total = buildTotal(build);
   const msg = `Oi! Montei esse PC no site da Starteq:\n\n${parts}\n\nTotal: R$ ${total.toFixed(2)} (à vista PIX)`;
-  return `https://wa.me/5563992528619?text=${encodeURIComponent(msg)}`;
+  return `https://wa.me/5563992988916?text=${encodeURIComponent(msg)}`;
 }
 
 export function categoryLabel(c: Product["category"]): string {

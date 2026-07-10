@@ -27,7 +27,7 @@ export default function TrocasPage() {
               </Card>
 
               <Card title="Como pedir devolução">
-                Manda mensagem no WhatsApp <strong className="text-starteq-gold">(63) 99252-8619</strong> com o número do pedido e o motivo
+                Manda mensagem no WhatsApp <strong className="text-starteq-gold">(63) 99298-8916</strong> com o número do pedido e o motivo
                 (arrependimento, defeito, peça errada). Em até 24h úteis a tripulação Starteq retorna com o procedimento de coleta.
               </Card>
 
@@ -56,7 +56,7 @@ export default function TrocasPage() {
             <div className="mt-12 bg-starteq-card border border-starteq-gold/30 rounded-xl p-8 text-center">
               <p className="text-starteq-muted mb-4">Dúvida sobre garantia ou troca?</p>
               <a
-                href="https://wa.me/5563992528619"
+                href="https://wa.me/5563992988916"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 bg-starteq-pix text-white hover:opacity-90 font-space font-bold tracking-wide uppercase text-sm px-8 py-4 rounded-lg transition-all"

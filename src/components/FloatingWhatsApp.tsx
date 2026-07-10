@@ -2,7 +2,7 @@
 
 import { Icon } from "./Icon";
 
-export function FloatingWhatsApp({ phone = "5563992528619" }: { phone?: string }) {
+export function FloatingWhatsApp({ phone = "5563992988916" }: { phone?: string }) {
   return (
     <a
       href={`https://wa.me/${phone}?text=Oi%21%20Cheguei%20pelo%20site%20da%20Starteq%2C%20preciso%20de%20uma%20ajuda%20pra%20escolher%20um%20produto.`}

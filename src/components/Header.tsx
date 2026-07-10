@@ -19,12 +19,12 @@ export function Header() {
             <Icon name="zap" size={14} /> 15% off no PIX
           </span>
           <a
-            href="https://wa.me/5563992528619"
+            href="https://wa.me/5563992988916"
             target="_blank"
             rel="noreferrer"
             className="text-starteq-gold hover:text-starteq-bone transition-colors"
           >
-            (63) 99252-8619
+            (63) 99298-8916
           </a>
         </div>
       </div>
@@ -66,7 +66,7 @@ export function Header() {
 
             <div className="flex items-center gap-2 ml-auto">
               <a
-                href="https://wa.me/5563992528619"
+                href="https://wa.me/5563992988916"
                 target="_blank"
                 rel="noreferrer"
                 className="hidden lg:flex items-center gap-2 text-xs font-space font-bold uppercase tracking-wider text-starteq-bone bg-starteq-card hover:bg-starteq-line border border-starteq-line hover:border-starteq-pix/40 px-4 py-2 rounded-lg transition-all"

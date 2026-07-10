@@ -40,11 +40,11 @@ export function Footer() {
               <ul className="space-y-0.5 text-xs text-starteq-muted">
                 <li>Seg-sex · 8h-12h · 14h-18h</li>
                 <li>Sáb · 9h-13h</li>
-                <li>WhatsApp: <span className="text-starteq-text">(63) 99252-8619</span></li>
+                <li>WhatsApp: <span className="text-starteq-text">(63) 99298-8916</span></li>
                 <li>Email: <span className="text-starteq-text">starteqpalmas@gmail.com</span></li>
               </ul>
               <a
-                href="https://wa.me/5563992528619?text=Oi!%20Cheguei%20pelo%20site%20da%20Starteq."
+                href="https://wa.me/5563992988916?text=Oi!%20Cheguei%20pelo%20site%20da%20Starteq."
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1 mt-3 text-xs text-starteq-gold hover:text-starteq-bone font-space font-bold uppercase tracking-wider"
@@ -119,7 +119,7 @@ export function Footer() {
                   }
                 />
                 <SocialIcon
-                  href="https://wa.me/5563992528619"
+                  href="https://wa.me/5563992988916"
                   label="WhatsApp"
                   icon={
                     <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
@@ -180,8 +180,8 @@ export function Footer() {
               Ajuda
             </h4>
             <ul className="space-y-2 text-sm">
-              <FooterLink external href="https://wa.me/5563992528619">SAC · WhatsApp</FooterLink>
-              <FooterLink external href="https://wa.me/5563992528619">Fale conosco</FooterLink>
+              <FooterLink external href="https://wa.me/5563992988916">SAC · WhatsApp</FooterLink>
+              <FooterLink external href="https://wa.me/5563992988916">Fale conosco</FooterLink>
               <FooterLink href="/quem-somos">Quem somos</FooterLink>
               <FooterLink href="/blog">Blog · Tutoriais</FooterLink>
               <FooterLink href="/termos">Termos de uso</FooterLink>
@@ -244,7 +244,7 @@ export function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row justify-between gap-4 text-xs text-starteq-muted text-center md:text-left">
           <div>
             © {new Date().getFullYear()} <strong className="text-starteq-bone">Starteq Tocantins</strong>
-            · CNPJ XX.XXX.XXX/0001-XX · Todos os direitos reservados
+            · CNPJ 28.623.696/0001-21 · Todos os direitos reservados
           </div>
           <div className="flex items-center justify-center md:justify-end gap-2">
             Site desenvolvido por

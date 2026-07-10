@@ -64,7 +64,7 @@ export type SiteConfig = {
     finalCta: { eyebrow: string; title: string; titleAccent: string; subtitle: string; ctaLabel: string };
   };
   contact: {
-    whatsapp: string; // só dígitos, ex "5563992528619"
+    whatsapp: string; // só dígitos, ex "5563992988916"
     whatsappDisplay: string;
     email: string;
     instagram: string; // handle sem @
@@ -176,8 +176,8 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
     },
   },
   contact: {
-    whatsapp: "5563992528619",
-    whatsappDisplay: "(63) 99252-8619",
+    whatsapp: "5563992988916",
+    whatsappDisplay: "(63) 99298-8916",
     email: "starteqpalmas@gmail.com",
     instagram: "starteq_to",
   },

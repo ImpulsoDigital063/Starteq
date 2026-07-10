@@ -44,7 +44,7 @@ export default async function ProdutoPage({ params }: Params) {
     (p) => p.category === product.category && p.sku !== product.sku
   ).slice(0, 4);
 
-  const whatsappLink = `https://wa.me/5563992528619?text=${encodeURIComponent(
+  const whatsappLink = `https://wa.me/5563992988916?text=${encodeURIComponent(
     `Oi! Tenho interesse no ${product.name} (SKU ${product.sku}). Qual a disponibilidade?`
   )}`;
 

@@ -15,7 +15,7 @@ const orgSchema = {
   name: "Starteq Tocantins",
   description: "Loja de hardware gamer e assistência técnica em Palmas-TO. PCs montados à mão, peças validadas, atendimento local.",
   url: SITE_URL,
-  telephone: "+55-63-99252-8619",
+  telephone: "+55-63-99298-8916",
   email: "starteqpalmas@gmail.com",
   address: {
     "@type": "PostalAddress",

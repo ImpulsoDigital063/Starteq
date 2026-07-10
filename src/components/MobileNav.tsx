@@ -101,7 +101,7 @@ export function MobileNav() {
 
             <div className="p-4 border-t border-starteq-line space-y-2">
               <a
-                href="https://wa.me/5563992528619"
+                href="https://wa.me/5563992988916"
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center justify-center gap-2 w-full bg-starteq-pix text-white font-space font-bold uppercase text-xs tracking-wider px-4 py-3 rounded-lg"

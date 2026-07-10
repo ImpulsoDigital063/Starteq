@@ -75,7 +75,7 @@ export default function QuemSomosPage() {
               <Stat number="6+" label="Anos de operação em Palmas" />
               <Stat number="9k" label="Seguidores no Instagram" />
               <Stat number="4.6" label="67 reviews Google · 5 estrelas" />
-              <Stat number="Same" label="Day em Palmas" />
+              <Stat number="Loja" label="Física em Palmas" />
             </div>
           </div>
         </section>
@@ -90,12 +90,12 @@ export default function QuemSomosPage() {
             <p className="text-starteq-muted mb-8">Horário comercial · Seg a sáb</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
-                href="https://wa.me/5563992528619"
+                href="https://wa.me/5563992988916"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-starteq-pix text-white hover:opacity-90 font-space font-bold tracking-wide uppercase text-sm px-8 py-4 rounded-lg transition-all"
               >
-                WhatsApp (63) 99252-8619
+                WhatsApp (63) 99298-8916
               </a>
               <a
                 href="https://instagram.com/starteq_to"
