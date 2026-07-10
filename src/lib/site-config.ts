@@ -111,12 +111,12 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
   categorias: {
     title: "Onde quer começar?",
     items: [
-      { label: "Monte seu PC", href: "/montador", image: "/products/photos/cpu-ryzen.jpg", accent: true },
-      { label: "PCs prontos", href: "/produtos/categoria/computadores", image: "/products/photos/pc-rgb.jpg" },
-      { label: "Placas de vídeo", href: "/produtos/categoria/gpu", image: "/products/photos/pc-pro.jpg" },
-      { label: "Mouse · Teclado", href: "/produtos/categoria/mouse", image: "/products/photos/mouse.jpg" },
-      { label: "Monitores", href: "/produtos/categoria/monitor", image: "/products/photos/monitor.jpg" },
-      { label: "Cadeiras", href: "/produtos/categoria/cadeira", image: "/products/photos/cadeira.jpg" },
+      { label: "Monte seu PC", href: "/montador", image: "/products/starteq/47b95e4b58f6c3a4bba19cde1e5d827d.webp", accent: true },
+      { label: "PCs prontos", href: "/produtos/categoria/computadores", image: "/products/starteq/2f2573d306e6188482f1a92060cdf37e.webp" },
+      { label: "Placas de vídeo", href: "/produtos/categoria/gpu", image: "/products/starteq/46922faaaef1c8054c64455182263ddb.webp" },
+      { label: "Mouse · Teclado", href: "/produtos/categoria/mouse", image: "/products/starteq/37aef31d63aaa19ffb12ec37971dff9d.webp" },
+      { label: "Monitores", href: "/produtos/categoria/monitor", image: "/products/starteq/c185550437da2637f362154e3c732eef.webp" },
+      { label: "Cadeiras", href: "/produtos/categoria/cadeira", image: "/products/starteq/a6ddc2f506c81e5cd9de4ecc85eaf260.webp" },
     ],
   },
   shelves: [

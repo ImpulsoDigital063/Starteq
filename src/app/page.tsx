@@ -485,16 +485,16 @@ function CategoryTile({
           : "bg-starteq-card border-starteq-line hover:border-starteq-gold/40"
       }`}
     >
-      <div className="aspect-square overflow-hidden bg-starteq-black">
+      <div className="aspect-square overflow-hidden bg-gradient-to-b from-starteq-card to-starteq-black">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={image}
           alt={label}
           loading="lazy"
-          className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+          className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
         />
         {/* Gradient bottom pra leitura do título */}
-        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-starteq-black via-starteq-black/70 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-starteq-black via-starteq-black/80 to-transparent pointer-events-none" />
       </div>
       <div className="absolute inset-x-0 bottom-0 p-3 lg:p-4">
         <div
