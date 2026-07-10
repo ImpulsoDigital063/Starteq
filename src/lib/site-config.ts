@@ -11,6 +11,27 @@ export type CtaConfig = { label: string; href: string };
 export type MarqueeItem = { icon: IconName; text: string };
 export type ObjectiveItem = { icon: IconName; title: string; desc: string; href: string };
 export type TrustCardItem = { icon: IconName; title: string; lines: string[] };
+export type CategoryTileItem = { label: string; href: string; image: string; accent?: boolean };
+export type ShelfConfig = {
+  key: string;
+  eyebrowIcon: IconName;
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  accentColor: "gold" | "red" | "purple";
+  ctaHref?: string;
+  ctaLabel?: string;
+  enabled?: boolean;
+};
+export type BandCopy = {
+  eyebrow: string;
+  eyebrowIcon: IconName;
+  title: string;
+  titleAccent: string;
+  subtitle: string;
+  ctaLabel: string;
+  ctaHref: string;
+};
 
 export type SiteConfig = {
   hero: {
@@ -29,6 +50,9 @@ export type SiteConfig = {
     titleAccent: string;
     cards: TrustCardItem[];
   };
+  categorias: { title: string; items: CategoryTileItem[] };
+  shelves: ShelfConfig[];
+  montador: BandCopy;
   contact: {
     whatsapp: string; // só dígitos, ex "5563992528619"
     whatsappDisplay: string;
@@ -74,6 +98,34 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
       { icon: "credit-card", title: "PIX & parcelado", lines: ["Mais barato à vista no PIX", "Ou parcelado sem juros no cartão"] },
     ],
   },
+  categorias: {
+    title: "Onde quer começar?",
+    items: [
+      { label: "Monte seu PC", href: "/montador", image: "/products/photos/cpu-ryzen.jpg", accent: true },
+      { label: "PCs prontos", href: "/produtos/categoria/computadores", image: "/products/photos/pc-rgb.jpg" },
+      { label: "Placas de vídeo", href: "/produtos/categoria/gpu", image: "/products/photos/pc-pro.jpg" },
+      { label: "Mouse · Teclado", href: "/produtos/categoria/mouse", image: "/products/photos/mouse.jpg" },
+      { label: "Monitores", href: "/produtos/categoria/monitor", image: "/products/photos/monitor.jpg" },
+      { label: "Cadeiras", href: "/produtos/categoria/cadeira", image: "/products/photos/cadeira.jpg" },
+    ],
+  },
+  shelves: [
+    { key: "lancamentos", eyebrowIcon: "zap", eyebrow: "Lançamentos", title: "Acabou de chegar", subtitle: "Últimas peças que chegaram em Palmas · do RTX 5070 ao Z790 DDR5", accentColor: "gold" },
+    { key: "maisVendidos", eyebrowIcon: "flame", eyebrow: "Mais Vendidos", title: "Top de linha em Palmas", subtitle: "O que a comunidade gamer de Palmas mais pede aqui", accentColor: "red" },
+    { key: "pcsProntos", eyebrowIcon: "monitor", eyebrow: "PCs Prontos", title: "Prontos pra levar", subtitle: "PCs montados, certificados e enviados com BIOS+drivers atualizados", accentColor: "gold" },
+    { key: "hardware", eyebrowIcon: "cpu", eyebrow: "Hardware", title: "As peças que fazem a build", subtitle: "GPU · CPU · SSD · Fonte das melhores marcas", accentColor: "gold", ctaHref: "/produtos/categoria/gpu", ctaLabel: "Ver Hardware completo" },
+    { key: "perifericos", eyebrowIcon: "gamepad", eyebrow: "Periféricos", title: "Setup completo na base", subtitle: "Mouse · teclado · monitor · headset · cadeira · tudo Husky/Razer/HyperX e mais", accentColor: "purple", ctaHref: "/produtos/categoria/mouse", ctaLabel: "Ver Periféricos" },
+    { key: "promos", eyebrowIcon: "tag", eyebrow: "Promo · OpenBox", title: "Aproveita antes que esgote", subtitle: "Produtos com desconto especial ou em condição open-box (testados, NF, garantia mantida)", accentColor: "red" },
+  ],
+  montador: {
+    eyebrow: "Configurador inteligente",
+    eyebrowIcon: "cpu",
+    title: "Monte seu PC",
+    titleAccent: "do seu jeito.",
+    subtitle: "8 passos · compatibilidade validada · orçamento direto no WhatsApp. A IA cuida pra você não comprar peça errada.",
+    ctaLabel: "Iniciar montador",
+    ctaHref: "/montador",
+  },
   contact: {
     whatsapp: "5563992528619",
     whatsappDisplay: "(63) 99252-8619",
@@ -100,6 +152,13 @@ function merge(remote: Partial<SiteConfig> | null | undefined): SiteConfig {
       ...(remote.trust ?? {}),
       cards: remote.trust?.cards?.length ? remote.trust.cards : d.trust.cards,
     },
+    categorias: {
+      ...d.categorias,
+      ...(remote.categorias ?? {}),
+      items: remote.categorias?.items?.length ? remote.categorias.items : d.categorias.items,
+    },
+    shelves: remote.shelves?.length ? remote.shelves : d.shelves,
+    montador: { ...d.montador, ...(remote.montador ?? {}) },
     contact: { ...d.contact, ...(remote.contact ?? {}) },
     seo: { ...d.seo, ...(remote.seo ?? {}) },
   };

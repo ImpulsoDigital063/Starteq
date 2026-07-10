@@ -3,7 +3,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StarField } from "@/components/StarField";
 import HeroParallax from "@/components/hero3d/HeroParallax";
-import { getSiteConfig } from "@/lib/site-config";
+import { getSiteConfig, type ShelfConfig } from "@/lib/site-config";
 import type { Metadata } from "next";
 import { ProductShelf } from "@/components/ProductShelf";
 import { Icon, type IconName } from "@/components/Icon";
@@ -35,6 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   const PRODUCTS = await getProducts();
   const site = await getSiteConfig();
+  const shelf = (k: string) => site.shelves.find((s) => s.key === k);
   const byBadge = (b: Product["badge"]) => PRODUCTS.filter((p) => p.badge === b && p.stock > 0);
   const lancamentos = byBadge("Lançamento");
   const maisVendidos = byBadge("Mais Vendido");
@@ -139,29 +140,17 @@ export default async function Home() {
             <Icon name="gamepad" size={16} />
             Categorias
           </div>
-          <h2 className="font-space text-3xl lg:text-4xl font-black text-starteq-bone mb-8">Onde quer começar?</h2>
+          <h2 className="font-space text-3xl lg:text-4xl font-black text-starteq-bone mb-8">{site.categorias.title}</h2>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            <CategoryTile href="/montador" label="Monte seu PC" image="/products/photos/cpu-ryzen.jpg" accent />
-            <CategoryTile href="/produtos/categoria/computadores" label="PCs prontos" image="/products/photos/pc-rgb.jpg" />
-            <CategoryTile href="/produtos/categoria/gpu" label="Placas de vídeo" image="/products/photos/pc-pro.jpg" />
-            <CategoryTile href="/produtos/categoria/mouse" label="Mouse · Teclado" image="/products/photos/mouse.jpg" />
-            <CategoryTile href="/produtos/categoria/monitor" label="Monitores" image="/products/photos/monitor.jpg" />
-            <CategoryTile href="/produtos/categoria/cadeira" label="Cadeiras" image="/products/photos/cadeira.jpg" />
+            {site.categorias.items.map((c, i) => (
+              <CategoryTile key={i} href={c.href} label={c.label} image={c.image} accent={c.accent} />
+            ))}
           </div>
         </div>
       </section>
 
-      {lancamentos.length > 0 && (
-        <ProductShelf
-          eyebrowIcon="zap"
-          eyebrow="Lançamentos"
-          title="Acabou de chegar"
-          subtitle="Últimas peças que chegaram em Palmas · do RTX 5070 ao Z790 DDR5"
-          products={lancamentos}
-          accentColor="gold"
-        />
-      )}
+      <ConfigShelf cfg={shelf("lancamentos")} products={lancamentos} />
 
       {/* BANNER CTA MONTADOR · nave Starteq atravessando o fundo */}
       <section className="relative overflow-hidden bg-starteq-black py-12 md:py-24 lg:py-32 border-y border-starteq-line min-h-[460px] md:min-h-[520px] lg:min-h-[600px]">
@@ -185,48 +174,28 @@ export default async function Home() {
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[1fr_auto] gap-6 lg:gap-8 items-end lg:items-center h-full pt-20 md:pt-0 text-center lg:text-left">
           <div className="max-w-xl mx-auto lg:mx-0">
             <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
-              <Icon name="cpu" size={16} />
-              Configurador inteligente
+              <Icon name={site.montador.eyebrowIcon} size={16} />
+              {site.montador.eyebrow}
             </div>
             <h2 className="font-space text-3xl lg:text-5xl font-black text-starteq-bone leading-tight mb-3 drop-shadow-[0_2px_16px_rgba(0,0,0,0.85)]">
-              Monte seu PC <span className="text-space-grad">do seu jeito.</span>
+              {site.montador.title} <span className="text-space-grad">{site.montador.titleAccent}</span>
             </h2>
             <p className="text-starteq-text text-base lg:text-lg max-w-xl mx-auto lg:mx-0 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
-              8 passos · compatibilidade validada · orçamento direto no WhatsApp.
-              A IA cuida pra você não comprar peça errada.
+              {site.montador.subtitle}
             </p>
           </div>
           <Link
-            href="/montador"
+            href={site.montador.ctaHref}
             className="inline-flex items-center justify-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-base px-8 py-5 rounded-lg transition-all animate-pulse-glow whitespace-nowrap shadow-2xl shadow-starteq-gold/30 mx-auto lg:mx-0"
           >
-            Iniciar montador <Icon name="arrow-right" size={20} strokeWidth={2.5} />
+            {site.montador.ctaLabel} <Icon name="arrow-right" size={20} strokeWidth={2.5} />
           </Link>
         </div>
       </section>
 
-      {maisVendidos.length > 0 && (
-        <ProductShelf
-          eyebrowIcon="flame"
-          eyebrow="Mais Vendidos"
-          title="Top de linha em Palmas"
-          subtitle="O que a comunidade gamer de Palmas mais pede aqui"
-          products={maisVendidos}
-          accentColor="red"
-        />
-      )}
+      <ConfigShelf cfg={shelf("maisVendidos")} products={maisVendidos} />
 
-      {pcsProntos.length > 0 && (
-        <ProductShelf
-          eyebrowIcon="monitor"
-          eyebrow="PCs Prontos"
-          title="Prontos pra levar"
-          subtitle="PCs montados, certificados e enviados com BIOS+drivers atualizados"
-          products={pcsProntos}
-          accentColor="gold"
-          highlightFirst
-        />
-      )}
+      <ConfigShelf cfg={shelf("pcsProntos")} products={pcsProntos} highlightFirst />
 
       {/* SOCIAL PROOF · transmissão da base */}
       <section className="bg-starteq-coal py-12 border-y border-starteq-line">
@@ -259,18 +228,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {hardware.length > 0 && (
-        <ProductShelf
-          eyebrowIcon="cpu"
-          eyebrow="Hardware"
-          title="As peças que fazem a build"
-          subtitle="GPU · CPU · SSD · Fonte das melhores marcas"
-          products={hardware}
-          ctaHref="/produtos/categoria/gpu"
-          ctaLabel="Ver Hardware completo"
-          accentColor="gold"
-        />
-      )}
+      <ConfigShelf cfg={shelf("hardware")} products={hardware} />
 
 
       {/* MARCAS · carrossel logos reais (SVG simpleicons) */}
@@ -362,18 +320,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {perifericos.length > 0 && (
-        <ProductShelf
-          eyebrowIcon="gamepad"
-          eyebrow="Periféricos"
-          title="Setup completo na base"
-          subtitle="Mouse · teclado · monitor · headset · cadeira · tudo Husky/Razer/HyperX e mais"
-          products={perifericos}
-          ctaHref="/produtos/categoria/mouse"
-          ctaLabel="Ver Periféricos"
-          accentColor="purple"
-        />
-      )}
+      <ConfigShelf cfg={shelf("perifericos")} products={perifericos} />
 
       {/* NEWSLETTER · centro de comando Starteq · cockpit ao fundo */}
       <section className="relative overflow-hidden bg-starteq-black py-12 md:py-20 lg:py-24 border-y border-starteq-line min-h-[460px] md:min-h-[480px] lg:min-h-[520px]">
@@ -440,16 +387,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {promos.length > 0 && (
-        <ProductShelf
-          eyebrowIcon="tag"
-          eyebrow="Promo · OpenBox"
-          title="Aproveita antes que esgote"
-          subtitle="Produtos com desconto especial ou em condição open-box (testados, NF, garantia mantida)"
-          products={promos}
-          accentColor="red"
-        />
-      )}
+      <ConfigShelf cfg={shelf("promos")} products={promos} />
 
       {/* CONFIANÇA / LOCAL · a vantagem que loja nacional não tem */}
       <section className="bg-starteq-coal py-14 border-y border-starteq-line">
@@ -618,6 +556,23 @@ function ObjectiveTile({ icon, title, desc, href }: { icon: IconName; title: str
         Montar meu PC <Icon name="arrow-right" size={14} strokeWidth={2.5} />
       </div>
     </Link>
+  );
+}
+
+function ConfigShelf({ cfg, products, highlightFirst }: { cfg?: ShelfConfig; products: Product[]; highlightFirst?: boolean }) {
+  if (!cfg || cfg.enabled === false || products.length === 0) return null;
+  return (
+    <ProductShelf
+      eyebrowIcon={cfg.eyebrowIcon}
+      eyebrow={cfg.eyebrow}
+      title={cfg.title}
+      subtitle={cfg.subtitle}
+      products={products}
+      accentColor={cfg.accentColor}
+      ctaHref={cfg.ctaHref}
+      ctaLabel={cfg.ctaLabel}
+      highlightFirst={highlightFirst}
+    />
   );
 }
 
