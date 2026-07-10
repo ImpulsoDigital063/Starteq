@@ -40,13 +40,13 @@ export default async function Home() {
   const lancamentos = byBadge("Lançamento");
   const maisVendidos = byBadge("Mais Vendido");
   const promos = [...byBadge("Promo"), ...byBadge("OpenBox")];
-  const pcsProntos = PRODUCTS.filter((p) => p.category === "computadores");
-  const perifericos = PRODUCTS.filter((p) =>
-    ["mouse", "teclado", "monitor", "headset", "mousepad", "cadeira"].includes(p.category)
-  ).slice(0, 8);
-  const hardware = PRODUCTS.filter((p) =>
-    ["gpu", "cpu", "ssd", "fonte"].includes(p.category)
-  ).slice(0, 8);
+  const inStockFirst = (a: Product, b: Product) => (b.stock > 0 ? 1 : 0) - (a.stock > 0 ? 1 : 0);
+  const pcsProntos = [...PRODUCTS.filter((p) => p.category === "computadores")].sort(inStockFirst);
+  // spread por subcategoria: evita a prateleira virar 8 itens do mesmo tipo
+  const spread = (cats: Product["category"][], perCat: number, total: number) =>
+    cats.flatMap((c) => PRODUCTS.filter((p) => p.category === c && p.stock > 0).slice(0, perCat)).slice(0, total);
+  const perifericos = spread(["mouse", "teclado", "monitor", "headset", "cadeira", "mousepad"], 2, 8);
+  const hardware = spread(["gpu", "cpu", "ssd", "fonte"], 2, 8);
 
   return (
     <>
@@ -77,7 +77,7 @@ export default async function Home() {
               <span className="w-1.5 h-1.5 rounded-full bg-starteq-gold animate-pulse" />
               {site.hero.eyebrow}
             </div>
-            <h1 data-glitch className="font-space text-4xl sm:text-5xl lg:text-7xl font-black leading-[0.95] text-starteq-bone mb-6 drop-shadow-[0_2px_20px_rgba(0,0,0,0.85)]">
+            <h1 className="font-space text-4xl sm:text-5xl lg:text-7xl font-black leading-[0.95] text-starteq-bone mb-6 drop-shadow-[0_2px_20px_rgba(0,0,0,0.85)]">
               {site.hero.titleLine1}<br />
               <span className="text-space-grad">{site.hero.titleLine2}</span>
             </h1>

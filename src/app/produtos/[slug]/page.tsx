@@ -173,15 +173,18 @@ export default async function ProdutoPage({ params }: Params) {
                     R$ {product.pix_price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                   </span>
                 </div>
-                <div className="text-sm text-starteq-pix mt-1 font-space font-bold uppercase tracking-wider">
-                  no PIX com {discount > 0 ? `${discount}%` : "15%"} de desconto
-                </div>
+                {discount > 0 ? (
+                  <div className="text-sm text-starteq-pix mt-1 font-space font-bold uppercase tracking-wider">
+                    no PIX com {discount}% de desconto
+                  </div>
+                ) : (
+                  <div className="text-sm text-starteq-muted mt-1 font-space font-bold uppercase tracking-wider">
+                    à vista no PIX
+                  </div>
+                )}
                 <div className="border-t border-starteq-line my-4" />
                 <div className="text-sm text-starteq-text">
-                  Ou R$ <span className="font-mono">{product.price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
-                </div>
-                <div className="text-sm text-starteq-text mt-0.5">
-                  Em até <strong className="text-starteq-bone font-mono">10x de R$ {(product.price / 10).toFixed(2)}</strong> sem juros
+                  Em até <strong className="text-starteq-bone font-mono">10x de R$ {(product.price / 10).toFixed(2)}</strong> sem juros no cartão
                 </div>
               </div>
 

@@ -57,7 +57,7 @@ export function ProductCard({ product, size = "default" }: ProductCardProps) {
         )}
         {product.stock > 0 && (
           <div className="absolute bottom-3 left-3 flex flex-col items-start gap-1.5">
-            {product.category === "computadores" && (
+            {product.category === "computadores" && !product.name.toLowerCase().includes("notebook") && (
               <span className="px-2 py-0.5 rounded text-[10px] font-space font-bold uppercase tracking-wider bg-starteq-black/80 border border-starteq-gold/40 text-starteq-gold backdrop-blur-sm">
                 Montado e testado
               </span>

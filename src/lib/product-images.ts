@@ -102,6 +102,8 @@ export function getProductGallery(
   product: Pick<Product, "sku" | "slug" | "category" | "brand" | "image">,
 ): string[] {
   const primary = getProductPhoto(product);
+  // produto com imagem REAL migrada → mostra só ela (não mistura fotos genéricas de contexto)
+  if (product.image && product.image.startsWith("/products/starteq/")) return [primary];
   const cat = product.category;
 
   // Periféricos · galeria mais "ambiente" e "uso real"
