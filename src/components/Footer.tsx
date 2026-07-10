@@ -167,6 +167,7 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <FooterLink href="/como-comprar">Como comprar</FooterLink>
               <FooterLink href="/trocas-devolucoes">Trocas e devoluções</FooterLink>
+              <FooterLink href="/duvidas-frequentes">Dúvidas frequentes</FooterLink>
               <FooterLink href="/trocas-devolucoes#garantia">Garantia</FooterLink>
               <FooterLink href="/como-comprar#pagamento">Formas de pagamento</FooterLink>
               <FooterLink href="/como-comprar#frete">Frete e entrega</FooterLink>
@@ -181,11 +182,11 @@ export function Footer() {
             </h4>
             <ul className="space-y-2 text-sm">
               <FooterLink external href="https://wa.me/5563992988916">SAC · WhatsApp</FooterLink>
-              <FooterLink external href="https://wa.me/5563992988916">Fale conosco</FooterLink>
+              <FooterLink href="/fale-conosco">Fale conosco</FooterLink>
               <FooterLink href="/quem-somos">Quem somos</FooterLink>
               <FooterLink href="/blog">Blog · Tutoriais</FooterLink>
-              <FooterLink href="/termos">Termos de uso</FooterLink>
-              <FooterLink href="/privacidade">Política de privacidade</FooterLink>
+              <FooterLink href="/duvidas-frequentes">Dúvidas frequentes</FooterLink>
+              <FooterLink href="/politica-privacidade">Política de privacidade</FooterLink>
             </ul>
           </div>
         </div>

@@ -23,7 +23,10 @@ const LINKS: { href: string; label: string; icon?: Parameters<typeof Icon>[0]["n
   { href: "/produtos/categoria/cadeira", label: "Cadeiras", icon: "armchair" },
   { href: "/blog", label: "Blog", icon: "file" },
   { href: "/como-comprar", label: "Como comprar", icon: "info" },
+  { href: "/duvidas-frequentes", label: "Dúvidas frequentes", icon: "info" },
   { href: "/quem-somos", label: "Quem somos", icon: "shield" },
+  { href: "/fale-conosco", label: "Fale conosco", icon: "whatsapp" },
+  { href: "/politica-privacidade", label: "Privacidade", icon: "lock" },
 ];
 
 export function MobileNav() {

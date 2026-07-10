@@ -31,6 +31,18 @@ export default function TrocasPage() {
                 (arrependimento, defeito, peça errada). Em até 24h úteis a tripulação Starteq retorna com o procedimento de coleta.
               </Card>
 
+              <Card title="Condições pra devolução">
+                O produto deve voltar na embalagem original, sem indícios de uso e sem violação do lacre do fabricante, acompanhado do
+                DANFE (nota fiscal eletrônica), do manual e de todos os acessórios. Em desistências, a etiqueta/lacre do produto é imprescindível.
+                Cancelamentos também podem ser feitos direto no painel de controle, no tópico &quot;Cancelar pedido&quot;.
+              </Card>
+
+              <Card title="Devolução pelos Correios">
+                Se o produto com a embalagem pesar menos de 15kg e não ultrapassar 105cm em cada dimensão, a devolução pode ser feita por
+                postagem. A gente envia por e-mail o código de postagem pra apresentar na agência dos Correios. Acondicione o produto na
+                embalagem original, devolva todos os acessórios, junte a 2ª via do DANFE e relate o motivo da devolução no verso.
+              </Card>
+
               <Card title="Produto chegou com defeito">
                 Não tente arrumar. Chama a gente que iniciamos a troca ou reparo dentro da garantia. PCs montados na Starteq saem com BIOS,
                 drivers atualizados e teste de estabilidade · se algo vier errado, é com a gente.
