@@ -10,7 +10,7 @@ type ProductImageProps = {
   category: Category;
   alt: string;
   className?: string;
-  product?: Pick<Product, "sku" | "slug" | "category" | "brand">;
+  product?: Pick<Product, "sku" | "slug" | "category" | "brand" | "image">;
 };
 
 const CATEGORY_GRADIENTS: Record<Category, [string, string]> = {

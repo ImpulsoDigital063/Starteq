@@ -42,3 +42,6 @@ next-env.d.ts
 
 .vercel
 .claude/settings.local.json
+
+# originais brutos das imagens migradas (comprimidos vão pra public/products/starteq)
+tmp-starteq-img/

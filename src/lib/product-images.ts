@@ -39,7 +39,9 @@ const GPU_VARIANTS = [
   `${BASE}/mobo.jpg`,
 ];
 
-export function getProductPhoto(product: Pick<Product, "sku" | "slug" | "category" | "brand">): string {
+export function getProductPhoto(product: Pick<Product, "sku" | "slug" | "category" | "brand" | "image">): string {
+  // Imagem REAL migrada (starteqpalmas.com → WebP local) tem prioridade sobre o placeholder
+  if (product.image && product.image.startsWith("/products/starteq/")) return product.image;
   const slug = product.slug.toLowerCase();
   const sku = product.sku.toLowerCase();
   const brand = product.brand.toLowerCase();
@@ -97,7 +99,7 @@ function simpleHash(str: string): number {
 // 3: detalhe (componente em destaque)
 // 4: ambiente (PC montado em uso)
 export function getProductGallery(
-  product: Pick<Product, "sku" | "slug" | "category" | "brand">,
+  product: Pick<Product, "sku" | "slug" | "category" | "brand" | "image">,
 ): string[] {
   const primary = getProductPhoto(product);
   const cat = product.category;
