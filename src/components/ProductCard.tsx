@@ -25,7 +25,8 @@ export function ProductCard({ product, size = "default" }: ProductCardProps) {
   return (
     <Link
       href={`/produtos/${product.slug}`}
-      className={`group bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-xl overflow-hidden transition-all hover:-translate-y-1 flex flex-col ${
+      data-tilt
+      className={`group bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-xl overflow-hidden hover:shadow-2xl hover:shadow-starteq-gold/10 flex flex-col ${
         size === "large" ? "min-h-[480px]" : ""
       }`}
     >
@@ -43,8 +44,8 @@ export function ProductCard({ product, size = "default" }: ProductCardProps) {
           </div>
         )}
         {discount > 0 && (
-          <div className="absolute top-3 right-3 px-2 py-1 rounded text-xs font-space font-bold bg-starteq-pix text-white">
-            -{discount}%
+          <div className="absolute top-3 right-3 px-2 py-1 rounded text-xs font-space font-black bg-starteq-gold text-starteq-black shadow-lg shadow-starteq-gold/20">
+            -{discount}% OFF
           </div>
         )}
         {product.stock === 0 && (
@@ -52,6 +53,20 @@ export function ProductCard({ product, size = "default" }: ProductCardProps) {
             <span className="px-3 py-1.5 rounded font-space font-bold text-xs uppercase tracking-wider bg-starteq-red/90 text-white">
               Esgotado
             </span>
+          </div>
+        )}
+        {product.stock > 0 && (
+          <div className="absolute bottom-3 left-3 flex flex-col items-start gap-1.5">
+            {product.category === "computadores" && (
+              <span className="px-2 py-0.5 rounded text-[10px] font-space font-bold uppercase tracking-wider bg-starteq-black/80 border border-starteq-gold/40 text-starteq-gold backdrop-blur-sm">
+                Montado e testado
+              </span>
+            )}
+            {product.stock <= 5 && (
+              <span className="px-2 py-0.5 rounded text-[10px] font-space font-bold uppercase tracking-wider bg-starteq-warn/90 text-starteq-black">
+                Últimas {product.stock} un.
+              </span>
+            )}
           </div>
         )}
       </div>
@@ -78,8 +93,13 @@ export function ProductCard({ product, size = "default" }: ProductCardProps) {
           <div className="text-[10px] text-starteq-muted uppercase tracking-wider font-bold mt-1">
             à vista no PIX
           </div>
-          <div className="text-xs text-starteq-text mt-1">
-            ou 10x de R$ {(product.price / 10).toFixed(2)}
+          {product.price > product.pix_price && (
+            <div className="text-[10px] text-starteq-pix font-bold mt-0.5">
+              economia de R$ {(product.price - product.pix_price).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+            </div>
+          )}
+          <div className="text-xs text-starteq-text mt-1.5">
+            ou 10x de R$ {(product.price / 10).toFixed(2)} <span className="text-starteq-muted">sem juros</span>
           </div>
         </div>
       </div>

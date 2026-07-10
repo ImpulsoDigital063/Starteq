@@ -224,4 +224,56 @@
     .animate-float-slow { animation: none !important; }
     .animate-pulse-glow { animation: none !important; }
   }
+
+  /* ===== Lenis (scroll suave) — regras base inlinadas ===== */
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+  .lenis.lenis-stopped { overflow: hidden; }
+  .lenis.lenis-smooth iframe { pointer-events: none; }
+
+  /* ===== Camada gamer (cursor de mira + magnetic + tilt + glitch) ===== */
+  body.gamer-cursor,
+  body.gamer-cursor a,
+  body.gamer-cursor button { cursor: none; }
+  body.gamer-cursor input,
+  body.gamer-cursor textarea,
+  body.gamer-cursor select { cursor: text; }
+
+  .gamer-ring,
+  .gamer-dot {
+    position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+    will-change: transform; display: none;
+  }
+  .gamer-dot { width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; background: #F5C518; border-radius: 50%; box-shadow: 0 0 8px rgba(245,197,24,0.9); }
+  .gamer-ring {
+    width: 34px; height: 34px; margin: -17px 0 0 -17px;
+    border: 1.5px solid rgba(245, 197, 24, 0.85); border-radius: 50%;
+    transition: width .18s ease, height .18s ease, margin .18s ease, border-radius .18s ease, background .18s ease;
+  }
+  .gamer-ring.lock {
+    width: 54px; height: 54px; margin: -27px 0 0 -27px; border-radius: 10px;
+    background: rgba(245, 197, 24, 0.08);
+  }
+  @media (pointer: fine) { .gamer-ring, .gamer-dot { display: block; } }
+
+  [data-magnetic] { transition: transform .18s cubic-bezier(.2,.8,.2,1); }
+  [data-tilt] { transition: transform .28s ease-out; transform-style: preserve-3d; }
+
+  /* reveal + glitch ao entrar na tela */
+  [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.8,.2,1); }
+  [data-reveal].in-view { opacity: 1; transform: none; }
+  @keyframes glitchflick {
+    0%   { text-shadow: none; transform: translate(0,0); }
+    20%  { text-shadow: -2px 0 #F5C518, 2px 0 #22d3ee; transform: translate(1px,-1px); }
+    45%  { text-shadow: 2px 0 #F5C518, -2px 0 #DC2626; transform: translate(-1px,1px); }
+    70%  { text-shadow: -1px 0 #F5C518; transform: translate(1px,0); }
+    100% { text-shadow: none; transform: translate(0,0); }
+  }
+  [data-glitch].glitched { animation: glitchflick .45s steps(3) 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1 !important; transform: none !important; transition: none !important; }
+    [data-tilt] { transition: none !important; }
+  }
 }

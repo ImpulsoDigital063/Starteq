@@ -1,6 +1,7 @@
 // Ponte site → ComandaPRO (headless). O site é a VITRINE; o ComandaPRO é o ERP/fonte única.
 // Catálogo e estoque vêm do sistema; a montagem do cliente vira uma OS lá.
 // Base configurável: dev = localhost:3000; prod = https://comandapro.net.br (via env).
+import { PRODUCTS } from "@/lib/catalog";
 import type { Product, Category } from "@/lib/catalog";
 
 const BASE = process.env.NEXT_PUBLIC_COMANDAPRO_API || "https://comandapro.net.br";
@@ -16,9 +17,9 @@ type ApiProduct = {
 export async function getProducts(): Promise<Product[]> {
   try {
     const r = await fetch(`${BASE}/api/loja/${SLUG}/produtos`, { cache: "no-store" });
-    if (!r.ok) return [];
+    if (!r.ok) return PRODUCTS; // backend fora → catálogo estático (nunca vitrine vazia)
     const d = await r.json();
-    return ((d.products as ApiProduct[]) ?? []).map((p) => ({
+    const mapped = ((d.products as ApiProduct[]) ?? []).map((p) => ({
       sku: p.sku,
       slug: p.sku,
       name: p.name,
@@ -32,8 +33,10 @@ export async function getProducts(): Promise<Product[]> {
       highlight: p.highlight,
       badge: p.badge,
     }));
+    // ComandaPRO com dado real ganha; só cai no snapshot quando vier vazio
+    return mapped.length > 0 ? mapped : PRODUCTS;
   } catch {
-    return [];
+    return PRODUCTS;
   }
 }
 

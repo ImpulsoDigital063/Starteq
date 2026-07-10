@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Rajdhani, JetBrains_Mono, Orbitron } from "next/font/google";
 import "./globals.css";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+import SmoothScroll from "@/components/fx/SmoothScroll";
+import GamerFX from "@/components/fx/GamerFX";
 
 const SITE_URL = "https://starteq.vercel.app";
 
@@ -120,8 +122,10 @@ export default function RootLayout({
       className={`${inter.variable} ${rajdhani.variable} ${jetbrains.variable} ${orbitron.variable}`}
     >
       <body className="min-h-screen flex flex-col">
+        <SmoothScroll />
         <CartProvider>{children}</CartProvider>
         <FloatingWhatsApp />
+        <GamerFX />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}

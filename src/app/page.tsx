@@ -1,9 +1,8 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StarField } from "@/components/StarField";
-import { Meteors } from "@/components/Meteors";
+import HeroParallax from "@/components/hero3d/HeroParallax";
 import { ProductShelf } from "@/components/ProductShelf";
 import { Icon, type IconName } from "@/components/Icon";
 import { getProducts } from "@/lib/comandapro";
@@ -46,29 +45,12 @@ export default async function Home() {
 
       {/* HERO · imagem cinematográfica full-bleed + texto sobre negative space */}
       <section className="relative overflow-hidden bg-starteq-black min-h-[85svh] md:min-h-[88vh] flex items-end md:items-center">
-        {/* Mobile: astronauta vertical no topo · texto embaixo */}
-        <Image
-          src="/hero-mobile.jpg"
-          alt="Astronauta Starteq · capacete dourado refletindo o eclipse Phoenix"
-          fill
-          priority
-          quality={88}
-          sizes="(max-width: 768px) 100vw, 1px"
-          className="object-cover object-top md:hidden"
-        />
-        {/* Desktop: astronauta wide na direita · texto na esquerda */}
-        <Image
-          src="/hero-desktop.jpg"
-          alt="Astronauta Starteq · capacete dourado refletindo o eclipse Phoenix"
-          fill
-          priority
-          quality={92}
-          sizes="(min-width: 768px) 100vw, 1px"
-          className="hidden md:block object-cover"
-          style={{
-            objectPosition: "calc(100% + 80px) center",
-            filter: "brightness(1.05) saturate(1.05)",
-          }}
+        {/* Hero 2.5D · foto cinematográfica + parallax/profundidade + surpresa no scroll (decolagem) · responsivo */}
+        <HeroParallax
+          desktopSrc="/hero-desktop.jpg"
+          mobileSrc="/hero-mobile.jpg"
+          objectPosition="calc(100% + 80px) center"
+          mobileObjectPosition="center top"
         />
 
         {/* Gradient overlay mobile: vertical fade pra preto na metade inferior · esconde watermark AI */}
@@ -78,11 +60,7 @@ export default async function Home() {
         {/* Gradient fino topo+base · fade pra preto puro · sutil pra preservar brilho */}
         <div className="absolute inset-0 bg-gradient-to-b from-starteq-black/25 via-transparent to-starteq-black/50 pointer-events-none" />
 
-        {/* Meteoros · mix-blend-mode screen faz eles "passarem atrás" do astronauta
-           (visíveis nas zonas pretas do fundo, invisíveis nas zonas claras da imagem) */}
-        <div className="absolute inset-0 pointer-events-none" style={{ mixBlendMode: "screen" }}>
-          <Meteors />
-        </div>
+        {/* poeira/warp já vêm do HeroParallax */}
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 lg:py-24 w-full">
           <div className="max-w-2xl">
@@ -90,57 +68,29 @@ export default async function Home() {
               <span className="w-1.5 h-1.5 rounded-full bg-starteq-gold animate-pulse" />
               Estação Palmas · Tocantins
             </div>
-            <h1 className="font-space text-4xl sm:text-5xl lg:text-7xl font-black leading-[0.95] text-starteq-bone mb-6 drop-shadow-[0_2px_20px_rgba(0,0,0,0.85)]">
-              Sua build pronta<br />
-              <span className="text-space-grad">em Palmas. Hoje.</span>
+            <h1 data-glitch className="font-space text-4xl sm:text-5xl lg:text-7xl font-black leading-[0.95] text-starteq-bone mb-6 drop-shadow-[0_2px_20px_rgba(0,0,0,0.85)]">
+              Monte seu PC gamer<br />
+              <span className="text-space-grad">do seu jeito.</span>
             </h1>
             <p className="text-base sm:text-lg text-starteq-text leading-relaxed max-w-lg mb-8 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
-              PC gamer montado, testado e entregue no mesmo dia.
-              Compatibilidade validada peça a peça · atendimento no WhatsApp em até 30 minutos.
+              Você escolhe as peças, a Starteq valida a compatibilidade, monta à mão e testa rodando de verdade. Sem risco de montar errado — e com gente de Palmas pra te ajudar.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
                 href="/montador"
+                data-magnetic
                 className="inline-flex items-center justify-center gap-2 bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-space font-bold tracking-wide uppercase text-sm px-8 py-4 rounded-lg transition-all animate-pulse-glow shadow-2xl shadow-starteq-gold/30"
               >
-                Decolar montador
+                Montar meu PC
                 <Icon name="arrow-right" size={18} strokeWidth={2.5} />
               </Link>
               <Link
                 href="/produtos/categoria/computadores"
+                data-magnetic
                 className="inline-flex items-center justify-center gap-2 bg-starteq-black/60 backdrop-blur-sm border border-starteq-line hover:border-starteq-gold/40 text-starteq-bone hover:text-starteq-gold font-space font-bold tracking-wide uppercase text-sm px-8 py-4 rounded-lg transition-all"
               >
                 PCs prontos
               </Link>
-            </div>
-
-            <div className="mt-8 md:mt-12 hidden md:grid grid-cols-3 gap-6 max-w-md">
-              <div>
-                <div className="text-2xl sm:text-3xl font-space font-black text-starteq-gold flex items-center gap-1 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
-                  4.6 <Icon name="star" size={20} className="text-starteq-gold" />
-                </div>
-                <div className="text-[10px] sm:text-xs text-starteq-muted uppercase tracking-wider mt-1">67 reviews Google</div>
-              </div>
-              <div>
-                <div className="text-2xl sm:text-3xl font-space font-black text-starteq-gold drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">6+</div>
-                <div className="text-[10px] sm:text-xs text-starteq-muted uppercase tracking-wider mt-1">Anos em Palmas</div>
-              </div>
-              <div>
-                <div className="text-2xl sm:text-3xl font-space font-black text-starteq-gold drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">9k+</div>
-                <div className="text-[10px] sm:text-xs text-starteq-muted uppercase tracking-wider mt-1">No Instagram</div>
-              </div>
-            </div>
-
-            {/* Stats compactos pro mobile · linha única abaixo dos CTAs */}
-            <div className="md:hidden mt-6 flex items-center gap-4 text-xs text-starteq-muted">
-              <span className="inline-flex items-center gap-1 text-starteq-gold font-space font-bold">
-                4.6 <Icon name="star" size={12} />
-              </span>
-              <span>·</span>
-              <span>6 anos em Palmas</span>
-              <span>·</span>
-              <span className="text-starteq-gold font-space font-bold">9k+</span>
-              <span>seguidores</span>
             </div>
           </div>
         </div>
@@ -151,7 +101,7 @@ export default async function Home() {
       {/* FAIXA PROMO · marquee */}
       <section className="bg-starteq-gold text-starteq-black py-3 overflow-hidden">
         <div className="flex items-center justify-center gap-12 whitespace-nowrap animate-[scroll_30s_linear_infinite] font-space font-bold uppercase tracking-wider text-sm">
-          <PromoBadge icon="bike" text="Same-day em Palmas" />
+          <PromoBadge icon="wrench" text="Montado à mão em Palmas" />
           <span>·</span>
           <PromoBadge icon="credit-card" text="10x sem juros no cartão" />
           <span>·</span>
@@ -162,6 +112,23 @@ export default async function Home() {
           <PromoBadge icon="bot" text="IA + atendimento humano no WhatsApp" />
           <span>·</span>
           <PromoBadge icon="rocket" text="Build com compatibilidade validada" />
+        </div>
+      </section>
+
+      {/* QUAL PC VOCÊ PROCURA · tiles por objetivo → montador */}
+      <section className="bg-starteq-black py-12 lg:py-16 border-b border-starteq-line">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-2">
+            <Icon name="gamepad" size={16} />
+            Pra que vai ser a máquina
+          </div>
+          <h2 data-glitch className="font-space text-3xl lg:text-4xl font-black text-starteq-bone mb-8">Qual PC você procura?</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <ObjectiveTile icon="flame" title="Jogar pesado" desc="Os lançamentos AAA no ultra, sem engasgo." />
+            <ObjectiveTile icon="zap" title="Competitivo" desc="Valorant, CS e LoL voando, FPS alto e estável." />
+            <ObjectiveTile icon="monitor" title="Trabalho + jogo" desc="Edita, faz live e joga na mesma máquina." />
+            <ObjectiveTile icon="rocket" title="Começar bem" desc="Seu primeiro PC gamer, montado sem erro." />
+          </div>
         </div>
       </section>
 
@@ -198,29 +165,13 @@ export default async function Home() {
 
       {/* BANNER CTA MONTADOR · nave Starteq atravessando o fundo */}
       <section className="relative overflow-hidden bg-starteq-black py-12 md:py-24 lg:py-32 border-y border-starteq-line min-h-[460px] md:min-h-[520px] lg:min-h-[600px]">
-        {/* Mobile: nave vertical no topo · texto embaixo */}
-        <Image
-          src="/nave-mobile.jpg"
-          alt="Nave Starteq atravessando o espaço com propulsores dourados"
-          fill
-          quality={90}
-          sizes="(max-width: 768px) 100vw, 1px"
-          className="object-cover object-top md:hidden animate-nave-glide"
-        />
-        {/* Desktop: nave wide centralizada · STARTEQ visível na fuselagem */}
-        <Image
-          src="/nave-desktop.jpg"
-          alt="Nave Starteq atravessando o espaço com propulsores dourados"
-          fill
-          quality={92}
-          sizes="(min-width: 768px) 100vw, 1px"
-          className="hidden md:block object-cover animate-nave-glide"
-          style={{
-            objectPosition: "60% center",
-            transform: "scale(1.15)",
-            transformOrigin: "65% center",
-            filter: "brightness(1.08) saturate(1.08) contrast(1.03)",
-          }}
+        {/* Banda 2.5D · nave + parallax/profundidade + warp no scroll */}
+        <HeroParallax
+          desktopSrc="/nave-desktop.jpg"
+          mobileSrc="/nave-mobile.jpg"
+          objectPosition="60% center"
+          mobileObjectPosition="center top"
+          filter="brightness(1.08) saturate(1.08) contrast(1.03)"
         />
 
         {/* Gradient overlay mobile · vertical fade pra preto na metade inferior */}
@@ -229,10 +180,7 @@ export default async function Home() {
         <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-starteq-black via-starteq-black/70 via-50% to-transparent pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-b from-starteq-black/40 via-transparent to-starteq-black/60 pointer-events-none" />
 
-        {/* Meteoros sutis · mix-blend-screen pra passar atrás da nave */}
-        <div className="absolute inset-0 pointer-events-none" style={{ mixBlendMode: "screen" }}>
-          <Meteors className="opacity-60" />
-        </div>
+        {/* poeira/warp vêm do HeroParallax */}
 
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-[1fr_auto] gap-6 lg:gap-8 items-end lg:items-center h-full pt-20 md:pt-0 text-center lg:text-left">
           <div className="max-w-xl mx-auto lg:mx-0">
@@ -272,7 +220,7 @@ export default async function Home() {
         <ProductShelf
           eyebrowIcon="monitor"
           eyebrow="PCs Prontos"
-          title="Leva pra casa hoje"
+          title="Prontos pra levar"
           subtitle="PCs montados, certificados e enviados com BIOS+drivers atualizados"
           products={pcsProntos}
           accentColor="gold"
@@ -324,29 +272,6 @@ export default async function Home() {
         />
       )}
 
-      {perifericos.length > 0 && (
-        <ProductShelf
-          eyebrowIcon="gamepad"
-          eyebrow="Periféricos"
-          title="Setup completo na base"
-          subtitle="Mouse · teclado · monitor · headset · cadeira · tudo Husky/Razer/HyperX e mais"
-          products={perifericos}
-          ctaHref="/produtos/categoria/mouse"
-          ctaLabel="Ver Periféricos"
-          accentColor="purple"
-        />
-      )}
-
-      {promos.length > 0 && (
-        <ProductShelf
-          eyebrowIcon="tag"
-          eyebrow="Promo · OpenBox"
-          title="Aproveita antes que esgote"
-          subtitle="Produtos com desconto especial ou em condição open-box (testados, NF, garantia mantida)"
-          products={promos}
-          accentColor="red"
-        />
-      )}
 
       {/* MARCAS · carrossel logos reais (SVG simpleicons) */}
       <section className="bg-starteq-coal py-12 border-y border-starteq-line overflow-hidden">
@@ -380,28 +305,15 @@ export default async function Home() {
 
       {/* SELOS · O jeito Starteq · engenheiro espacial no fundo + 3 etapas numeradas */}
       <section className="relative overflow-hidden bg-starteq-black py-12 md:py-20 lg:py-24 min-h-[480px] md:min-h-[560px]">
-        {/* Mobile: engenheiro vertical no topo */}
-        <Image
-          src="/engenheiro-mobile.jpg"
-          alt="Engenheiro Starteq montando PC com placa-mãe holográfica"
-          fill
-          quality={88}
-          sizes="(max-width: 768px) 100vw, 1px"
-          className="md:hidden object-cover object-top"
-        />
-        {/* Desktop: engenheiro wide à direita · object-contain mostra a CENA INTEIRA
-           (engenheiro + holograma + arco + sparks) sem zoom in close-up */}
-        <Image
-          src="/engenheiro-desktop.jpg"
-          alt="Engenheiro Starteq montando PC com placa-mãe holográfica"
-          fill
-          quality={90}
-          sizes="(min-width: 768px) 100vw, 1px"
-          className="hidden md:block object-contain"
-          style={{
-            objectPosition: "right center",
-            filter: "brightness(1.08) saturate(1.08)",
-          }}
+        {/* Banda 2.5D · engenheiro (contain, cena inteira) + parallax + warp no scroll */}
+        <HeroParallax
+          desktopSrc="/engenheiro-desktop.jpg"
+          mobileSrc="/engenheiro-mobile.jpg"
+          objectPosition="right center"
+          mobileObjectPosition="center top"
+          fit="contain"
+          baseScale={1}
+          filter="brightness(1.08) saturate(1.08)"
         />
 
         {/* Gradient mobile · vertical fade pra preto inferior */}
@@ -450,26 +362,28 @@ export default async function Home() {
         </div>
       </section>
 
+      {perifericos.length > 0 && (
+        <ProductShelf
+          eyebrowIcon="gamepad"
+          eyebrow="Periféricos"
+          title="Setup completo na base"
+          subtitle="Mouse · teclado · monitor · headset · cadeira · tudo Husky/Razer/HyperX e mais"
+          products={perifericos}
+          ctaHref="/produtos/categoria/mouse"
+          ctaLabel="Ver Periféricos"
+          accentColor="purple"
+        />
+      )}
+
       {/* NEWSLETTER · centro de comando Starteq · cockpit ao fundo */}
       <section className="relative overflow-hidden bg-starteq-black py-12 md:py-20 lg:py-24 border-y border-starteq-line min-h-[460px] md:min-h-[480px] lg:min-h-[520px]">
-        {/* Mobile: cockpit vertical com STARTEQ COMMAND no topo · console + waveforms */}
-        <Image
-          src="/cockpit-mobile.jpg"
-          alt="Centro de comando Starteq · displays gold transmitindo sinais"
-          fill
-          quality={88}
-          sizes="(max-width: 768px) 100vw, 1px"
-          className="md:hidden object-cover object-top"
-        />
-        {/* Desktop: cockpit panorâmico full-bleed */}
-        <Image
-          src="/cockpit-desktop.jpg"
-          alt="Centro de comando Starteq · displays gold transmitindo sinais"
-          fill
-          quality={90}
-          sizes="(min-width: 768px) 100vw, 1px"
-          className="hidden md:block object-cover"
-          style={{ objectPosition: "center center", filter: "brightness(1.05) saturate(1.05)" }}
+        {/* Banda 2.5D · cockpit + parallax + warp no scroll */}
+        <HeroParallax
+          desktopSrc="/cockpit-desktop.jpg"
+          mobileSrc="/cockpit-mobile.jpg"
+          objectPosition="center center"
+          mobileObjectPosition="center top"
+          filter="brightness(1.05) saturate(1.05)"
         />
 
         {/* Gradient mobile · vertical fade pra preto inferior · texto+form aterrissam na zona escura */}
@@ -477,10 +391,7 @@ export default async function Home() {
         {/* Gradient desktop · horizontal fade pra preto na esquerda · texto+form na zona escura */}
         <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-starteq-black via-starteq-black/85 via-50% to-transparent pointer-events-none" />
 
-        {/* Meteoros sutis com mix-blend-screen */}
-        <div className="absolute inset-0 pointer-events-none" style={{ mixBlendMode: "screen" }}>
-          <Meteors className="opacity-50" />
-        </div>
+        {/* poeira/warp vêm do HeroParallax */}
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[inherit] h-full grid md:grid-cols-2 gap-8 items-end md:items-center pt-16 md:pt-0">
           <div>
@@ -529,26 +440,45 @@ export default async function Home() {
         </div>
       </section>
 
+      {promos.length > 0 && (
+        <ProductShelf
+          eyebrowIcon="tag"
+          eyebrow="Promo · OpenBox"
+          title="Aproveita antes que esgote"
+          subtitle="Produtos com desconto especial ou em condição open-box (testados, NF, garantia mantida)"
+          products={promos}
+          accentColor="red"
+        />
+      )}
+
+      {/* CONFIANÇA / LOCAL · a vantagem que loja nacional não tem */}
+      <section className="bg-starteq-coal py-14 border-y border-starteq-line">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-2">
+            <Icon name="shield" size={16} />
+            Por que a Starteq
+          </div>
+          <h2 data-glitch className="font-space text-3xl lg:text-4xl font-black text-starteq-bone mb-8">
+            Aqui você <span className="text-space-grad">fala com quem monta.</span>
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <TrustCard icon="map-pin" title="Loja física em Palmas" lines={["104 Sul, SE 05, Lt. 19 · Sala 07", "Seg–Sex 8h–18h · Sáb 9h–13h"]} />
+            <TrustCard icon="whatsapp" title="Fala com quem monta" lines={["Atendimento humano no WhatsApp", "Gente de Palmas, não robô impessoal"]} />
+            <TrustCard icon="shield" title="Garantia dobrada" lines={["Peça: garantia do fabricante", "Montagem: coberta pela Starteq"]} />
+            <TrustCard icon="credit-card" title="PIX & parcelado" lines={["Mais barato à vista no PIX", "Ou parcelado sem juros no cartão"]} />
+          </div>
+        </div>
+      </section>
+
       {/* CTA FINAL · linha direta WhatsApp · satélite Starteq comunica com Palmas */}
       <section className="relative overflow-hidden bg-starteq-black py-12 md:py-24 lg:py-32 min-h-[460px] md:min-h-[520px] lg:min-h-[580px]">
-        {/* Mobile: satélite vertical com laser gold descendo pra Terra */}
-        <Image
-          src="/satelite-mobile.jpg"
-          alt="Satélite Starteq · laser gold descendo pra Palmas-TO"
-          fill
-          quality={88}
-          sizes="(max-width: 768px) 100vw, 1px"
-          className="md:hidden object-cover object-top"
-        />
-        {/* Desktop: satélite wide · mostra raio gold inteiro saindo da antena pra esquerda */}
-        <Image
-          src="/satelite-desktop.jpg"
-          alt="Satélite Starteq · linha direta de comunicação com Palmas"
-          fill
-          quality={92}
-          sizes="(min-width: 768px) 100vw, 1px"
-          className="hidden md:block object-cover"
-          style={{ objectPosition: "center center", filter: "brightness(1.08) saturate(1.08)" }}
+        {/* Banda 2.5D · satélite + parallax + warp no scroll */}
+        <HeroParallax
+          desktopSrc="/satelite-desktop.jpg"
+          mobileSrc="/satelite-mobile.jpg"
+          objectPosition="center center"
+          mobileObjectPosition="center top"
+          filter="brightness(1.08) saturate(1.08)"
         />
 
         {/* Gradient mobile · vertical fade pra preto inferior */}
@@ -556,10 +486,7 @@ export default async function Home() {
         {/* Gradient desktop · horizontal fade pra preto na esquerda */}
         <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-starteq-black via-starteq-black/85 via-50% to-transparent pointer-events-none" />
 
-        {/* Meteoros mix-blend-screen */}
-        <div className="absolute inset-0 pointer-events-none" style={{ mixBlendMode: "screen" }}>
-          <Meteors className="opacity-50" />
-        </div>
+        {/* poeira/warp vêm do HeroParallax */}
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[inherit] h-full grid md:grid-cols-2 gap-8 items-end md:items-center pt-16 md:pt-0">
           <div>
@@ -673,6 +600,44 @@ function CategoryTile({
         </div>
       )}
     </Link>
+  );
+}
+
+function ObjectiveTile({ icon, title, desc }: { icon: IconName; title: string; desc: string }) {
+  return (
+    <Link
+      href="/montador"
+      data-tilt
+      className="group relative bg-starteq-card border border-starteq-line hover:border-starteq-gold/50 rounded-xl p-5 flex flex-col gap-3 overflow-hidden hover:shadow-2xl hover:shadow-starteq-gold/10 transition-colors"
+    >
+      <div className="w-12 h-12 rounded-lg bg-starteq-gold/10 border border-starteq-gold/30 flex items-center justify-center text-starteq-gold group-hover:bg-starteq-gold/20 transition-colors">
+        <Icon name={icon} size={24} />
+      </div>
+      <div className="font-space font-black text-lg text-starteq-bone group-hover:text-starteq-gold transition-colors">{title}</div>
+      <p className="text-sm text-starteq-muted leading-snug flex-1">{desc}</p>
+      <div className="inline-flex items-center gap-1.5 text-starteq-gold font-space font-bold text-xs uppercase tracking-wider">
+        Montar meu PC <Icon name="arrow-right" size={14} strokeWidth={2.5} />
+      </div>
+    </Link>
+  );
+}
+
+function TrustCard({ icon, title, lines }: { icon: IconName; title: string; lines: string[] }) {
+  return (
+    <div
+      data-tilt
+      className="bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-xl p-5 flex flex-col gap-3 transition-colors"
+    >
+      <div className="w-12 h-12 rounded-lg bg-starteq-gold/10 border border-starteq-gold/30 flex items-center justify-center text-starteq-gold">
+        <Icon name={icon} size={24} />
+      </div>
+      <div className="font-space font-bold text-base text-starteq-bone">{title}</div>
+      <div className="text-sm text-starteq-muted leading-snug space-y-0.5">
+        {lines.map((l, i) => (
+          <div key={i}>{l}</div>
+        ))}
+      </div>
+    </div>
   );
 }
 
