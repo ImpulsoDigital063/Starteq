@@ -32,6 +32,9 @@ export type BandCopy = {
   ctaLabel: string;
   ctaHref: string;
 };
+export type ProcessStepItem = { num: string; title: string; stat: string; text: string };
+export type StatItem = { value: string; label: string; sub: string };
+export type BandHead = { eyebrow: string; eyebrowIcon: IconName; title: string; titleAccent: string; subtitle: string };
 
 export type SiteConfig = {
   hero: {
@@ -53,6 +56,13 @@ export type SiteConfig = {
   categorias: { title: string; items: CategoryTileItem[] };
   shelves: ShelfConfig[];
   montador: BandCopy;
+  marcasTitle: string;
+  socialProof: { eyebrow: string; stats: StatItem[] };
+  bands: {
+    selos: BandHead & { steps: ProcessStepItem[] };
+    newsletter: BandHead & { couponTitle: string; couponText: string };
+    finalCta: { eyebrow: string; title: string; titleAccent: string; subtitle: string; ctaLabel: string };
+  };
   contact: {
     whatsapp: string; // só dígitos, ex "5563992528619"
     whatsappDisplay: string;
@@ -126,6 +136,45 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
     ctaLabel: "Iniciar montador",
     ctaHref: "/montador",
   },
+  marcasTitle: "Marcas oficiais que vendemos",
+  socialProof: {
+    eyebrow: "Quem nos conhece",
+    stats: [
+      { value: "4.6", label: "67 reviews no Google", sub: "Operando há 6+ anos em Palmas" },
+      { value: "~30 min", label: "Resposta no WhatsApp", sub: "Equipe real em Palmas · não bot impessoal" },
+      { value: "23k+", label: "Curtidas no maior post", sub: "Comunidade gamer @starteq_to" },
+    ],
+  },
+  bands: {
+    selos: {
+      eyebrow: "O jeito Starteq",
+      eyebrowIcon: "wrench",
+      title: "Comprou na Starteq,",
+      titleAccent: "levou tranquilidade.",
+      subtitle: "Cada PC sai da nossa bancada montado, certificado e embalado pra entrega segura.",
+      steps: [
+        { num: "01", title: "Montagem", stat: "2.300+ PCs montados", text: "BIOS e drivers atualizados · cabos pela parte de trás · acabamento de fábrica." },
+        { num: "02", title: "Entrega", stat: "Motoboy próprio em Palmas", text: "Caixa de ondas duplas com fitas de segurança · entrega cuidada na cidade." },
+        { num: "03", title: "Garantia", stat: "0% lacre · 100% honrada", text: "Garantia por peça com prazo na NF · você pode abrir e modificar como quiser." },
+      ],
+    },
+    newsletter: {
+      eyebrow: "Transmissão Starteq",
+      eyebrowIcon: "radio",
+      title: "Lançamentos",
+      titleAccent: "antes da galera.",
+      subtitle: "Entra na lista e recebe drop de RTX nova, promo relâmpago e dicas de build · 1 email por semana, zero spam.",
+      couponTitle: "Ganha 5% off já no cadastro",
+      couponText: "Cupom enviado no seu email · vale na primeira compra",
+    },
+    finalCta: {
+      eyebrow: "Linha direta · online agora",
+      title: "Em dúvida?",
+      titleAccent: "Fala com a gente.",
+      subtitle: "Equipe real em Palmas · responde no WhatsApp de segunda a sábado, 8h às 18h. Sem bot impessoal · sem letrinha miúda.",
+      ctaLabel: "Falar com a equipe",
+    },
+  },
   contact: {
     whatsapp: "5563992528619",
     whatsappDisplay: "(63) 99252-8619",
@@ -159,6 +208,21 @@ function merge(remote: Partial<SiteConfig> | null | undefined): SiteConfig {
     },
     shelves: remote.shelves?.length ? remote.shelves : d.shelves,
     montador: { ...d.montador, ...(remote.montador ?? {}) },
+    marcasTitle: remote.marcasTitle ?? d.marcasTitle,
+    socialProof: {
+      ...d.socialProof,
+      ...(remote.socialProof ?? {}),
+      stats: remote.socialProof?.stats?.length ? remote.socialProof.stats : d.socialProof.stats,
+    },
+    bands: {
+      selos: {
+        ...d.bands.selos,
+        ...(remote.bands?.selos ?? {}),
+        steps: remote.bands?.selos?.steps?.length ? remote.bands.selos.steps : d.bands.selos.steps,
+      },
+      newsletter: { ...d.bands.newsletter, ...(remote.bands?.newsletter ?? {}) },
+      finalCta: { ...d.bands.finalCta, ...(remote.bands?.finalCta ?? {}) },
+    },
     contact: { ...d.contact, ...(remote.contact ?? {}) },
     seo: { ...d.seo, ...(remote.seo ?? {}) },
   };

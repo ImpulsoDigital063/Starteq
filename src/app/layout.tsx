@@ -4,6 +4,7 @@ import "./globals.css";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import SmoothScroll from "@/components/fx/SmoothScroll";
 import GamerFX from "@/components/fx/GamerFX";
+import { getSiteConfig } from "@/lib/site-config";
 
 const SITE_URL = "https://starteq.vercel.app";
 
@@ -111,11 +112,12 @@ export const viewport: Viewport = {
 
 import { CartProvider } from "@/lib/cart";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const site = await getSiteConfig();
   return (
     <html
       lang="pt-BR"
@@ -124,7 +126,7 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col">
         <SmoothScroll />
         <CartProvider>{children}</CartProvider>
-        <FloatingWhatsApp />
+        <FloatingWhatsApp phone={site.contact.whatsapp} />
         <GamerFX />
         <script
           type="application/ld+json"

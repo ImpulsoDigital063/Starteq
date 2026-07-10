@@ -203,27 +203,17 @@ export default async function Home() {
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase">
               <Icon name="check" size={16} />
-              Quem nos conhece
+              {site.socialProof.eyebrow}
             </div>
           </div>
           <div className="grid sm:grid-cols-3 gap-6 text-center">
-            <div>
-              <div className="font-space text-4xl font-black text-starteq-gold inline-flex items-center gap-2 justify-center">
-                4.6 <Icon name="star" size={28} className="text-starteq-gold" />
+            {site.socialProof.stats.map((s, i) => (
+              <div key={i}>
+                <div className="font-space text-4xl font-black text-starteq-gold">{s.value}</div>
+                <div className="text-sm text-starteq-text mt-1">{s.label}</div>
+                <div className="text-xs text-starteq-muted mt-0.5">{s.sub}</div>
               </div>
-              <div className="text-sm text-starteq-text mt-1">67 reviews no Google</div>
-              <div className="text-xs text-starteq-muted mt-0.5">Operando há 6+ anos em Palmas</div>
-            </div>
-            <div>
-              <div className="font-space text-4xl font-black text-starteq-gold">~30 min</div>
-              <div className="text-sm text-starteq-text mt-1">Resposta no WhatsApp</div>
-              <div className="text-xs text-starteq-muted mt-0.5">Equipe real em Palmas · não bot impessoal</div>
-            </div>
-            <div>
-              <div className="font-space text-4xl font-black text-starteq-gold">23k+</div>
-              <div className="text-sm text-starteq-text mt-1">Curtidas no maior post</div>
-              <div className="text-xs text-starteq-muted mt-0.5">Comunidade gamer @starteq_to</div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -236,7 +226,7 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
           <div className="text-center">
             <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase">
-              Marcas oficiais que vendemos
+              {site.marcasTitle}
             </div>
           </div>
         </div>
@@ -283,36 +273,21 @@ export default async function Home() {
           {/* Coluna esquerda · texto + 3 cards stacked · imagem ocupa direita naturalmente */}
           <div>
             <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
-              <Icon name="wrench" size={14} className="inline mr-2" />
-              O jeito Starteq
+              <Icon name={site.bands.selos.eyebrowIcon} size={14} className="inline mr-2" />
+              {site.bands.selos.eyebrow}
             </div>
             <h2 className="font-space text-3xl lg:text-5xl font-black text-starteq-bone leading-tight mb-3 drop-shadow-[0_2px_16px_rgba(0,0,0,0.85)]">
-              Comprou na Starteq,<br />
-              <span className="text-space-grad">levou tranquilidade.</span>
+              {site.bands.selos.title}<br />
+              <span className="text-space-grad">{site.bands.selos.titleAccent}</span>
             </h2>
             <p className="text-starteq-text text-base mb-8 drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
-              Cada PC sai da nossa bancada montado, certificado e embalado pra entrega segura.
+              {site.bands.selos.subtitle}
             </p>
 
             <div className="space-y-3">
-              <ProcessStep
-                num="01"
-                title="Montagem"
-                stat="2.300+ PCs montados"
-                text="BIOS e drivers atualizados · cabos pela parte de trás · acabamento de fábrica."
-              />
-              <ProcessStep
-                num="02"
-                title="Entrega"
-                stat="Same-day em Palmas"
-                text="Caixa de ondas duplas com fitas de segurança · motoboy próprio mesmo dia."
-              />
-              <ProcessStep
-                num="03"
-                title="Garantia"
-                stat="0% lacre · 100% honrada"
-                text="Garantia por peça com prazo na NF · você pode abrir e modificar como quiser."
-              />
+              {site.bands.selos.steps.map((s, i) => (
+                <ProcessStep key={i} num={s.num} title={s.title} stat={s.stat} text={s.text} />
+              ))}
             </div>
           </div>
           {/* Coluna direita vazia · imagem do engenheiro flui aqui naturalmente como background */}
@@ -343,23 +318,23 @@ export default async function Home() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[inherit] h-full grid md:grid-cols-2 gap-8 items-end md:items-center pt-16 md:pt-0">
           <div>
             <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
-              <Icon name="radio" size={14} />
-              Transmissão Starteq
+              <Icon name={site.bands.newsletter.eyebrowIcon} size={14} />
+              {site.bands.newsletter.eyebrow}
             </div>
             <h2 className="font-space text-3xl lg:text-5xl font-black text-starteq-bone leading-tight mb-3 drop-shadow-[0_2px_16px_rgba(0,0,0,0.95)]">
-              Lançamentos<br />
-              <span className="text-space-grad">antes da galera.</span>
+              {site.bands.newsletter.title}<br />
+              <span className="text-space-grad">{site.bands.newsletter.titleAccent}</span>
             </h2>
             <p className="text-starteq-text text-base max-w-lg mb-6 drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
-              Entra na lista e recebe drop de RTX nova, promo relâmpago e dicas de build · 1 email por semana, zero spam.
+              {site.bands.newsletter.subtitle}
             </p>
 
-            {/* Isca · cupom 5% off na primeira compra */}
+            {/* Isca · cupom */}
             <div className="inline-flex items-center gap-3 mb-6 bg-starteq-gold/10 border border-starteq-gold/40 backdrop-blur-sm rounded-lg px-4 py-3">
               <Icon name="tag" size={20} className="text-starteq-gold flex-shrink-0" />
               <div>
-                <div className="text-starteq-gold font-space font-bold text-sm uppercase tracking-wider">Ganha 5% off já no cadastro</div>
-                <div className="text-xs text-starteq-text mt-0.5">Cupom enviado no seu email · vale na primeira compra</div>
+                <div className="text-starteq-gold font-space font-bold text-sm uppercase tracking-wider">{site.bands.newsletter.couponTitle}</div>
+                <div className="text-xs text-starteq-text mt-0.5">{site.bands.newsletter.couponText}</div>
               </div>
             </div>
 
@@ -432,26 +407,25 @@ export default async function Home() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-starteq-pix opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-starteq-pix" />
               </span>
-              Linha direta · online agora
+              {site.bands.finalCta.eyebrow}
             </div>
             <h2 className="font-space text-4xl lg:text-6xl font-black text-starteq-bone leading-[0.95] mb-4 drop-shadow-[0_2px_16px_rgba(0,0,0,0.95)]">
-              Em dúvida?<br />
-              <span className="text-space-grad">Fala com a gente.</span>
+              {site.bands.finalCta.title}<br />
+              <span className="text-space-grad">{site.bands.finalCta.titleAccent}</span>
             </h2>
             <p className="text-starteq-text text-lg max-w-xl mb-8 drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
-              Equipe real em Palmas · responde no WhatsApp em até <strong className="text-starteq-bone">30 minutos</strong> de segunda a sábado, 8h às 18h.
-              Sem bot impessoal · sem letrinha miúda.
+              {site.bands.finalCta.subtitle}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3">
               <a
-                href="https://wa.me/5563992528619?text=Oi!%20Cheguei%20pelo%20site%20da%20Starteq%2C%20preciso%20de%20uma%20ajuda%20pra%20escolher%20um%20produto."
+                href={`https://wa.me/${site.contact.whatsapp}?text=Oi!%20Cheguei%20pelo%20site%20da%20Starteq%2C%20preciso%20de%20uma%20ajuda%20pra%20escolher%20um%20produto.`}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-starteq-pix text-white hover:opacity-90 font-space font-bold tracking-wide uppercase text-base px-8 py-5 rounded-lg transition-all shadow-2xl shadow-starteq-pix/30"
               >
                 <Icon name="whatsapp" size={20} strokeWidth={2.2} />
-                Falar com a equipe
+                {site.bands.finalCta.ctaLabel}
               </a>
               <Link
                 href="/montador"
