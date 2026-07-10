@@ -13,7 +13,7 @@ const orgSchema = {
   "@type": "LocalBusiness",
   "@id": `${SITE_URL}/#organization`,
   name: "Starteq Tocantins",
-  description: "Loja de hardware gamer e assistência técnica em Palmas-TO. PCs montados, peças validadas, entrega same-day.",
+  description: "Loja de hardware gamer e assistência técnica em Palmas-TO. PCs montados à mão, peças validadas, atendimento local.",
   url: SITE_URL,
   telephone: "+55-63-99252-8619",
   email: "starteqpalmas@gmail.com",
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "Starteq Tocantins · Hardware Gamer e Assistência Técnica · Palmas-TO",
   description:
-    "Loja gamer especializada em Palmas. Monte seu PC com peças validadas, retire na hora ou receba no mesmo dia. Atendimento humano + IA + PIX nativo.",
+    "Loja gamer especializada em Palmas. Monte seu PC com peças validadas, montado à mão e testado. Atendimento humano + IA + PIX nativo.",
   keywords: [
     "PC gamer Palmas",
     "loja de computador Palmas",
@@ -84,13 +84,13 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: "Starteq Tocantins",
     title: "Starteq Tocantins · Hardware Gamer em Palmas-TO",
-    description: "Hardware gamer em Palmas-TO · monte seu PC · entrega same-day · assistência técnica.",
+    description: "Hardware gamer em Palmas-TO · monte seu PC · loja física · assistência técnica.",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Starteq Tocantins" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Starteq Tocantins · Hardware Gamer em Palmas-TO",
-    description: "Monte seu PC com peças validadas · entrega same-day em Palmas.",
+    description: "Monte seu PC com peças validadas · loja física em Palmas.",
     images: ["/og-image.png"],
   },
   robots: {

@@ -4,7 +4,7 @@ import { StarField } from "@/components/StarField";
 
 export const metadata = {
   title: "Como comprar · Starteq Tocantins",
-  description: "Passo a passo pra comprar na Starteq · PIX · cartão · entrega same-day em Palmas.",
+  description: "Passo a passo pra comprar na Starteq · PIX · cartão · loja física em Palmas.",
 };
 
 const STEPS = [
@@ -31,7 +31,7 @@ const STEPS = [
   {
     n: "05",
     title: "Receba ou retire",
-    text: "Mesmo dia em Palmas via motoboy. Pra fora, frete calculado por transportadora. Tudo montado, com NF, garantia por peça.",
+    text: "Em Palmas via motoboy próprio (prazo combinado no WhatsApp). Pra fora, frete calculado por transportadora. Tudo montado, com NF, garantia por peça.",
   },
 ];
 

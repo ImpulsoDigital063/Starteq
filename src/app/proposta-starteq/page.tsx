@@ -173,7 +173,7 @@ export default function PropostaPage() {
                 <li>✓ Sistema completo entregue + contas próprias</li>
                 <li>✓ Migração dos dados do GestãoClick</li>
                 <li>✓ Treinamento 4h (você + técnico)</li>
-                <li>✓ Suporte WhatsApp humano (mesmo dia)</li>
+                <li>✓ Suporte WhatsApp humano</li>
                 <li>✓ Correções de bugs ilimitadas</li>
                 <li>✓ 4h/mês de evolução (features novas)</li>
                 <li>✓ Monitoramento + backup diário</li>

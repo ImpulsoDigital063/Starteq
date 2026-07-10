@@ -11,7 +11,7 @@ export function Header() {
       <div className="bg-starteq-coal border-b border-starteq-line">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-9 text-xs font-space font-medium tracking-wide">
           <span className="text-starteq-muted hidden sm:inline-flex items-center gap-2">
-            <Icon name="bike" size={14} /> Same-day em Palmas <span>·</span>
+            <Icon name="map-pin" size={14} /> Loja física em Palmas <span>·</span>
             <Icon name="credit-card" size={14} /> 10x sem juros <span>·</span>
             <Icon name="zap" size={14} /> 15% off no PIX
           </span>

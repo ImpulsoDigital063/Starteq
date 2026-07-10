@@ -414,7 +414,7 @@ export function MontadorClient({ products }: { products: Product[] }) {
           )}
 
           <div className="text-xs text-starteq-muted leading-relaxed text-center">
-            Junior responde em até 30min em horário comercial · retire na loja em Palmas no mesmo dia ou recebe motoboy.
+            Junior responde em até 30min em horário comercial · retirada na loja em Palmas ou entrega por motoboy · prazo combinado no WhatsApp.
           </div>
         </aside>
       </div>

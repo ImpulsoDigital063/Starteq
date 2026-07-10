@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Produtos · Starteq Tocantins",
-  description: "Catálogo completo · processadores, placas, memória, fontes, periféricos. Entrega same-day em Palmas.",
+  description: "Catálogo completo · processadores, placas, memória, fontes, periféricos. Loja física em Palmas.",
 };
 
 const CATEGORIES: { slug: Category; label: string; icon: IconName }[] = [

@@ -56,7 +56,7 @@ export default function QuemSomosPage() {
                 <li>· Hardware gamer top de linha com NF e garantia por peça</li>
                 <li>· Montagem de PC com compatibilidade validada via /montador</li>
                 <li>· Assistência técnica especializada (limpeza, troca SSD/HD, upgrade)</li>
-                <li>· Entrega same-day em Palmas via motoboy próprio</li>
+                <li>· Entrega em Palmas via motoboy próprio</li>
                 <li>· Atendimento humano no WhatsApp · resposta em ~30 minutos</li>
               </ul>
             </Block>

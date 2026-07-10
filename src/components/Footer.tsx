@@ -100,7 +100,7 @@ export function Footer() {
             <Logo />
             <p className="mt-4 text-starteq-muted text-sm leading-relaxed max-w-sm">
               Hardware gamer e assistência técnica especializada em Palmas-TO.
-              Monte seu PC, retire na hora ou receba no mesmo dia.
+              Monte seu PC, montado à mão e testado em Palmas.
               6+ anos cuidando do setup dos gamers do Tocantins.
             </p>
 

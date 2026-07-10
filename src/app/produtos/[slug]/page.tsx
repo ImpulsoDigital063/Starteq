@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Params) {
   if (!p) return { title: "Produto não encontrado" };
   return {
     title: `${p.name} · Starteq Tocantins`,
-    description: `${p.brand} · R$ ${p.pix_price.toFixed(2)} à vista PIX · entrega same-day em Palmas`,
+    description: `${p.brand} · R$ ${p.pix_price.toFixed(2)} à vista PIX · loja física em Palmas`,
   };
 }
 
@@ -200,7 +200,7 @@ export default async function ProdutoPage({ params }: Params) {
               {/* Selos institucionais compactos · padrão Pichau */}
               <div className="grid grid-cols-3 gap-2 mb-6 text-center text-xs">
                 <Seal icon="wrench" title="Montagem" sub="Certificada" />
-                <Seal icon="bike" title="Same-day" sub="Em Palmas" />
+                <Seal icon="map-pin" title="Retirada" sub="Na loja em Palmas" />
                 <Seal icon="shield" title="Garantia" sub="Por peça · NF" />
               </div>
 
@@ -231,7 +231,7 @@ export default async function ProdutoPage({ params }: Params) {
             <BigSeal
               icon="package"
               title="Entrega"
-              text="Embalado com caixa de papelão de ondas duplas exclusiva e fitas de segurança com cola quimicamente ativa. Motoboy mesmo dia em Palmas."
+              text="Embalado com caixa de papelão de ondas duplas exclusiva e fitas de segurança com cola quimicamente ativa. Motoboy próprio em Palmas."
             />
             <BigSeal
               icon="shield"
