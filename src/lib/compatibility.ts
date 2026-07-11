@@ -189,10 +189,15 @@ export function validateBuild(build: Build): ValidationIssue[] {
 /**
  * Total da build · usa pix_price se disponível
  */
-export function buildTotal(build: Build, useDiscount = true): number {
-  return Object.values(build).reduce((sum, p) => {
+export function buildTotal(
+  build: Build,
+  useDiscount = true,
+  qty: Partial<Record<Product["category"], number>> = {}
+): number {
+  return Object.entries(build).reduce((sum, [cat, p]) => {
     if (!p) return sum;
-    return sum + (useDiscount ? p.pix_price : p.price);
+    const q = qty[cat as Product["category"]] ?? 1;
+    return sum + (useDiscount ? p.pix_price : p.price) * q;
   }, 0);
 }
 
@@ -223,12 +228,19 @@ export function buildStatus(build: Build): {
 /**
  * Link WhatsApp com resumo da build
  */
-export function buildWhatsAppLink(build: Build): string {
+export function buildWhatsAppLink(
+  build: Build,
+  qty: Partial<Record<Product["category"], number>> = {}
+): string {
   const parts = Object.entries(build)
     .filter(([, p]) => p)
-    .map(([cat, p]) => `${categoryLabel(cat as Product["category"])}: ${p!.name} — R$ ${p!.pix_price.toFixed(2)}`)
+    .map(([cat, p]) => {
+      const q = qty[cat as Product["category"]] ?? 1;
+      const prefix = q > 1 ? `${q}x ` : "";
+      return `${prefix}${categoryLabel(cat as Product["category"])}: ${p!.name} — R$ ${(p!.pix_price * q).toFixed(2)}`;
+    })
     .join("\n");
-  const total = buildTotal(build);
+  const total = buildTotal(build, true, qty);
   const msg = `Oi! Montei esse PC no site da Starteq:\n\n${parts}\n\nTotal: R$ ${total.toFixed(2)} (à vista PIX)`;
   return `https://wa.me/5563992988916?text=${encodeURIComponent(msg)}`;
 }

@@ -37,8 +37,13 @@ const STEPS: Step[] = [
   { cat: "fonte", label: "Fonte", hint: "Wattagem calculada pela sua build" },
 ];
 
+// Componentes onde faz sentido escolher quantidade (2 pentes de RAM dual-channel, +1 SSD)
+const QTY_CATS: Category[] = ["ram", "ssd"];
+const MAX_QTY = 4;
+
 export function MontadorClient({ products }: { products: Product[] }) {
   const [build, setBuild] = useState<Build>({});
+  const [qty, setQty] = useState<Partial<Record<Category, number>>>({});
   const [activeStep, setActiveStep] = useState(0);
   const [showIgpuModal, setShowIgpuModal] = useState(false);
   const [sending, setSending] = useState(false);
@@ -49,17 +54,27 @@ export function MontadorClient({ products }: { products: Product[] }) {
     if (sending) return;
     setSending(true);
     try {
-      const skus = Object.values(build).filter((p): p is Product => !!p).map((p) => p.sku);
+      // repete o sku conforme a quantidade → a loja recebe 2x a RAM, etc.
+      const skus = Object.entries(build)
+        .filter((e): e is [string, Product] => !!e[1])
+        .flatMap(([cat, p]) => Array(qty[cat as Category] ?? 1).fill(p.sku));
       const d = await postMontagem(skus, nome.trim() || undefined);
       if (d.ok) setSentOs(d.code ?? d.osId ?? "enviado");
       else alert(d.error || "Não consegui enviar. Tente de novo.");
     } finally { setSending(false); }
   }
 
+  function setQtyFor(cat: Category, delta: number) {
+    setQty((q) => {
+      const next = Math.min(MAX_QTY, Math.max(1, (q[cat] ?? 1) + delta));
+      return { ...q, [cat]: next };
+    });
+  }
+
   const issues = useMemo(() => validateBuild(build), [build]);
   const errors = useMemo(() => issues.filter((i) => i.type === "error"), [issues]);
-  const total = useMemo(() => buildTotal(build), [build]);
-  const totalRetail = useMemo(() => buildTotal(build, false), [build]);
+  const total = useMemo(() => buildTotal(build, true, qty), [build, qty]);
+  const totalRetail = useMemo(() => buildTotal(build, false, qty), [build, qty]);
   const status = useMemo(() => buildStatus(build), [build]);
   const consumption = useMemo(() => estimateWattage(build), [build]);
   const minWatts = useMemo(() => recommendedWattage(build), [build]);
@@ -88,6 +103,9 @@ export function MontadorClient({ products }: { products: Product[] }) {
       } else {
         setTimeout(() => setActiveStep(nextIdx), 200);
       }
+    } else {
+      // último step (fonte) escolhido → colapsa o card (nenhum ativo)
+      setTimeout(() => setActiveStep(-1), 200);
     }
   }
 
@@ -100,6 +118,13 @@ export function MontadorClient({ products }: { products: Product[] }) {
       for (let i = idx + 1; i < STEPS.length; i++) {
         delete next[STEPS[i].cat];
       }
+      return next;
+    });
+    // zera a quantidade da categoria removida e das dependentes
+    setQty((q) => {
+      const next = { ...q };
+      const idx = STEPS.findIndex((s) => s.cat === cat);
+      for (let i = idx; i < STEPS.length; i++) delete next[STEPS[i].cat];
       return next;
     });
     setActiveStep(STEPS.findIndex((s) => s.cat === cat));
@@ -119,6 +144,7 @@ export function MontadorClient({ products }: { products: Product[] }) {
 
   function reset() {
     setBuild({});
+    setQty({});
     setActiveStep(0);
   }
 
@@ -186,19 +212,46 @@ export function MontadorClient({ products }: { products: Product[] }) {
                     </div>
                     {selected ? (
                       <div className="text-sm text-starteq-muted mt-1 truncate">
-                        {selected.name} · R$ {selected.pix_price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                        {(qty[step.cat] ?? 1) > 1 && (
+                          <span className="text-starteq-gold font-mono">{qty[step.cat]}× </span>
+                        )}
+                        {selected.name} · R$ {(selected.pix_price * (qty[step.cat] ?? 1)).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                       </div>
                     ) : (
                       <div className="text-sm text-starteq-muted mt-1">{step.hint}</div>
                     )}
                   </div>
+                  {selected && QTY_CATS.includes(step.cat) && (
+                    <div
+                      className="flex items-center gap-1.5 mr-1 flex-shrink-0"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <span
+                        onClick={(e) => { e.stopPropagation(); setQtyFor(step.cat, -1); }}
+                        className="w-7 h-7 rounded flex items-center justify-center bg-starteq-line text-starteq-bone hover:bg-starteq-gold hover:text-starteq-black cursor-pointer select-none font-mono text-lg leading-none"
+                        aria-label="Diminuir quantidade"
+                      >
+                        −
+                      </span>
+                      <span className="font-mono text-sm text-starteq-bone w-4 text-center select-none">
+                        {qty[step.cat] ?? 1}
+                      </span>
+                      <span
+                        onClick={(e) => { e.stopPropagation(); setQtyFor(step.cat, +1); }}
+                        className="w-7 h-7 rounded flex items-center justify-center bg-starteq-line text-starteq-bone hover:bg-starteq-gold hover:text-starteq-black cursor-pointer select-none font-mono text-lg leading-none"
+                        aria-label="Aumentar quantidade"
+                      >
+                        +
+                      </span>
+                    </div>
+                  )}
                   {selected && (
                     <span
                       onClick={(e) => {
                         e.stopPropagation();
                         clear(step.cat);
                       }}
-                      className="text-xs text-starteq-muted hover:text-starteq-red px-2 cursor-pointer"
+                      className="text-xs text-starteq-muted hover:text-starteq-red px-2 cursor-pointer flex-shrink-0"
                     >
                       trocar
                     </span>
@@ -403,7 +456,7 @@ export function MontadorClient({ products }: { products: Product[] }) {
                 {sending ? "Enviando…" : allRequiredSelected ? "Enviar montagem pra loja" : `Faltam ${status.required - status.filled} componente${status.required - status.filled > 1 ? "s" : ""}`}
               </button>
               <a
-                href={buildWhatsAppLink(build)}
+                href={buildWhatsAppLink(build, qty)}
                 target="_blank"
                 rel="noreferrer"
                 className={`block text-center text-xs font-display font-semibold uppercase tracking-wider ${allRequiredSelected ? "text-starteq-gold hover:text-starteq-bone" : "text-starteq-muted pointer-events-none"}`}
