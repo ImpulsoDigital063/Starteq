@@ -12,7 +12,17 @@ export default function SmoothScroll() {
     let raf = 0;
     const loop = (t: number) => { lenis.raf(t); raf = requestAnimationFrame(loop); };
     raf = requestAnimationFrame(loop);
-    return () => { cancelAnimationFrame(raf); lenis.destroy(); };
+    // modais travam o scroll da página (evita scroll chaining por trás do overlay)
+    const lock = () => lenis.stop();
+    const unlock = () => lenis.start();
+    window.addEventListener("modal:open", lock);
+    window.addEventListener("modal:close", unlock);
+    return () => {
+      window.removeEventListener("modal:open", lock);
+      window.removeEventListener("modal:close", unlock);
+      cancelAnimationFrame(raf);
+      lenis.destroy();
+    };
   }, []);
   return null;
 }

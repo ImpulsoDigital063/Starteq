@@ -85,7 +85,21 @@ export function MontadorClient({ products }: { products: Product[] }) {
     return clean;
   }
 
+  // próxima categoria obrigatória a mostrar (pula opcionais não necessárias); null = acabou
+  function nextCatAfter(cat: Category, b: Build): Category | null {
+    const idx = OBLIGATORY.indexOf(cat);
+    if (idx < 0) return null; // periférico não avança
+    for (let i = idx + 1; i < OBLIGATORY.length; i++) {
+      const c = OBLIGATORY[i];
+      if (c === "cooler" && !isCoolerRequired(b)) continue;
+      if (c === "gpu" && !isGpuRequired(b)) continue;
+      return c;
+    }
+    return "monitor"; // terminou os obrigatórios → periféricos
+  }
+
   function handleSelect(cat: Category, p: Product) {
+    const toggleOff = build[cat]?.sku === p.sku;
     setBuild((b) => {
       if (b[cat]?.sku === p.sku) {
         const next = { ...b };
@@ -95,6 +109,11 @@ export function MontadorClient({ products }: { products: Product[] }) {
       const merged = { ...b, [cat]: p };
       return OBLIGATORY.includes(cat) ? sanitize(merged) : merged;
     });
+    // ao escolher (não ao remover) um obrigatório, avança pra próxima etapa
+    if (!toggleOff && OBLIGATORY.includes(cat)) {
+      const predicted = sanitize({ ...build, [cat]: p });
+      setModalCat(nextCatAfter(cat, predicted));
+    }
   }
 
   function removeItem(cat: Category) {

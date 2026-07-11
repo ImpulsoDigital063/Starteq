@@ -56,6 +56,18 @@ export function ComponentPickerModal({ openCat, build, qty, products, onClose, o
     setSort("relevancia");
   }, [openCat]);
 
+  // trava o scroll da página enquanto o modal está aberto (para o Lenis + body)
+  const isOpen = !!openCat;
+  useEffect(() => {
+    if (!isOpen) return;
+    document.body.style.overflow = "hidden";
+    window.dispatchEvent(new Event("modal:open"));
+    return () => {
+      document.body.style.overflow = "";
+      window.dispatchEvent(new Event("modal:close"));
+    };
+  }, [isOpen]);
+
   const cat = openCat;
   const isPeriph = !!cat && PERIPHERAL_CATS.includes(cat);
 
@@ -190,7 +202,7 @@ export function ComponentPickerModal({ openCat, build, qty, products, onClose, o
         {/* corpo: filtros + lista */}
         <div className="flex-1 flex overflow-hidden">
           {/* FILTROS */}
-          <aside className="hidden md:block w-56 flex-shrink-0 border-r border-starteq-line overflow-y-auto p-4 space-y-5">
+          <aside className="hidden md:block w-56 flex-shrink-0 border-r border-starteq-line overflow-y-auto overscroll-contain p-4 space-y-5">
             {facetDefs.map((f) => {
               const opts = facetOptions[f.key] ?? [];
               if (opts.length === 0) return null;
@@ -275,7 +287,7 @@ export function ComponentPickerModal({ openCat, build, qty, products, onClose, o
             </div>
 
             {/* produtos */}
-            <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-2">
+            <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-4 space-y-2">
               {list.length === 0 ? (
                 <div className="text-sm text-starteq-muted py-12 text-center">Nenhum produto encontrado com esses filtros.</div>
               ) : (
