@@ -63,11 +63,23 @@ export default function DuvidasFrequentesPage() {
 
         <section className="py-16 lg:py-24">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-            {FAQ.map((f) => (
-              <div key={f.q} className="bg-starteq-card border border-starteq-line rounded-xl p-6 lg:p-7">
-                <h2 className="font-space font-bold text-lg text-starteq-bone mb-2">{f.q}</h2>
-                <p className="text-starteq-muted leading-relaxed">{f.a}</p>
-              </div>
+            {FAQ.map((f, i) => (
+              <details
+                key={f.q}
+                open={i === 0}
+                className="group bg-starteq-card border border-starteq-line rounded-xl overflow-hidden"
+              >
+                <summary className="flex items-center justify-between gap-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden p-6 lg:p-7 select-none">
+                  <h2 className="font-space font-bold text-lg text-starteq-bone group-hover:text-starteq-gold transition-colors">{f.q}</h2>
+                  <svg
+                    className="w-5 h-5 flex-shrink-0 text-starteq-gold transition-transform group-open:rotate-180"
+                    fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
+                  </svg>
+                </summary>
+                <p className="text-starteq-muted leading-relaxed px-6 lg:px-7 pb-6 lg:pb-7 -mt-1">{f.a}</p>
+              </details>
             ))}
 
             <div className="mt-8 text-center">

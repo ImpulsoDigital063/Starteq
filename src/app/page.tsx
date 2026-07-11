@@ -64,8 +64,9 @@ export default async function Home() {
 
         {/* Gradient overlay mobile: vertical fade pra preto na metade inferior · esconde watermark AI */}
         <div className="md:hidden absolute inset-0 bg-gradient-to-b from-transparent via-starteq-black/20 to-starteq-black pointer-events-none" />
-        {/* Gradient overlay desktop: horizontal fade pra preto na esquerda */}
-        <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-starteq-black via-starteq-black/85 to-transparent pointer-events-none" />
+        {/* Gradient overlay desktop: preto sólido cobrindo a metade esquerda (esconde o
+            gibberish da imagem AI atrás do título) e desvanecendo pro astronauta à direita */}
+        <div className="hidden md:block absolute inset-0 bg-gradient-to-r from-starteq-black from-[48%] via-starteq-black/75 via-[72%] to-transparent pointer-events-none" />
         {/* Gradient fino topo+base · fade pra preto puro · sutil pra preservar brilho */}
         <div className="absolute inset-0 bg-gradient-to-b from-starteq-black/25 via-transparent to-starteq-black/50 pointer-events-none" />
 

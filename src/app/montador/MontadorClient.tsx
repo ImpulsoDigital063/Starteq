@@ -60,18 +60,22 @@ export function MontadorClient({ products }: { products: Product[] }) {
   const [modalCat, setModalCat] = useState<Category | null>(null);
   const [sending, setSending] = useState(false);
   const [sentOs, setSentOs] = useState<string | null>(null);
+  const [sendError, setSendError] = useState<string | null>(null);
   const [nome, setNome] = useState("");
 
   async function enviarPraLoja() {
     if (sending) return;
     setSending(true);
+    setSendError(null);
     try {
       const skus = Object.entries(build)
         .filter((e): e is [string, Product] => !!e[1])
         .flatMap(([cat, p]) => Array(qty[cat as Category] ?? 1).fill(p.sku));
       const d = await postMontagem(skus, nome.trim() || undefined);
       if (d.ok) setSentOs(d.code ?? d.osId ?? "enviado");
-      else alert(d.error || "Não consegui enviar. Tente de novo.");
+      else setSendError("Não consegui registrar no sistema agora. Finaliza no WhatsApp que a Starteq monta pra você.");
+    } catch {
+      setSendError("Falha de conexão. Tenta de novo ou finaliza no WhatsApp.");
     } finally { setSending(false); }
   }
 
@@ -423,13 +427,25 @@ export function MontadorClient({ products }: { products: Product[] }) {
               >
                 {sending ? "Enviando…" : allRequiredSelected ? "Enviar montagem pra loja" : `Faltam ${status.required - status.filled} componente${status.required - status.filled > 1 ? "s" : ""}`}
               </button>
+              {sendError && (
+                <div className="rounded-lg border border-starteq-red/40 bg-starteq-red/10 p-3 text-xs text-starteq-bone flex items-start gap-2">
+                  <Icon name="alert" size={14} className="text-starteq-red flex-shrink-0 mt-0.5" />
+                  <span>{sendError}</span>
+                </div>
+              )}
               <a
                 href={buildWhatsAppLink(build, qty)}
                 target="_blank"
                 rel="noreferrer"
-                className={`block text-center text-xs font-display font-semibold uppercase tracking-wider ${allRequiredSelected ? "text-starteq-gold hover:text-starteq-bone" : "text-starteq-muted pointer-events-none"}`}
+                className={`block text-center text-xs font-display font-semibold uppercase tracking-wider ${
+                  sendError && allRequiredSelected
+                    ? "text-starteq-pix hover:opacity-80"
+                    : allRequiredSelected
+                      ? "text-starteq-gold hover:text-starteq-bone"
+                      : "text-starteq-muted pointer-events-none"
+                }`}
               >
-                ou finalizar no WhatsApp
+                {sendError ? "→ finalizar no WhatsApp agora" : "ou finalizar no WhatsApp"}
               </a>
             </div>
           )}
