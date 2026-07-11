@@ -34,7 +34,7 @@ export default function BlogPage() {
   return (
     <>
       <Header />
-      <main className="flex-1 bg-starteq-black">
+      <main className="flex-1">
         <section className="relative overflow-hidden nebula-bg py-20">
           <StarField className="opacity-60" />
           <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

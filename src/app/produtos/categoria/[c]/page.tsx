@@ -51,7 +51,7 @@ export default async function CategoriaPage({ params }: Params) {
   return (
     <>
       <Header />
-      <main className="flex-1 bg-starteq-black">
+      <main className="flex-1">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-12">
           <nav className="text-xs text-starteq-muted mb-4 font-space font-bold uppercase tracking-wider">
             <Link href="/" className="hover:text-starteq-gold">Início</Link>

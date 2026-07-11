@@ -13,7 +13,7 @@ export default function CarrinhoPage() {
   return (
     <>
       <Header />
-      <main className="flex-1 bg-starteq-black">
+      <main className="flex-1">
         <CarrinhoClient />
       </main>
       <Footer />

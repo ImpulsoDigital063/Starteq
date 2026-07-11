@@ -188,8 +188,8 @@ export function ComponentPickerModal({ openCat, build, qty, products, onClose, o
     tabIdx >= 0 && tabIdx < OBLIGATORY.length - 1 ? OBLIGATORY[tabIdx + 1] : tabIdx === OBLIGATORY.length - 1 ? "monitor" : null;
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-stretch sm:items-center justify-center bg-black/80 p-0 sm:p-4">
-      <div className="bg-starteq-black border border-starteq-line rounded-none sm:rounded-xl w-full sm:max-w-6xl h-full sm:h-[90vh] flex flex-col overflow-hidden">
+    <div className="fixed inset-0 z-[200] flex items-stretch sm:items-center justify-center bg-black/70 backdrop-blur-md p-0 sm:p-4">
+      <div className="bg-starteq-black border border-starteq-line rounded-none sm:rounded-xl w-full sm:max-w-6xl h-full sm:h-[90vh] flex flex-col overflow-hidden shadow-[inset_0_-1px_0_rgba(245,197,24,0.15),inset_0_1px_0_rgba(255,255,255,0.05),0_40px_90px_-24px_rgba(0,0,0,0.9)]">
         {/* HEADER */}
         <div className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-starteq-line">
           <h2 className="font-display font-bold text-starteq-bone text-lg sm:text-xl">Selecionar Componente</h2>

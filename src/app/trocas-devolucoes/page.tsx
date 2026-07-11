@@ -10,7 +10,7 @@ export default function TrocasPage() {
   return (
     <>
       <Header />
-      <main className="flex-1 bg-starteq-black">
+      <main className="flex-1">
         <section className="py-20 lg:py-28">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3">

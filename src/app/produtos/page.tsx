@@ -68,7 +68,7 @@ export default async function ProdutosPage({ searchParams }: { searchParams: Pro
   return (
     <>
       <Header />
-      <main className="flex-1 bg-starteq-black">
+      <main className="flex-1">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-12">
           <header className="mb-8">
             <div className="text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-2">

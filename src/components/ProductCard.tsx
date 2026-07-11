@@ -26,7 +26,7 @@ export function ProductCard({ product, size = "default" }: ProductCardProps) {
     <Link
       href={`/produtos/${product.slug}`}
       data-tilt
-      className={`group bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-xl overflow-hidden hover:shadow-2xl hover:shadow-starteq-gold/10 flex flex-col ${
+      className={`group elev bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-xl overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl hover:shadow-starteq-gold/10 flex flex-col ${
         size === "large" ? "min-h-[480px]" : ""
       }`}
     >

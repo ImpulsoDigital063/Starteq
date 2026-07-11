@@ -56,19 +56,22 @@ export function ProductImage({ url, category, alt, className = "", fit = "cover"
   const photoUrl = url ?? (product ? getProductPhoto(product) : undefined);
 
   if (photoUrl) {
+    // Moldura de vitrine consistente: fundo claro controlado (holofote) + peça
+    // centralizada. Padroniza as fotos de fundo branco em vez de virarem quadrados soltos.
     return (
-      <div className={`relative overflow-hidden bg-starteq-black ${className}`}>
+      <div
+        className={`relative overflow-hidden ${className}`}
+        style={{ background: "radial-gradient(120% 115% at 50% 22%, #fbfbfc 0%, #ededf0 62%, #dcdce1 100%)" }}
+      >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={photoUrl}
           alt={alt}
           loading="lazy"
-          className={`w-full h-full ${fit === "contain" ? "object-contain" : "object-cover"}`}
+          className={`w-full h-full object-contain ${fit === "cover" ? "p-[9%]" : "p-[6%]"}`}
         />
-        {/* Vinheta sutil pra dar acabamento Pichau-style (só no modo cover) */}
-        {fit === "cover" && (
-          <div className="absolute inset-0 bg-gradient-to-t from-starteq-black/40 via-transparent to-transparent pointer-events-none" />
-        )}
+        {/* brilho de vitrine: luz no topo + leve sombra na base, pra dar volume */}
+        <div className="absolute inset-0 pointer-events-none shadow-[inset_0_1px_0_rgba(255,255,255,0.7),inset_0_-24px_40px_-24px_rgba(0,0,0,0.18)]" />
       </div>
     );
   }

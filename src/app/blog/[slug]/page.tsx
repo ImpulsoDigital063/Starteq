@@ -103,7 +103,7 @@ export default async function PostPage({ params }: Params) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <Header />
-      <main className="flex-1 bg-starteq-black">
+      <main className="flex-1">
         <article>
           {/* HERO POST */}
           <header className="bg-gradient-to-b from-starteq-coal to-starteq-black py-16 lg:py-24 border-b border-starteq-line">

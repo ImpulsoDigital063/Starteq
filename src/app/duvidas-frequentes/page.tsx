@@ -44,7 +44,7 @@ export default function DuvidasFrequentesPage() {
   return (
     <>
       <Header />
-      <main className="flex-1 bg-starteq-black">
+      <main className="flex-1">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
         <section className="relative overflow-hidden nebula-bg py-20">
           <StarField className="opacity-60" />
