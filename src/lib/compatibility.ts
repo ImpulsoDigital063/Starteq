@@ -50,28 +50,37 @@ export function filterCompatible(
   build: Build,
   category: Product["category"]
 ): Product[] {
+  // Leniente: só EXCLUI quando temos dado dos DOIS lados e ele NÃO bate.
+  // Se falta o dado de compatibilidade (catálogo real veio incompleto), mostra o produto
+  // (a loja valida no WhatsApp) — melhor que travar o montador com "nenhuma opção".
   return candidates.filter((p) => {
     // mobo precisa bater socket do cpu
-    if (category === "mobo" && build.cpu) {
+    if (category === "mobo" && build.cpu?.specs.socket && p.specs.socket) {
       return p.specs.socket === build.cpu.specs.socket;
     }
     // cpu (inverso) precisa bater socket da mobo
-    if (category === "cpu" && build.mobo) {
+    if (category === "cpu" && build.mobo?.specs.socket && p.specs.socket) {
       return p.specs.socket === build.mobo.specs.socket;
     }
     // ram precisa bater tipo com mobo
-    if (category === "ram" && build.mobo) {
+    if (category === "ram" && build.mobo?.specs.ram_type && p.specs.ram_type) {
       return p.specs.ram_type === build.mobo.specs.ram_type;
     }
-    // cooler precisa suportar socket da cpu
-    if (category === "cooler" && build.cpu) {
+    // cooler: só filtra se o cooler DECLARA quais sockets suporta
+    if (category === "cooler" && build.cpu?.specs.socket) {
       const supports = p.specs.supports_socket as string[] | undefined;
-      return Array.isArray(supports) && supports.includes(build.cpu.specs.socket as string);
+      if (Array.isArray(supports) && supports.length > 0) {
+        return supports.includes(build.cpu.specs.socket as string);
+      }
+      return true; // sem dado de socket = mostra
     }
-    // gabinete precisa suportar form factor da mobo
-    if (category === "gabinete" && build.mobo) {
+    // gabinete: só filtra se o gabinete DECLARA quais form factors aceita
+    if (category === "gabinete" && build.mobo?.specs.form) {
       const supports = p.specs.supports_mobo as string[] | undefined;
-      return Array.isArray(supports) && supports.includes(build.mobo.specs.form as string);
+      if (Array.isArray(supports) && supports.length > 0) {
+        return supports.includes(build.mobo.specs.form as string);
+      }
+      return true; // sem dado de form factor = mostra
     }
     return true;
   });
