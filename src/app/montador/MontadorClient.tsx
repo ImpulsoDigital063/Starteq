@@ -42,10 +42,15 @@ const STEPS: Step[] = [
 const QTY_CATS: Category[] = ["ram", "ssd"];
 const MAX_QTY = 4;
 
+// Etapa opcional "Periféricos e Extras" · monitor primeiro (Eduardo pediu)
+const PERIPHERAL_CATS: Category[] = ["monitor", "teclado", "mouse", "headset", "mousepad", "cadeira"];
+
 export function MontadorClient({ products }: { products: Product[] }) {
   const [build, setBuild] = useState<Build>({});
   const [qty, setQty] = useState<Partial<Record<Category, number>>>({});
   const [activeStep, setActiveStep] = useState(0);
+  const [extrasOpen, setExtrasOpen] = useState(false);
+  const [periphCat, setPeriphCat] = useState<Category>("monitor");
   const [showIgpuModal, setShowIgpuModal] = useState(false);
   const [sending, setSending] = useState(false);
   const [sentOs, setSentOs] = useState<string | null>(null);
@@ -147,7 +152,28 @@ export function MontadorClient({ products }: { products: Product[] }) {
     setBuild({});
     setQty({});
     setActiveStep(0);
+    setExtrasOpen(false);
+    setPeriphCat("monitor");
   }
+
+  // periféricos: seleciona/troca sem mexer nas etapas obrigatórias (sem limpar dependentes)
+  function selectPeriph(cat: Category, product: Product) {
+    setBuild((b) => (b[cat]?.sku === product.sku ? removeKey(b, cat) : { ...b, [cat]: product }));
+  }
+  function removePeriph(cat: Category) {
+    setBuild((b) => removeKey(b, cat));
+  }
+  function removeKey(obj: Build, cat: Category): Build {
+    const next = { ...obj };
+    delete next[cat];
+    return next;
+  }
+
+  const extrasCount = PERIPHERAL_CATS.filter((c) => build[c]).length;
+  const periphCandidates = useMemo(
+    () => products.filter((p) => p.category === periphCat && p.stock > 0),
+    [products, periphCat]
+  );
 
   return (
     <>
@@ -335,6 +361,128 @@ export function MontadorClient({ products }: { products: Product[] }) {
               </div>
             );
           })}
+
+          {/* PERIFÉRICOS E EXTRAS · etapa opcional (monitor, teclado, mouse, headset, mousepad, cadeira) */}
+          <div
+            className={`border rounded-xl overflow-hidden transition-all ${
+              extrasOpen ? "border-starteq-gold bg-starteq-card" : "border-starteq-line bg-starteq-coal"
+            }`}
+          >
+            <button
+              type="button"
+              onClick={() => setExtrasOpen((o) => !o)}
+              className="w-full flex items-center gap-4 p-4 text-left hover:bg-starteq-card/50"
+            >
+              <div
+                className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                  extrasCount > 0
+                    ? "bg-starteq-green/20 text-starteq-green border border-starteq-green/40"
+                    : extrasOpen
+                      ? "bg-starteq-gold text-starteq-black"
+                      : "bg-starteq-line text-starteq-muted"
+                }`}
+              >
+                <Icon name={extrasCount > 0 ? "check" : "plus"} size={18} strokeWidth={extrasCount > 0 ? 3 : 2} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h3 className="font-display font-bold text-starteq-bone text-lg">Periféricos e Extras</h3>
+                  <span className="text-[10px] font-display font-bold uppercase tracking-wider text-starteq-muted bg-starteq-line/50 px-2 py-0.5 rounded">
+                    opcional
+                  </span>
+                  {extrasCount > 0 && (
+                    <span className="text-xs font-mono text-starteq-green">{extrasCount} item{extrasCount > 1 ? "s" : ""}</span>
+                  )}
+                </div>
+                <div className="text-sm text-starteq-muted mt-1">
+                  Monitor, teclado, mouse, headset, cadeira — o que quiser somar à build
+                </div>
+              </div>
+              <Icon name="arrow-right" size={20} className={`text-starteq-muted flex-shrink-0 transition-transform ${extrasOpen ? "rotate-90" : ""}`} />
+            </button>
+
+            {extrasOpen && (
+              <div className="border-t border-starteq-line p-4 space-y-4">
+                {/* chips de categoria */}
+                <div className="flex flex-wrap gap-2">
+                  {PERIPHERAL_CATS.map((cat) => {
+                    const active = periphCat === cat;
+                    const chosen = !!build[cat];
+                    return (
+                      <button
+                        key={cat}
+                        type="button"
+                        onClick={() => setPeriphCat(cat)}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-sm font-display font-semibold transition-all ${
+                          active
+                            ? "border-starteq-gold bg-starteq-gold/10 text-starteq-gold"
+                            : "border-starteq-line bg-starteq-black text-starteq-muted hover:text-starteq-bone hover:border-starteq-gold/40"
+                        }`}
+                      >
+                        {categoryLabel(cat)}
+                        {chosen && <Icon name="check" size={13} strokeWidth={3} className="text-starteq-green" />}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* produtos da categoria ativa */}
+                <div className="space-y-2">
+                  {periphCandidates.length === 0 ? (
+                    <div className="text-sm text-starteq-muted py-6 text-center">
+                      Nenhum {categoryLabel(periphCat).toLowerCase()} em estoque agora · chama no WhatsApp
+                    </div>
+                  ) : (
+                    periphCandidates.map((p) => {
+                      const isChosen = build[periphCat]?.sku === p.sku;
+                      return (
+                        <button
+                          key={p.sku}
+                          type="button"
+                          onClick={() => selectPeriph(periphCat, p)}
+                          className={`w-full flex items-center gap-3 p-3 rounded-lg border text-left transition-all group ${
+                            isChosen
+                              ? "border-starteq-green/50 bg-starteq-green/5"
+                              : "border-starteq-line hover:border-starteq-gold/40 bg-starteq-black hover:bg-starteq-card"
+                          }`}
+                        >
+                          <div className="w-16 h-16 rounded-lg border border-starteq-line bg-starteq-black flex-shrink-0 overflow-hidden p-1">
+                            <ProductImage product={p} category={p.category} alt={p.name} fit="contain" className="w-full h-full rounded" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className="text-xs text-starteq-muted uppercase tracking-wider">{p.brand}</span>
+                              {isChosen && (
+                                <span className="text-[10px] font-display font-bold uppercase tracking-wider text-starteq-green bg-starteq-green/10 border border-starteq-green/30 px-2 py-0.5 rounded">
+                                  Adicionado
+                                </span>
+                              )}
+                            </div>
+                            <div className="font-display font-semibold text-starteq-bone group-hover:text-starteq-gold transition-colors leading-snug">
+                              {p.name}
+                            </div>
+                            <div className="text-xs text-starteq-muted mt-1 font-mono">
+                              {Object.entries(p.specs)
+                                .filter(([k]) => !["cooler_included", "igpu", "supports_socket", "supports_mobo"].includes(k))
+                                .slice(0, 3)
+                                .map(([k, v]) => `${k}=${Array.isArray(v) ? v.join("/") : v}`)
+                                .join(" · ")}
+                            </div>
+                          </div>
+                          <div className="text-right flex-shrink-0">
+                            <div className="font-mono font-bold text-lg text-starteq-pix">
+                              R$ {p.pix_price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                            </div>
+                            <div className="text-xs text-starteq-muted">{isChosen ? "remover" : "PIX"}</div>
+                          </div>
+                        </button>
+                      );
+                    })
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* COLUNA DIREITA · RESUMO STICKY */}
