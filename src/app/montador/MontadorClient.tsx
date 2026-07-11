@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { Icon } from "@/components/Icon";
+import { ProductImage } from "@/components/ProductImage";
 import { type Product, type Category } from "@/lib/catalog";
 import { postMontagem } from "@/lib/comandapro";
 import {
@@ -274,12 +275,21 @@ export function MontadorClient({ products }: { products: Product[] }) {
                             type="button"
                             onClick={() => !fonteInadequate && select(step.cat, p)}
                             disabled={!!fonteInadequate}
-                            className={`w-full flex items-center justify-between gap-3 p-3 rounded-lg border text-left transition-all group ${
+                            className={`w-full flex items-center gap-3 p-3 rounded-lg border text-left transition-all group ${
                               fonteInadequate
                                 ? "border-starteq-line bg-starteq-coal opacity-50 cursor-not-allowed"
                                 : "border-starteq-line hover:border-starteq-gold/40 bg-starteq-black hover:bg-starteq-card"
                             }`}
                           >
+                            <div className="w-16 h-16 rounded-lg border border-starteq-line bg-starteq-black flex-shrink-0 overflow-hidden p-1">
+                              <ProductImage
+                                product={p}
+                                category={p.category}
+                                alt={p.name}
+                                fit="contain"
+                                className="w-full h-full rounded"
+                              />
+                            </div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 flex-wrap">
                                 <span className="text-xs text-starteq-muted uppercase tracking-wider">{p.brand}</span>

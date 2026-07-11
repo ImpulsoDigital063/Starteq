@@ -10,6 +10,7 @@ type ProductImageProps = {
   category: Category;
   alt: string;
   className?: string;
+  fit?: "cover" | "contain";
   product?: Pick<Product, "sku" | "slug" | "category" | "brand" | "image">;
 };
 
@@ -51,7 +52,7 @@ const CATEGORY_ICONS: Record<Category, string> = {
 
 import { getProductPhoto } from "@/lib/product-images";
 
-export function ProductImage({ url, category, alt, className = "", product }: ProductImageProps) {
+export function ProductImage({ url, category, alt, className = "", fit = "cover", product }: ProductImageProps) {
   const photoUrl = url ?? (product ? getProductPhoto(product) : undefined);
 
   if (photoUrl) {
@@ -62,10 +63,12 @@ export function ProductImage({ url, category, alt, className = "", product }: Pr
           src={photoUrl}
           alt={alt}
           loading="lazy"
-          className="w-full h-full object-cover"
+          className={`w-full h-full ${fit === "contain" ? "object-contain" : "object-cover"}`}
         />
-        {/* Vinheta sutil pra dar acabamento Pichau-style */}
-        <div className="absolute inset-0 bg-gradient-to-t from-starteq-black/40 via-transparent to-transparent pointer-events-none" />
+        {/* Vinheta sutil pra dar acabamento Pichau-style (só no modo cover) */}
+        {fit === "cover" && (
+          <div className="absolute inset-0 bg-gradient-to-t from-starteq-black/40 via-transparent to-transparent pointer-events-none" />
+        )}
       </div>
     );
   }
