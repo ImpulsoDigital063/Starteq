@@ -483,6 +483,17 @@ export function MontadorClient({ products }: { products: Product[] }) {
               </div>
             )}
           </div>
+
+          {/* ZERAR BUILD · sempre visível quando há algo montado */}
+          {Object.keys(build).length > 0 && (
+            <button
+              type="button"
+              onClick={reset}
+              className="w-full flex items-center justify-center gap-2 mt-1 py-3.5 rounded-xl border border-starteq-red/40 text-starteq-red hover:bg-starteq-red hover:text-white font-display font-bold uppercase text-sm tracking-wide transition-all"
+            >
+              <Icon name="x" size={16} strokeWidth={3} /> Zerar build e recomeçar
+            </button>
+          )}
         </div>
 
         {/* COLUNA DIREITA · RESUMO STICKY */}
@@ -494,9 +505,9 @@ export function MontadorClient({ products }: { products: Product[] }) {
               {Object.keys(build).length > 0 && (
                 <button
                   onClick={reset}
-                  className="text-xs text-starteq-red hover:text-starteq-bone font-display font-semibold uppercase tracking-wider"
+                  className="inline-flex items-center gap-1.5 text-xs text-starteq-red hover:bg-starteq-red hover:text-white border border-starteq-red/40 rounded-md px-2.5 py-1 font-display font-bold uppercase tracking-wider transition-all"
                 >
-                  ↻ Reiniciar
+                  <Icon name="x" size={13} strokeWidth={3} /> Zerar
                 </button>
               )}
             </div>
