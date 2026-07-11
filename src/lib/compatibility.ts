@@ -202,6 +202,44 @@ export function buildTotal(
 }
 
 /**
+ * Análise estimada de Performance e Custo-Benefício (referência, estilo Pichau).
+ * Heurística transparente sobre specs reais (CPU/GPU/RAM) — não é benchmark.
+ */
+const clamp100 = (n: number) => Math.max(0, Math.min(100, n));
+
+export type BuildAnalysis = {
+  performance: number;      // 0-100
+  performanceLabel: string;
+  costBenefit: number;      // 0-100
+  costBenefitLabel: string;
+};
+
+export function analyzeBuild(build: Build, qty: Partial<Record<Product["category"], number>> = {}): BuildAnalysis {
+  const cores = Number(build.cpu?.specs.cores ?? 0);
+  const clock = Number(build.cpu?.specs.clock_ghz ?? build.cpu?.specs.turbo_ghz ?? 3);
+  const cpuPart = clamp100(cores * 8 + clock * 8);
+
+  // GPU dedicada pesa; só iGPU tem baseline baixo
+  const gpuPart = build.gpu ? clamp100(Number(build.gpu.specs.vram_gb ?? 4) * 7 + 30) : 15;
+
+  const ramGb = Number(build.ram?.specs.capacity_gb ?? 0) * (qty.ram ?? 1);
+  const ramPart = clamp100(ramGb * 3);
+
+  const performance = Math.round(cpuPart * 0.45 + gpuPart * 0.45 + ramPart * 0.1);
+
+  const total = buildTotal(build, true, qty);
+  const cbRaw = total > 0 ? (performance / total) * 1000 : 0; // pontos de performance por mil reais
+  const costBenefit = Math.round(clamp100((cbRaw / 28) * 100));
+
+  return {
+    performance,
+    performanceLabel: performance < 25 ? "Básico" : performance < 50 ? "Intermediário" : performance < 75 ? "Avançado" : "Extremo",
+    costBenefit,
+    costBenefitLabel: costBenefit < 30 ? "Baixo" : costBenefit < 55 ? "Razoável" : costBenefit < 78 ? "Bom" : "Ótimo",
+  };
+}
+
+/**
  * Status do build pra UI: X de N obrigatórios + percentual
  */
 export function buildStatus(build: Build): {

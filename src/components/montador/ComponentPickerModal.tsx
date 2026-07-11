@@ -34,6 +34,41 @@ const FACETS: Partial<Record<Category, Facet[]>> = {
 
 const BRAND_KEY = "__brand";
 
+// Badges de spec no card (estilo Pichau) — usa só o que existe no catálogo
+const SPEC_SKIP = ["cooler_included", "igpu", "supports_socket", "supports_mobo", "brand"];
+const SPEC_FMT: Record<string, (v: unknown) => string> = {
+  cores: (v) => `${v} núcleos`,
+  threads: (v) => `${v} threads`,
+  vram_gb: (v) => `${v}GB VRAM`,
+  cache_mb: (v) => `${v}MB cache`,
+  watts: (v) => `${v}W`,
+  clock_ghz: (v) => `${v}GHz`,
+  turbo_ghz: (v) => `${v}GHz turbo`,
+  tela_pol: (v) => `${v}"`,
+  refresh_hz: (v) => `${v}Hz`,
+  resp_ms: (v) => `${v}ms`,
+  size_mm: (v) => `${v}mm`,
+  max_gpu_mm: (v) => `GPU até ${v}mm`,
+  gen: (v) => `${v} geração`,
+};
+const SPEC_BOOL_LABEL: Record<string, string> = { rgb: "RGB", argb: "ARGB" };
+
+function specBadges(p: Product): string[] {
+  const out: string[] = [];
+  for (const [k, v] of Object.entries(p.specs)) {
+    if (SPEC_SKIP.includes(k)) continue;
+    if (v === undefined || v === null || v === "" || v === false) continue;
+    if (Array.isArray(v)) continue;
+    if (typeof v === "boolean") {
+      if (SPEC_BOOL_LABEL[k]) out.push(SPEC_BOOL_LABEL[k]);
+    } else {
+      out.push(SPEC_FMT[k] ? SPEC_FMT[k](v) : String(v));
+    }
+    if (out.length >= 4) break;
+  }
+  return out;
+}
+
 type Props = {
   openCat: Category | null;
   build: Build;
@@ -345,12 +380,15 @@ export function ComponentPickerModal({ openCat, build, qty, products, onClose, o
                         <div className={`font-display font-semibold leading-snug ${disabled ? "text-starteq-muted" : "text-starteq-bone group-hover:text-starteq-gold"} transition-colors`}>
                           {p.name}
                         </div>
-                        <div className="text-xs text-starteq-muted mt-1 font-mono">
-                          {Object.entries(p.specs)
-                            .filter(([k]) => !["cooler_included", "igpu", "supports_socket", "supports_mobo"].includes(k))
-                            .slice(0, 3)
-                            .map(([k, v]) => `${k}=${Array.isArray(v) ? v.join("/") : v}`)
-                            .join(" · ")}
+                        <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
+                          {specBadges(p).map((b) => (
+                            <span
+                              key={b}
+                              className="inline-flex items-center text-[10px] font-display font-semibold uppercase tracking-wide text-starteq-text bg-starteq-line/50 border border-starteq-line rounded px-1.5 py-0.5"
+                            >
+                              {b}
+                            </span>
+                          ))}
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">

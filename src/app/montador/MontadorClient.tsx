@@ -18,6 +18,7 @@ import {
   buildStatus,
   buildWhatsAppLink,
   categoryLabel,
+  analyzeBuild,
   type Build,
 } from "@/lib/compatibility";
 
@@ -149,6 +150,7 @@ export function MontadorClient({ products }: { products: Product[] }) {
   const status = useMemo(() => buildStatus(build), [build]);
   const consumption = useMemo(() => estimateWattage(build), [build]);
   const minWatts = useMemo(() => recommendedWattage(build), [build]);
+  const analysis = useMemo(() => analyzeBuild(build, qty), [build, qty]);
 
   const allRequiredSelected = status.filled === status.required && errors.length === 0;
   const chosenPeriphs = PERIPHERAL_CATS.filter((c) => build[c]);
@@ -350,6 +352,19 @@ export function MontadorClient({ products }: { products: Product[] }) {
             </div>
           </div>
 
+          {/* ANÁLISE DA BUILD · performance + custo-benefício (estimativa) */}
+          {build.cpu && (
+            <div className="bg-starteq-card border border-starteq-line rounded-xl p-5">
+              <div className="flex items-center gap-2 mb-3">
+                <Icon name="sparkles" size={16} className="text-starteq-gold" />
+                <h4 className="font-display font-semibold text-starteq-bone text-sm uppercase tracking-wider">Análise da build</h4>
+                <span className="ml-auto text-[10px] font-display font-semibold uppercase tracking-wider text-starteq-muted bg-starteq-line/50 px-2 py-0.5 rounded">estimativa</span>
+              </div>
+              <Meter label="Performance" value={analysis.performance} tag={analysis.performanceLabel} />
+              <Meter label="Custo-benefício" value={analysis.costBenefit} tag={analysis.costBenefitLabel} />
+            </div>
+          )}
+
           {/* ALERTAS */}
           {errors.length > 0 && (
             <div className="space-y-2">
@@ -436,5 +451,21 @@ export function MontadorClient({ products }: { products: Product[] }) {
         onSelect={handleSelect}
       />
     </>
+  );
+}
+
+function Meter({ label, value, tag }: { label: string; value: number; tag: string }) {
+  const color = value < 25 ? "bg-starteq-red" : value < 50 ? "bg-starteq-gold" : value < 75 ? "bg-starteq-warn" : "bg-starteq-pix";
+  const tagColor = value < 25 ? "text-starteq-red" : value < 50 ? "text-starteq-gold" : value < 75 ? "text-starteq-warn" : "text-starteq-pix";
+  return (
+    <div className="mb-3 last:mb-0">
+      <div className="flex items-center justify-between mb-1">
+        <span className="text-xs text-starteq-muted font-display font-semibold uppercase tracking-wider">{label}</span>
+        <span className={`text-xs font-display font-bold uppercase tracking-wider ${tagColor}`}>{tag}</span>
+      </div>
+      <div className="w-full bg-starteq-black rounded-full h-2 overflow-hidden">
+        <div className={`h-full transition-all duration-500 ${color}`} style={{ width: `${Math.max(4, value)}%` }} />
+      </div>
+    </div>
   );
 }
