@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Icon } from "@/components/Icon";
+import { Icon, type IconName } from "@/components/Icon";
 import { ProductImage } from "@/components/ProductImage";
+import { ComponentPickerModal } from "@/components/montador/ComponentPickerModal";
 import { type Product, type Category } from "@/lib/catalog";
 import { postMontagem } from "@/lib/comandapro";
 import {
@@ -44,14 +45,18 @@ const MAX_QTY = 4;
 
 // Etapa opcional "Periféricos e Extras" · monitor primeiro (Eduardo pediu)
 const PERIPHERAL_CATS: Category[] = ["monitor", "teclado", "mouse", "headset", "mousepad", "cadeira"];
+const OBLIGATORY: Category[] = STEPS.map((s) => s.cat);
+
+const CAT_ICON: Record<Category, IconName> = {
+  cpu: "cpu", cooler: "snowflake", mobo: "plug", ram: "memory", gpu: "gamepad", ssd: "disc",
+  gabinete: "package", fonte: "zap", monitor: "monitor", teclado: "keyboard", mouse: "mouse",
+  headset: "headphones", mousepad: "ruler", cadeira: "armchair", computadores: "monitor",
+};
 
 export function MontadorClient({ products }: { products: Product[] }) {
   const [build, setBuild] = useState<Build>({});
   const [qty, setQty] = useState<Partial<Record<Category, number>>>({});
-  const [activeStep, setActiveStep] = useState(0);
-  const [extrasOpen, setExtrasOpen] = useState(false);
-  const [periphCat, setPeriphCat] = useState<Category>("monitor");
-  const [showIgpuModal, setShowIgpuModal] = useState(false);
+  const [modalCat, setModalCat] = useState<Category | null>(null);
   const [sending, setSending] = useState(false);
   const [sentOs, setSentOs] = useState<string | null>(null);
   const [nome, setNome] = useState("");
@@ -60,7 +65,6 @@ export function MontadorClient({ products }: { products: Product[] }) {
     if (sending) return;
     setSending(true);
     try {
-      // repete o sku conforme a quantidade → a loja recebe 2x a RAM, etc.
       const skus = Object.entries(build)
         .filter((e): e is [string, Product] => !!e[1])
         .flatMap(([cat, p]) => Array(qty[cat as Category] ?? 1).fill(p.sku));
@@ -70,11 +74,53 @@ export function MontadorClient({ products }: { products: Product[] }) {
     } finally { setSending(false); }
   }
 
+  // reprocessa os obrigatórios em ordem, removendo o que ficou incompatível com upstream
+  function sanitize(b: Build): Build {
+    const clean: Build = {};
+    for (const s of STEPS) {
+      const cur = b[s.cat];
+      if (cur && filterCompatible([cur], clean, s.cat).length > 0) clean[s.cat] = cur;
+    }
+    for (const c of PERIPHERAL_CATS) if (b[c]) clean[c] = b[c];
+    return clean;
+  }
+
+  function handleSelect(cat: Category, p: Product) {
+    setBuild((b) => {
+      if (b[cat]?.sku === p.sku) {
+        const next = { ...b };
+        delete next[cat];
+        return OBLIGATORY.includes(cat) ? sanitize(next) : next;
+      }
+      const merged = { ...b, [cat]: p };
+      return OBLIGATORY.includes(cat) ? sanitize(merged) : merged;
+    });
+  }
+
+  function removeItem(cat: Category) {
+    setBuild((b) => {
+      const next = { ...b };
+      delete next[cat];
+      return OBLIGATORY.includes(cat) ? sanitize(next) : next;
+    });
+    setQty((q) => {
+      const next = { ...q };
+      delete next[cat];
+      return next;
+    });
+  }
+
   function setQtyFor(cat: Category, delta: number) {
     setQty((q) => {
       const next = Math.min(MAX_QTY, Math.max(1, (q[cat] ?? 1) + delta));
       return { ...q, [cat]: next };
     });
+  }
+
+  function reset() {
+    setBuild({});
+    setQty({});
+    setModalCat(null);
   }
 
   const issues = useMemo(() => validateBuild(build), [build]);
@@ -86,405 +132,148 @@ export function MontadorClient({ products }: { products: Product[] }) {
   const minWatts = useMemo(() => recommendedWattage(build), [build]);
 
   const allRequiredSelected = status.filled === status.required && errors.length === 0;
-
-  function select(cat: Category, product: Product) {
-    setBuild((b) => ({ ...b, [cat]: product }));
-
-    // Se acabou de escolher CPU com iGPU · mostra modal antes de pular GPU
-    if (cat === "cpu" && product.specs.igpu) {
-      // não mostra modal agora · só quando chegar no step de GPU
-    }
-
-    // Auto-avança próximo step pendente
-    const idx = STEPS.findIndex((s) => s.cat === cat);
-    const nextIdx = idx + 1;
-    if (nextIdx < STEPS.length) {
-      const nextStep = STEPS[nextIdx];
-      // Pula step opcional automaticamente se condição já bate
-      const newBuild = { ...build, [cat]: product };
-      if (nextStep.optional?.(newBuild) && !newBuild[nextStep.cat]) {
-        // step opcional · mostra modal pra GPU/cooler
-        if (nextStep.cat === "gpu") setShowIgpuModal(true);
-        else setTimeout(() => setActiveStep(nextIdx + 1), 200);
-      } else {
-        setTimeout(() => setActiveStep(nextIdx), 200);
-      }
-    } else {
-      // último step (fonte) escolhido → colapsa o card (nenhum ativo)
-      setTimeout(() => setActiveStep(-1), 200);
-    }
-  }
-
-  function clear(cat: Category) {
-    setBuild((b) => {
-      const next = { ...b };
-      delete next[cat];
-      // limpa dependentes
-      const idx = STEPS.findIndex((s) => s.cat === cat);
-      for (let i = idx + 1; i < STEPS.length; i++) {
-        delete next[STEPS[i].cat];
-      }
-      return next;
-    });
-    // zera a quantidade da categoria removida e das dependentes
-    setQty((q) => {
-      const next = { ...q };
-      const idx = STEPS.findIndex((s) => s.cat === cat);
-      for (let i = idx; i < STEPS.length; i++) delete next[STEPS[i].cat];
-      return next;
-    });
-    setActiveStep(STEPS.findIndex((s) => s.cat === cat));
-  }
-
-  function skipGpu() {
-    setShowIgpuModal(false);
-    const gpuIdx = STEPS.findIndex((s) => s.cat === "gpu");
-    setActiveStep(gpuIdx + 1);
-  }
-
-  function chooseGpu() {
-    setShowIgpuModal(false);
-    const gpuIdx = STEPS.findIndex((s) => s.cat === "gpu");
-    setActiveStep(gpuIdx);
-  }
-
-  function reset() {
-    setBuild({});
-    setQty({});
-    setActiveStep(0);
-    setExtrasOpen(false);
-    setPeriphCat("monitor");
-  }
-
-  // periféricos: seleciona/troca sem mexer nas etapas obrigatórias (sem limpar dependentes)
-  function selectPeriph(cat: Category, product: Product) {
-    setBuild((b) => (b[cat]?.sku === product.sku ? removeKey(b, cat) : { ...b, [cat]: product }));
-  }
-  function removePeriph(cat: Category) {
-    setBuild((b) => removeKey(b, cat));
-  }
-  function removeKey(obj: Build, cat: Category): Build {
-    const next = { ...obj };
-    delete next[cat];
-    return next;
-  }
-
-  const extrasCount = PERIPHERAL_CATS.filter((c) => build[c]).length;
-  const periphCandidates = useMemo(
-    () => products.filter((p) => p.category === periphCat && p.stock > 0),
-    [products, periphCat]
-  );
+  const chosenPeriphs = PERIPHERAL_CATS.filter((c) => build[c]);
 
   return (
     <>
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-8">
-        {/* COLUNA ESQUERDA · STEPS */}
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8">
+        {/* COLUNA ESQUERDA · BLOCOS DE COMPONENTE */}
         <div className="space-y-3">
           {STEPS.map((step, idx) => {
-            const isActive = activeStep === idx;
             const selected = build[step.cat];
-            const isPrevDone = idx === 0 || build[STEPS[idx - 1].cat] || STEPS[idx - 1].optional?.(build);
             const isOptional = step.optional?.(build);
-
-            const baseCandidates = products.filter(
-              (p) => p.category === step.cat && p.stock > 0
-            );
-            const candidates = filterCompatible(baseCandidates, build, step.cat);
-
+            const q = qty[step.cat] ?? 1;
             return (
               <div
                 key={step.cat}
                 className={`border rounded-xl overflow-hidden transition-all ${
-                  isActive
-                    ? "border-starteq-gold bg-starteq-card"
-                    : selected
-                      ? "border-starteq-green/40 bg-starteq-card"
-                      : isOptional
-                        ? "border-starteq-line bg-starteq-coal opacity-70"
-                        : "border-starteq-line bg-starteq-coal"
+                  selected ? "border-starteq-green/40 bg-starteq-card" : "border-starteq-line bg-starteq-coal"
                 }`}
               >
-                <button
-                  type="button"
-                  onClick={() => isPrevDone && setActiveStep(idx)}
-                  disabled={!isPrevDone}
-                  className={`w-full flex items-center gap-4 p-4 text-left ${
-                    isPrevDone ? "cursor-pointer hover:bg-starteq-card/50" : "cursor-not-allowed opacity-40"
-                  }`}
-                >
+                <div className="flex items-center gap-4 p-4">
                   <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center font-display font-bold text-sm flex-shrink-0 ${
-                      selected
-                        ? "bg-starteq-green/20 text-starteq-green border border-starteq-green/40"
-                        : isOptional && !selected
-                          ? "bg-starteq-line text-starteq-muted border border-starteq-line"
-                          : isActive
-                            ? "bg-starteq-gold text-starteq-black"
-                            : "bg-starteq-line text-starteq-muted"
+                    className={`w-11 h-11 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                      selected ? "bg-starteq-green/15 text-starteq-green border border-starteq-green/40" : "bg-starteq-line/60 text-starteq-gold"
                     }`}
                   >
-                    {selected ? <Icon name="check" size={16} strokeWidth={3} /> : idx + 1}
+                    <Icon name={selected ? "check" : CAT_ICON[step.cat]} size={20} strokeWidth={selected ? 3 : 2} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-[11px] font-mono text-starteq-muted">{idx + 1}</span>
                       <h3 className="font-display font-bold text-starteq-bone text-lg">{step.label}</h3>
                       {isOptional && !selected && (
                         <span className="text-[10px] font-display font-bold uppercase tracking-wider text-starteq-muted bg-starteq-line/50 px-2 py-0.5 rounded">
                           opcional
                         </span>
                       )}
-                      {selected && (
-                        <span className="text-xs font-mono text-starteq-green">selecionado</span>
-                      )}
                     </div>
-                    {selected ? (
-                      <div className="text-sm text-starteq-muted mt-1 truncate">
-                        {(qty[step.cat] ?? 1) > 1 && (
-                          <span className="text-starteq-gold font-mono">{qty[step.cat]}× </span>
-                        )}
-                        {selected.name} · R$ {(selected.pix_price * (qty[step.cat] ?? 1)).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
-                      </div>
-                    ) : (
-                      <div className="text-sm text-starteq-muted mt-1">{step.hint}</div>
-                    )}
+                    {!selected && <div className="text-sm text-starteq-muted mt-0.5">{step.hint}</div>}
                   </div>
                   {selected && QTY_CATS.includes(step.cat) && (
-                    <div
-                      className="flex items-center gap-1.5 mr-1 flex-shrink-0"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <span
-                        onClick={(e) => { e.stopPropagation(); setQtyFor(step.cat, -1); }}
-                        className="w-7 h-7 rounded flex items-center justify-center bg-starteq-line text-starteq-bone hover:bg-starteq-gold hover:text-starteq-black cursor-pointer select-none font-mono text-lg leading-none"
-                        aria-label="Diminuir quantidade"
-                      >
-                        −
-                      </span>
-                      <span className="font-mono text-sm text-starteq-bone w-4 text-center select-none">
-                        {qty[step.cat] ?? 1}
-                      </span>
-                      <span
-                        onClick={(e) => { e.stopPropagation(); setQtyFor(step.cat, +1); }}
-                        className="w-7 h-7 rounded flex items-center justify-center bg-starteq-line text-starteq-bone hover:bg-starteq-gold hover:text-starteq-black cursor-pointer select-none font-mono text-lg leading-none"
-                        aria-label="Aumentar quantidade"
-                      >
-                        +
-                      </span>
+                    <div className="flex items-center gap-1.5 flex-shrink-0">
+                      <span onClick={() => setQtyFor(step.cat, -1)} className="w-7 h-7 rounded flex items-center justify-center bg-starteq-line text-starteq-bone hover:bg-starteq-gold hover:text-starteq-black cursor-pointer select-none font-mono text-lg leading-none">−</span>
+                      <span className="font-mono text-sm text-starteq-bone w-4 text-center select-none">{q}</span>
+                      <span onClick={() => setQtyFor(step.cat, +1)} className="w-7 h-7 rounded flex items-center justify-center bg-starteq-line text-starteq-bone hover:bg-starteq-gold hover:text-starteq-black cursor-pointer select-none font-mono text-lg leading-none">+</span>
                     </div>
                   )}
+                  <button
+                    type="button"
+                    onClick={() => setModalCat(step.cat)}
+                    className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg font-display font-bold text-xs uppercase tracking-wider transition-all ${
+                      selected ? "bg-starteq-line/60 text-starteq-bone hover:bg-starteq-line" : "bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk"
+                    }`}
+                  >
+                    {selected ? "Trocar" : <><Icon name="plus" size={14} strokeWidth={3} /> Escolher</>}
+                  </button>
                   {selected && (
-                    <span
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        clear(step.cat);
-                      }}
-                      className="text-xs text-starteq-muted hover:text-starteq-red px-2 cursor-pointer flex-shrink-0"
-                    >
-                      trocar
-                    </span>
+                    <button type="button" onClick={() => removeItem(step.cat)} className="flex-shrink-0 text-starteq-muted hover:text-starteq-red p-1" aria-label="Remover">
+                      <Icon name="x" size={16} />
+                    </button>
                   )}
-                </button>
+                </div>
 
-                {isActive && (
-                  <div className="border-t border-starteq-line p-4 space-y-2">
-                    {candidates.length === 0 ? (
-                      <div className="text-sm text-starteq-muted py-8 text-center">
-                        Nenhuma opção compatível · reveja a etapa anterior
+                {selected ? (
+                  <div className="border-t border-starteq-line px-4 py-3 flex items-center gap-3">
+                    <div className="w-14 h-14 rounded-lg border border-starteq-line bg-starteq-black flex-shrink-0 overflow-hidden p-1">
+                      <ProductImage product={selected} category={selected.category} alt={selected.name} fit="contain" className="w-full h-full rounded" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs text-starteq-muted uppercase tracking-wider">{selected.brand}</div>
+                      <div className="font-display font-semibold text-starteq-bone text-sm leading-snug truncate">{selected.name}</div>
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                      <div className="font-mono font-bold text-starteq-pix">
+                        {q > 1 && <span className="text-starteq-gold text-xs">{q}× </span>}
+                        R$ {(selected.pix_price * q).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
                       </div>
-                    ) : (
-                      candidates.map((p) => {
-                        const isFonte = step.cat === "fonte";
-                        const fonteInadequate = isFonte && build.cpu && !isFonteAdequate(p, build);
-                        return (
-                          <button
-                            key={p.sku}
-                            type="button"
-                            onClick={() => !fonteInadequate && select(step.cat, p)}
-                            disabled={!!fonteInadequate}
-                            className={`w-full flex items-center gap-3 p-3 rounded-lg border text-left transition-all group ${
-                              fonteInadequate
-                                ? "border-starteq-line bg-starteq-coal opacity-50 cursor-not-allowed"
-                                : "border-starteq-line hover:border-starteq-gold/40 bg-starteq-black hover:bg-starteq-card"
-                            }`}
-                          >
-                            <div className="w-16 h-16 rounded-lg border border-starteq-line bg-starteq-black flex-shrink-0 overflow-hidden p-1">
-                              <ProductImage
-                                product={p}
-                                category={p.category}
-                                alt={p.name}
-                                fit="contain"
-                                className="w-full h-full rounded"
-                              />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 flex-wrap">
-                                <span className="text-xs text-starteq-muted uppercase tracking-wider">{p.brand}</span>
-                                {fonteInadequate && (
-                                  <span className="text-[10px] font-display font-bold uppercase tracking-wider text-starteq-warn bg-starteq-warn/10 border border-starteq-warn/30 px-2 py-0.5 rounded">
-                                    Potência Insuficiente
-                                  </span>
-                                )}
-                                {p.specs.cooler_included && (
-                                  <span className="text-[10px] font-display font-bold uppercase tracking-wider text-starteq-green bg-starteq-green/10 border border-starteq-green/30 px-2 py-0.5 rounded">
-                                    Cooler incluído
-                                  </span>
-                                )}
-                                {p.specs.igpu === true && (
-                                  <span className="text-[10px] font-display font-bold uppercase tracking-wider text-starteq-gold bg-starteq-gold/10 border border-starteq-gold/30 px-2 py-0.5 rounded">
-                                    Vídeo integrado
-                                  </span>
-                                )}
-                              </div>
-                              <div className="font-display font-semibold text-starteq-bone group-hover:text-starteq-gold transition-colors leading-snug">
-                                {p.name}
-                              </div>
-                              <div className="text-xs text-starteq-muted mt-1 font-mono">
-                                {Object.entries(p.specs)
-                                  .filter(([k]) => !["cooler_included", "igpu", "supports_socket", "supports_mobo"].includes(k))
-                                  .slice(0, 3)
-                                  .map(([k, v]) => `${k}=${Array.isArray(v) ? v.join("/") : v}`)
-                                  .join(" · ")}
-                              </div>
-                            </div>
-                            <div className="text-right flex-shrink-0">
-                              <div className="font-mono font-bold text-lg text-starteq-pix">
-                                R$ {p.pix_price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
-                              </div>
-                              <div className="text-xs text-starteq-muted">PIX</div>
-                            </div>
-                          </button>
-                        );
-                      })
-                    )}
+                      <div className="text-[11px] text-starteq-muted">no PIX</div>
+                    </div>
                   </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setModalCat(step.cat)}
+                    className="w-full border-t border-dashed border-starteq-line/70 py-6 flex flex-col items-center justify-center gap-1.5 text-starteq-muted hover:text-starteq-gold hover:bg-starteq-card/40 transition-all"
+                  >
+                    <Icon name="plus" size={22} />
+                    <span className="text-sm font-display font-semibold">
+                      {isOptional ? "Adicionar (opcional)" : "Clique para adicionar este componente"}
+                    </span>
+                  </button>
                 )}
               </div>
             );
           })}
 
-          {/* PERIFÉRICOS E EXTRAS · etapa opcional (monitor, teclado, mouse, headset, mousepad, cadeira) */}
-          <div
-            className={`border rounded-xl overflow-hidden transition-all ${
-              extrasOpen ? "border-starteq-gold bg-starteq-card" : "border-starteq-line bg-starteq-coal"
-            }`}
-          >
-            <button
-              type="button"
-              onClick={() => setExtrasOpen((o) => !o)}
-              className="w-full flex items-center gap-4 p-4 text-left hover:bg-starteq-card/50"
-            >
-              <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                  extrasCount > 0
-                    ? "bg-starteq-green/20 text-starteq-green border border-starteq-green/40"
-                    : extrasOpen
-                      ? "bg-starteq-gold text-starteq-black"
-                      : "bg-starteq-line text-starteq-muted"
-                }`}
-              >
-                <Icon name={extrasCount > 0 ? "check" : "plus"} size={18} strokeWidth={extrasCount > 0 ? 3 : 2} />
+          {/* PERIFÉRICOS E EXTRAS · opcional */}
+          <div className={`border rounded-xl overflow-hidden ${chosenPeriphs.length > 0 ? "border-starteq-green/40 bg-starteq-card" : "border-starteq-line bg-starteq-coal"}`}>
+            <div className="flex items-center gap-4 p-4">
+              <div className={`w-11 h-11 rounded-lg flex items-center justify-center flex-shrink-0 ${chosenPeriphs.length > 0 ? "bg-starteq-green/15 text-starteq-green border border-starteq-green/40" : "bg-starteq-line/60 text-starteq-gold"}`}>
+                <Icon name={chosenPeriphs.length > 0 ? "check" : "monitor"} size={20} strokeWidth={chosenPeriphs.length > 0 ? 3 : 2} />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
                   <h3 className="font-display font-bold text-starteq-bone text-lg">Periféricos e Extras</h3>
-                  <span className="text-[10px] font-display font-bold uppercase tracking-wider text-starteq-muted bg-starteq-line/50 px-2 py-0.5 rounded">
-                    opcional
-                  </span>
-                  {extrasCount > 0 && (
-                    <span className="text-xs font-mono text-starteq-green">{extrasCount} item{extrasCount > 1 ? "s" : ""}</span>
-                  )}
+                  <span className="text-[10px] font-display font-bold uppercase tracking-wider text-starteq-muted bg-starteq-line/50 px-2 py-0.5 rounded">opcional</span>
                 </div>
-                <div className="text-sm text-starteq-muted mt-1">
-                  Monitor, teclado, mouse, headset, cadeira — o que quiser somar à build
-                </div>
+                <div className="text-sm text-starteq-muted mt-0.5">Monitor, teclado, mouse, headset, cadeira</div>
               </div>
-              <Icon name="arrow-right" size={20} className={`text-starteq-muted flex-shrink-0 transition-transform ${extrasOpen ? "rotate-90" : ""}`} />
-            </button>
-
-            {extrasOpen && (
-              <div className="border-t border-starteq-line p-4 space-y-4">
-                {/* chips de categoria */}
-                <div className="flex flex-wrap gap-2">
-                  {PERIPHERAL_CATS.map((cat) => {
-                    const active = periphCat === cat;
-                    const chosen = !!build[cat];
-                    return (
-                      <button
-                        key={cat}
-                        type="button"
-                        onClick={() => setPeriphCat(cat)}
-                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-sm font-display font-semibold transition-all ${
-                          active
-                            ? "border-starteq-gold bg-starteq-gold/10 text-starteq-gold"
-                            : "border-starteq-line bg-starteq-black text-starteq-muted hover:text-starteq-bone hover:border-starteq-gold/40"
-                        }`}
-                      >
-                        {categoryLabel(cat)}
-                        {chosen && <Icon name="check" size={13} strokeWidth={3} className="text-starteq-green" />}
+              <button
+                type="button"
+                onClick={() => setModalCat("monitor")}
+                className="flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-display font-bold text-xs uppercase tracking-wider"
+              >
+                <Icon name="plus" size={14} strokeWidth={3} /> Adicionar
+              </button>
+            </div>
+            {chosenPeriphs.length > 0 && (
+              <div className="border-t border-starteq-line p-3 space-y-2">
+                {chosenPeriphs.map((c) => {
+                  const p = build[c]!;
+                  return (
+                    <div key={c} className="flex items-center gap-3 bg-starteq-black rounded-lg border border-starteq-line p-2">
+                      <div className="w-12 h-12 rounded border border-starteq-line bg-starteq-black flex-shrink-0 overflow-hidden p-1">
+                        <ProductImage product={p} category={p.category} alt={p.name} fit="contain" className="w-full h-full rounded" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-[11px] text-starteq-gold uppercase tracking-wider">{categoryLabel(c)}</div>
+                        <div className="font-display font-semibold text-starteq-bone text-sm truncate">{p.name}</div>
+                      </div>
+                      <div className="font-mono font-bold text-starteq-pix text-sm flex-shrink-0">
+                        R$ {p.pix_price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
+                      </div>
+                      <button type="button" onClick={() => removeItem(c)} className="text-starteq-muted hover:text-starteq-red p-1 flex-shrink-0" aria-label="Remover">
+                        <Icon name="x" size={15} />
                       </button>
-                    );
-                  })}
-                </div>
-
-                {/* produtos da categoria ativa */}
-                <div className="space-y-2">
-                  {periphCandidates.length === 0 ? (
-                    <div className="text-sm text-starteq-muted py-6 text-center">
-                      Nenhum {categoryLabel(periphCat).toLowerCase()} em estoque agora · chama no WhatsApp
                     </div>
-                  ) : (
-                    periphCandidates.map((p) => {
-                      const isChosen = build[periphCat]?.sku === p.sku;
-                      return (
-                        <button
-                          key={p.sku}
-                          type="button"
-                          onClick={() => selectPeriph(periphCat, p)}
-                          className={`w-full flex items-center gap-3 p-3 rounded-lg border text-left transition-all group ${
-                            isChosen
-                              ? "border-starteq-green/50 bg-starteq-green/5"
-                              : "border-starteq-line hover:border-starteq-gold/40 bg-starteq-black hover:bg-starteq-card"
-                          }`}
-                        >
-                          <div className="w-16 h-16 rounded-lg border border-starteq-line bg-starteq-black flex-shrink-0 overflow-hidden p-1">
-                            <ProductImage product={p} category={p.category} alt={p.name} fit="contain" className="w-full h-full rounded" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 flex-wrap">
-                              <span className="text-xs text-starteq-muted uppercase tracking-wider">{p.brand}</span>
-                              {isChosen && (
-                                <span className="text-[10px] font-display font-bold uppercase tracking-wider text-starteq-green bg-starteq-green/10 border border-starteq-green/30 px-2 py-0.5 rounded">
-                                  Adicionado
-                                </span>
-                              )}
-                            </div>
-                            <div className="font-display font-semibold text-starteq-bone group-hover:text-starteq-gold transition-colors leading-snug">
-                              {p.name}
-                            </div>
-                            <div className="text-xs text-starteq-muted mt-1 font-mono">
-                              {Object.entries(p.specs)
-                                .filter(([k]) => !["cooler_included", "igpu", "supports_socket", "supports_mobo"].includes(k))
-                                .slice(0, 3)
-                                .map(([k, v]) => `${k}=${Array.isArray(v) ? v.join("/") : v}`)
-                                .join(" · ")}
-                            </div>
-                          </div>
-                          <div className="text-right flex-shrink-0">
-                            <div className="font-mono font-bold text-lg text-starteq-pix">
-                              R$ {p.pix_price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
-                            </div>
-                            <div className="text-xs text-starteq-muted">{isChosen ? "remover" : "PIX"}</div>
-                          </div>
-                        </button>
-                      );
-                    })
-                  )}
-                </div>
+                  );
+                })}
               </div>
             )}
           </div>
 
-          {/* ZERAR BUILD · sempre visível quando há algo montado */}
+          {/* ZERAR BUILD */}
           {Object.keys(build).length > 0 && (
             <button
               type="button"
@@ -517,36 +306,23 @@ export function MontadorClient({ products }: { products: Product[] }) {
               <div className="font-mono font-bold text-3xl text-starteq-pix leading-none">
                 R$ {total.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
               </div>
-              <div className="text-xs text-starteq-pix mt-1.5 uppercase tracking-wider font-display font-semibold">
-                à vista no PIX
-              </div>
+              <div className="text-xs text-starteq-pix mt-1.5 uppercase tracking-wider font-display font-semibold">à vista no PIX</div>
             </div>
 
             <div className="text-sm text-starteq-text">
               ou <span className="font-mono text-starteq-bone">R$ {totalRetail.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</span>
             </div>
-            <div className="text-xs text-starteq-muted mt-0.5">
-              10x de R$ {(totalRetail / 10).toFixed(2)} sem juros no cartão
-            </div>
+            <div className="text-xs text-starteq-muted mt-0.5">10x de R$ {(totalRetail / 10).toFixed(2)} sem juros no cartão</div>
           </div>
 
           {/* STATUS DO BUILD */}
           <div className="bg-starteq-card border border-starteq-line rounded-xl p-5">
             <div className="flex items-center justify-between mb-2">
-              <h4 className="font-display font-semibold text-starteq-bone text-sm uppercase tracking-wider">
-                Status do build
-              </h4>
-              <span className="font-mono text-sm text-starteq-gold font-bold">
-                {status.filled}/{status.required}
-              </span>
+              <h4 className="font-display font-semibold text-starteq-bone text-sm uppercase tracking-wider">Status do build</h4>
+              <span className="font-mono text-sm text-starteq-gold font-bold">{status.filled}/{status.required}</span>
             </div>
             <div className="w-full bg-starteq-black rounded-full h-2 overflow-hidden">
-              <div
-                className={`h-full transition-all duration-500 ${
-                  status.percent === 100 ? "bg-starteq-pix" : "bg-starteq-gold"
-                }`}
-                style={{ width: `${status.percent}%` }}
-              />
+              <div className={`h-full transition-all duration-500 ${status.percent === 100 ? "bg-starteq-pix" : "bg-starteq-gold"}`} style={{ width: `${status.percent}%` }} />
             </div>
             <div className="text-xs text-starteq-muted mt-2">
               {status.percent === 100
@@ -555,14 +331,11 @@ export function MontadorClient({ products }: { products: Product[] }) {
             </div>
           </div>
 
-          {/* ALERTAS · cards individuais vermelhos */}
+          {/* ALERTAS */}
           {errors.length > 0 && (
             <div className="space-y-2">
               {errors.map((i, idx) => (
-                <div
-                  key={idx}
-                  className="bg-starteq-red/10 border border-starteq-red/40 rounded-lg p-3 text-sm flex items-start gap-2"
-                >
+                <div key={idx} className="bg-starteq-red/10 border border-starteq-red/40 rounded-lg p-3 text-sm flex items-start gap-2">
                   <Icon name="alert" size={16} className="text-starteq-red flex-shrink-0 mt-0.5" />
                   <span className="text-starteq-bone leading-snug">{i.message}</span>
                 </div>
@@ -570,18 +343,14 @@ export function MontadorClient({ products }: { products: Product[] }) {
             </div>
           )}
 
-          {/* CONSUMO DE ENERGIA */}
+          {/* CONSUMO */}
           {(build.cpu || build.gpu) && (
             <div className="bg-starteq-card border border-starteq-line rounded-xl p-5">
               <div className="flex items-center gap-2 mb-2">
                 <Icon name="zap" size={16} className="text-starteq-gold" />
-                <h4 className="font-display font-semibold text-starteq-bone text-sm uppercase tracking-wider">
-                  Consumo estimado
-                </h4>
+                <h4 className="font-display font-semibold text-starteq-bone text-sm uppercase tracking-wider">Consumo estimado</h4>
               </div>
-              <div className="font-mono text-sm text-starteq-text">
-                ~{consumption}W reais
-              </div>
+              <div className="font-mono text-sm text-starteq-text">~{consumption}W reais</div>
               <div className="font-mono text-xs text-starteq-muted mt-1">
                 Fonte recomendada: <span className="text-starteq-gold">{minWatts}W ou mais</span>
               </div>
@@ -593,15 +362,13 @@ export function MontadorClient({ products }: { products: Product[] }) {
             </div>
           )}
 
-          {/* CTA · envia pra loja → cria a OS de montagem no ComandaPRO */}
+          {/* CTA */}
           {sentOs ? (
             <div className="rounded-lg border border-starteq-pix/40 bg-starteq-pix/10 p-4 text-center">
               <div className="font-display font-bold text-starteq-pix">✓ Enviado pra loja!</div>
               <p className="text-xs text-starteq-muted mt-1">Sua montagem virou uma ordem de serviço. A Starteq vai montar e te chamar.</p>
               {sentOs && sentOs !== "enviado" && (
-                <p className="text-xs text-starteq-muted mt-2">
-                  Código da OS: <span className="font-mono font-bold text-starteq-gold">{sentOs}</span>
-                </p>
+                <p className="text-xs text-starteq-muted mt-2">Código da OS: <span className="font-mono font-bold text-starteq-gold">{sentOs}</span></p>
               )}
             </div>
           ) : (
@@ -617,9 +384,7 @@ export function MontadorClient({ products }: { products: Product[] }) {
                 onClick={enviarPraLoja}
                 disabled={!allRequiredSelected || sending}
                 className={`w-full inline-flex items-center justify-center gap-2 font-display font-bold tracking-wide uppercase text-sm px-6 py-4 rounded-lg transition-all ${
-                  allRequiredSelected && !sending
-                    ? "bg-starteq-pix text-white hover:opacity-90"
-                    : "bg-starteq-line text-starteq-muted cursor-not-allowed"
+                  allRequiredSelected && !sending ? "bg-starteq-pix text-white hover:opacity-90" : "bg-starteq-line text-starteq-muted cursor-not-allowed"
                 }`}
               >
                 {sending ? "Enviando…" : allRequiredSelected ? "Enviar montagem pra loja" : `Faltam ${status.required - status.filled} componente${status.required - status.filled > 1 ? "s" : ""}`}
@@ -641,37 +406,16 @@ export function MontadorClient({ products }: { products: Product[] }) {
         </aside>
       </div>
 
-      {/* MODAL iGPU · CPU com video integrado */}
-      {showIgpuModal && (
-        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-          <div className="bg-starteq-card border border-starteq-gold/40 rounded-xl max-w-md w-full p-6 border-glow-gold">
-            <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3">
-              <Icon name="cpu" size={14} /> Processador com vídeo integrado
-            </div>
-            <h3 className="font-display font-bold text-starteq-bone text-2xl mb-3">
-              Você precisa de placa de vídeo dedicada?
-            </h3>
-            <p className="text-sm text-starteq-muted leading-relaxed mb-6">
-              O <strong className="text-starteq-bone">{build.cpu?.name}</strong> já tem gráficos integrados, então roda jogos leves e tarefas do dia a dia sem GPU.
-              Pra jogos pesados ou renderização, recomendo escolher uma placa dedicada.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-2">
-              <button
-                onClick={skipGpu}
-                className="flex-1 px-4 py-3 rounded-lg border border-starteq-line bg-starteq-coal text-starteq-bone hover:bg-starteq-card font-display font-semibold text-sm uppercase tracking-wide transition-all"
-              >
-                Pular GPU
-              </button>
-              <button
-                onClick={chooseGpu}
-                className="flex-1 px-4 py-3 rounded-lg bg-starteq-gold text-starteq-black hover:bg-starteq-gold-dk font-display font-bold text-sm uppercase tracking-wide transition-all"
-              >
-                Escolher GPU
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* MODAL DE SELEÇÃO estilo Pichau */}
+      <ComponentPickerModal
+        openCat={modalCat}
+        build={build}
+        qty={qty}
+        products={products}
+        onClose={() => setModalCat(null)}
+        onSelectCat={(c) => setModalCat(c)}
+        onSelect={handleSelect}
+      />
     </>
   );
 }
