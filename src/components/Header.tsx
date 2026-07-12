@@ -99,6 +99,9 @@ export function Header() {
             <Link href="/montador" className="px-3 py-2 text-starteq-gold hover:text-starteq-bone transition-colors whitespace-nowrap inline-flex items-center gap-1.5">
               <Icon name="wrench" size={14} /> Monte Seu PC
             </Link>
+            <Link href="/blog" className="px-3 py-2 text-starteq-text hover:text-starteq-gold transition-colors whitespace-nowrap inline-flex items-center gap-1.5">
+              <Icon name="file" size={14} /> Blog
+            </Link>
             <Link href="/produtos/categoria/computadores" className="px-3 py-2 text-starteq-text hover:text-starteq-gold transition-colors whitespace-nowrap">
               PCs Prontos
             </Link>
@@ -119,9 +122,6 @@ export function Header() {
             </Link>
             <Link href="/produtos/categoria/cadeira" className="px-3 py-2 text-starteq-text hover:text-starteq-gold transition-colors whitespace-nowrap">
               Cadeiras
-            </Link>
-            <Link href="/blog" className="px-3 py-2 text-starteq-text hover:text-starteq-gold transition-colors whitespace-nowrap">
-              Blog
             </Link>
           </nav>
         </div>

@@ -9,6 +9,8 @@ import { ProductShelf } from "@/components/ProductShelf";
 import { Icon, type IconName } from "@/components/Icon";
 import { getProducts } from "@/lib/comandapro";
 import type { Product } from "@/lib/catalog";
+import { POSTS } from "@/lib/posts";
+import { PostCover } from "@/components/PostCover";
 
 export const dynamic = "force-dynamic";
 
@@ -378,6 +380,56 @@ export default async function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {site.trust.cards.map((c, i) => (
               <TrustCard key={i} icon={c.icon} title={c.title} lines={c.lines} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* DO BLOG · conteúdo/SEO · guias e comparativos */}
+      <section className="relative overflow-hidden py-12 md:py-20 lg:py-24 border-y border-starteq-line">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-end justify-between gap-4 flex-wrap mb-8">
+            <div>
+              <div className="inline-flex items-center gap-2 text-starteq-gold text-xs font-space font-bold tracking-[0.3em] uppercase mb-3">
+                <Icon name="radio" size={14} /> Transmissões da base
+              </div>
+              <h2 data-glitch className="font-space text-3xl lg:text-4xl font-black text-starteq-bone">
+                Do <span className="text-space-grad">blog</span> da Starteq
+              </h2>
+              <p className="text-starteq-muted mt-2 max-w-xl">
+                Guias, comparativos e a real do hardware em 2026 · pra você comprar certo, não pelo hype.
+              </p>
+            </div>
+            <Link
+              href="/blog"
+              data-magnetic
+              className="glow-hover inline-flex items-center gap-2 border border-starteq-gold/40 hover:border-starteq-gold text-starteq-gold font-space font-bold tracking-wide uppercase text-sm px-6 py-3 rounded-lg transition-all whitespace-nowrap"
+            >
+              Ver todos os posts <Icon name="arrow-right" size={16} />
+            </Link>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {POSTS.slice(0, 3).map((p) => (
+              <Link
+                key={p.slug}
+                href={`/blog/${p.slug}`}
+                data-spotlight
+                className="group spotlight elev bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-xl overflow-hidden transition-all duration-200 hover:-translate-y-1 flex flex-col"
+              >
+                <PostCover category={p.category} icon={p.cover_icon} iconSize={110} className="aspect-video" />
+                <div className="p-5 flex flex-col flex-1">
+                  <div className="flex items-center gap-2 text-xs mb-2 text-starteq-muted font-mono">
+                    <span className="text-starteq-gold font-space font-bold uppercase tracking-wider">{p.category}</span>
+                    <span>·</span>
+                    <span>{p.read_min} min</span>
+                  </div>
+                  <h3 className="font-space font-bold text-starteq-bone group-hover:text-starteq-gold transition-colors leading-snug">
+                    {p.title}
+                  </h3>
+                  <p className="text-starteq-muted text-sm mt-2 leading-relaxed line-clamp-2">{p.excerpt}</p>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
