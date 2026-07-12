@@ -18,11 +18,11 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "Quem paga o frete?",
-    a: "O frete é por conta do comprador e calculado de acordo com o peso do pedido. Para pedidos maiores, dá pra negociar o frete — fala com a gente no WhatsApp. Em Palmas, entrega ou retirada é combinada no WhatsApp.",
+    a: "O frete é por conta do comprador e a gente acerta o valor junto com você no fechamento. Para pedidos maiores dá pra negociar. Em Palmas e região, entrega ou retirada é combinada no WhatsApp.",
   },
   {
     q: "Quanto tempo demora pra chegar?",
-    a: "Depende da aprovação do pagamento. Para fora de Palmas, o envio é feito pelos Correios (Sedex ou PAC) e o prazo segue o estabelecido pelos Correios. Em Palmas, prazo e forma de entrega são combinados no WhatsApp.",
+    a: "Depende de onde você está e da aprovação do pagamento. A forma de envio e o prazo a gente combina direto no WhatsApp: em Palmas e região, entrega local ou retirada na loja; para outras cidades, acertamos o envio no atendimento.",
   },
   {
     q: "Quais as formas de pagamento?",

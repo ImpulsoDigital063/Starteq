@@ -37,10 +37,10 @@ export default function TrocasPage() {
                 Cancelamentos também podem ser feitos direto no painel de controle, no tópico &quot;Cancelar pedido&quot;.
               </Card>
 
-              <Card title="Devolução pelos Correios">
-                Se o produto com a embalagem pesar menos de 15kg e não ultrapassar 105cm em cada dimensão, a devolução pode ser feita por
-                postagem. A gente envia por e-mail o código de postagem pra apresentar na agência dos Correios. Acondicione o produto na
-                embalagem original, devolva todos os acessórios, junte a 2ª via do DANFE e relate o motivo da devolução no verso.
+              <Card title="Como devolver à distância">
+                Se você não é de Palmas, a gente combina a forma de devolução direto no WhatsApp e te passa o passo a passo. Acondicione o
+                produto na embalagem original, com todos os acessórios e a 2ª via do DANFE, e relate o motivo da devolução. Em Palmas e
+                região, a coleta ou entrega é combinada localmente.
               </Card>
 
               <Card title="Produto chegou com defeito">
