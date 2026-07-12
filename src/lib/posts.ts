@@ -16,6 +16,119 @@ export type Post = {
 
 export const POSTS: Post[] = [
   {
+    slug: "vale-a-pena-montar-pc-gamer-2026-crise-das-memorias",
+    title: "Vale a pena montar PC gamer agora em 2026 (ou esperar)? A crise das memórias explicada",
+    excerpt:
+      "O preço de RAM e SSD explodiu em 2026 por causa da IA. Entenda por que subiu, quanto subiu de verdade (com fontes) e a decisão certa pra quem quer montar PC em Palmas: comprar agora ou esperar.",
+    category: "Mercado",
+    author: "Tripulação Starteq",
+    date: "2026-07-08",
+    read_min: 9,
+    cover_icon: "tag",
+    body: `Se você abriu o orçamento de um PC em 2026 e levou um susto com o preço da memória RAM e do SSD, não é impressão sua. O mercado vive a maior alta de preço de componentes em anos — apelidada de "crise das memórias" ou "Rammargedon". Antes de decidir montar agora ou esperar, entenda o que está acontecendo de verdade.
+
+## O que subiu, e quanto
+
+Os números são reais e assustadores:
+
+- Um módulo de **DDR4 16GB** que era acessível chegou ao teto de **R$ 950** em janeiro de 2026 — uma alta que beira **300% em dois anos**. ([Adrenaline](https://www.adrenaline.com.br/hardware/preco-da-memoria-ddr5-dobra-modulos-de-16-e-32-gb-atingem-recorde-historico/))
+- Um **SSD NVMe de 1TB** que custava cerca de R$ 350 em 2025 passou de **R$ 950**. ([Canaltech](https://canaltech.com.br/hardware/crise-das-memorias-como-escapar-do-preco-inflado-e-montar-um-pc/))
+- No geral, memórias DRAM e SSDs encareceram **até 89% em 2026**. ([Última Ficha](https://ultimaficha.com.br/2026/06/23/memorias-dram-ssd-precos-2026/))
+
+E tem um detalhe cruel: a **DDR4 (mais antiga) está subindo mais rápido que a DDR5**. No primeiro trimestre de 2026, a DDR4 subiu **+172%** contra **+76%** da DDR5. ([Adrenaline](https://www.adrenaline.com.br/hardware/precos-de-memorias-ddr4-estao-subindo-mais-rapido-do-que-os-de-ddr5/))
+
+## Por que isso aconteceu
+
+A resposta em uma palavra: **IA**. As fábricas de memória (Samsung, SK Hynix, Micron) redirecionaram a produção pra atender os data centers de inteligência artificial nos EUA e na China, que pagam mais e compram em volume gigante. O varejo — a gente, que monta PC em casa — ficou com as sobras. ([Promobit](https://www.promobit.com.br/blog/por-que-pecas-de-computador-estao-caras-2026/) · [Olhar Digital](https://olhardigital.com.br/2026/04/08/reviews/escassez-de-memoria-ram-para-ia-eleva-precos-de-ssds-no-mercado-global/))
+
+A produção de DDR4 foi praticamente encerrada pra liberar linha pra DDR5 e memória de servidor — por isso o pente velho ficou raro e caro.
+
+## Então: montar agora ou esperar?
+
+A pergunta que todo mundo faz. A resposta honesta depende de duas coisas.
+
+**A previsão de normalização é meados de 2027, com estabilização só em 2028.** ([Adrenaline](https://www.adrenaline.com.br/hardware/precos-altos-de-memorias-ram-ddr4-e-ddr5-podem-durar-ate-2028/)) Ou seja: **não é uma alta de semanas — é um platô de mais de um ano.** Esperar "o preço cair mês que vem" provavelmente não vai funcionar.
+
+- **Se você PRECISA do PC agora** (trabalho, estudo, aquele jogo que os amigos já estão jogando): montar agora é a decisão racional. O preço não vai melhorar tão cedo, e cada mês parado é um mês sem usar.
+- **Se é um upgrade que pode esperar** (você já tem um PC que roda o que precisa): dá pra segurar, priorizar peças que não subiram tanto (GPU, gabinete, fonte) e completar a memória depois.
+
+## Como montar gastando menos no cenário atual
+
+- **RAM: 16GB dual channel é o piso — não corte pra 8GB** só pra economizar, porque isso derruba desempenho e causa travadas. Melhor esperar um pouco e comprar os 16GB certos.
+- **Reaproveite o que der:** se você já tem pentes de RAM ou um SSD de uma máquina antiga, aproveitar agora vale ouro.
+- **Plataforma:** montando do zero, o argumento clássico "economizo indo de DDR4" perdeu força (a DDR4 subiu mais). Pra build novo, plataforma DDR5 (AMD AM5) faz mais sentido a longo prazo.
+- **Onde o dinheiro rende:** GPU e fonte são onde o desempenho e a segurança da build moram — não é aqui que se corta.
+
+## O papel de uma loja local nisso tudo
+
+Num mercado com preço oscilando toda semana, comprar peça solta online vira roleta: o valor que você viu ontem pode não ser o de amanhã, e o frete pra Tocantins ainda entra por cima.
+
+Na Starteq, em Palmas, a gente fecha o **orçamento da build com o preço da peça travado na hora** — você sabe exatamente quanto vai pagar, com a máquina montada à mão, testada e com garantia por peça. Sem surpresa de preço no meio do caminho.
+
+## Resumo
+
+A crise das memórias é real, tem causa (IA) e prazo longo (normalização só em 2027-2028). Esperar o preço despencar mês que vem é aposta furada. Se precisa do PC, monte com estratégia: 16GB de verdade, plataforma que dura, e o dinheiro nas peças que importam. Quer um orçamento com preço travado? Chama a Starteq no WhatsApp.
+
+## Fontes
+
+- Adrenaline — [Preço da memória DDR5 dobra: módulos de 16 e 32 GB atingem recorde](https://www.adrenaline.com.br/hardware/preco-da-memoria-ddr5-dobra-modulos-de-16-e-32-gb-atingem-recorde-historico/)
+- Adrenaline — [Preços de DDR4 estão subindo mais rápido que DDR5](https://www.adrenaline.com.br/hardware/precos-de-memorias-ddr4-estao-subindo-mais-rapido-do-que-os-de-ddr5/)
+- Adrenaline — [Preços altos de memórias podem durar até 2028](https://www.adrenaline.com.br/hardware/precos-altos-de-memorias-ram-ddr4-e-ddr5-podem-durar-ate-2028/)
+- Canaltech — [Crise das memórias: como escapar do preço inflado](https://canaltech.com.br/hardware/crise-das-memorias-como-escapar-do-preco-inflado-e-montar-um-pc/)
+- Promobit — [Por que peças de computador estão caras em 2026](https://www.promobit.com.br/blog/por-que-pecas-de-computador-estao-caras-2026/)
+- Olhar Digital — [Escassez de RAM para IA eleva preços de SSDs](https://olhardigital.com.br/2026/04/08/reviews/escassez-de-memoria-ram-para-ia-eleva-precos-de-ssds-no-mercado-global/)`,
+  },
+  {
+    slug: "melhor-placa-de-video-ate-2500-reais-2026",
+    title: "Melhor placa de vídeo até R$ 2.500 em 2026: RTX 5060 vs RX 9060 XT vs Intel Arc B580",
+    excerpt:
+      "Comparativo real das três placas que dominam a faixa de R$ 2.500 em 2026 — desempenho, VRAM, DLSS/FSR/XeSS e qual entrega mais frame por real pra 1080p e 1440p.",
+    category: "Hardware",
+    author: "Tripulação Starteq",
+    date: "2026-07-05",
+    read_min: 8,
+    cover_icon: "gamepad",
+    body: `A faixa de até R$ 2.500 é onde mora a maioria dos gamers brasileiros — e em 2026 ela ficou disputada. Três placas brigam por esse dinheiro: a NVIDIA RTX 5060, a AMD RX 9060 XT 16GB e a Intel Arc B580. Cada uma tem um argumento forte. Vamos ao que importa.
+
+## As três candidatas
+
+| Placa | VRAM | Preço Brasil (R$) | Alvo |
+|---|---|---|---|
+| Intel Arc B580 | 12 GB | ~2.000–2.100 | 1080p com folga de VRAM |
+| NVIDIA RTX 5060 | 8 GB GDDR7 | ~2.200–2.400 | 1080p ultra + DLSS 4 |
+| AMD RX 9060 XT | 16 GB | ~2.500–2.980 | 1440p custo por frame |
+
+Faixas de rua em julho/2026. ([TechTudo tier list](https://www.techtudo.com.br/noticias/2026/02/qual-a-melhor-placa-de-video-de-2026-veja-tier-list-e-escolha-para-o-seu-pc-edinfoeletro.ghtml) · [TerabyteShop](https://www.terabyteshop.com.br/blog/melhores-placas-video-custo-beneficio-2026))
+
+## O ponto que decide tudo em 2026: VRAM
+
+A regra que virou consenso entre os reviewers brasileiros neste ano é dura e direta: **não compre placa com menos de 12GB de VRAM pra jogar títulos AAA**. ([TerabyteShop](https://www.terabyteshop.com.br/blog/melhores-placas-video-custo-beneficio-2026)) Jogos novos estão estourando os 8GB em 1080p com texturas altas, causando quedas de FPS e travadas.
+
+Isso coloca a **RTX 5060, com só 8GB, em desvantagem** de futuro — apesar de ser uma ótima placa hoje. A Arc B580 (12GB) e a RX 9060 XT (16GB) nascem mais preparadas pro que vem.
+
+## Desempenho e tecnologias
+
+- **RX 9060 XT 16GB** — apontada como a **"rainha do custo por frame"** de 2026, com cerca de **R$ 24,20 por frame** e desempenho até **22% acima da RTX 5060** em jogos sem ray tracing pesado. Os 16GB dão folga real pra 1440p. Usa FSR pra upscaling. ([TerabyteShop](https://www.terabyteshop.com.br/blog/melhores-placas-video-custo-beneficio-2026) · [André Indica](https://www.andreindica.com.br/guia/melhores-placas-de-video-2026/))
+- **RTX 5060** — a mais equilibrada pra **1080p ultra** e a única das três com **DLSS 4 e Multi Frame Generation** (geração de quadros por IA), que aumenta muito a fluidez percebida em jogos compatíveis. O calcanhar são os 8GB. ([André Indica](https://www.andreindica.com.br/guia/melhores-placas-de-video-2026/))
+- **Intel Arc B580** — a surpresa da faixa: **12GB de VRAM por preço de entrada** (~R$ 2.000), com upscaling XeSS. É a mais barata e a que mais entrega VRAM por real, mas o ecossistema Intel Arc ainda é o mais novo dos três (drivers evoluindo). ([TechTudo](https://www.techtudo.com.br/noticias/2026/02/qual-a-melhor-placa-de-video-de-2026-veja-tier-list-e-escolha-para-o-seu-pc-edinfoeletro.ghtml))
+
+## Veredito por perfil
+
+- **Melhor custo-benefício geral / quer 1440p:** RX 9060 XT 16GB. Mais frame por real e VRAM de sobra.
+- **Só joga 1080p e quer DLSS/ecossistema NVIDIA:** RTX 5060 — sabendo que os 8GB pedem cautela em AAA futuros.
+- **Orçamento mais apertado e quer VRAM:** Intel Arc B580 — 12GB baratos, se você topa uma plataforma mais nova.
+
+## Antes de comprar
+
+Placa de vídeo não vive sozinha: ela precisa de uma fonte adequada e de um processador que não segure o desempenho (gargalo). Se quiser, monte a build inteira no nosso [configurador](/montador) — ele valida a compatibilidade e calcula a fonte recomendada. E se tiver dúvida de qual das três encaixa no seu setup, chama a Starteq no WhatsApp que a gente avalia junto.
+
+## Fontes
+
+- TechTudo — [Tier list: melhor placa de vídeo de 2026](https://www.techtudo.com.br/noticias/2026/02/qual-a-melhor-placa-de-video-de-2026-veja-tier-list-e-escolha-para-o-seu-pc-edinfoeletro.ghtml)
+- TerabyteShop — [Melhores placas de vídeo custo-benefício 2026](https://www.terabyteshop.com.br/blog/melhores-placas-video-custo-beneficio-2026)
+- André Indica — [Guia: melhores placas de vídeo 2026](https://www.andreindica.com.br/guia/melhores-placas-de-video-2026/)`,
+  },
+  {
     slug: "onde-comprar-pc-gamer-palmas-tocantins-2026",
     title: "Onde comprar PC gamer em Palmas-TO em 2026 · guia completo",
     excerpt:
