@@ -313,7 +313,7 @@ export function MontadorClient({ products }: { products: Product[] }) {
         {/* COLUNA DIREITA · RESUMO STICKY */}
         <aside className="lg:sticky lg:top-24 h-fit space-y-4">
           {/* CARD PREÇO */}
-          <div className="bg-starteq-card border border-starteq-line rounded-xl p-5">
+          <div data-spotlight className="spotlight overflow-hidden bg-starteq-card border border-starteq-line rounded-xl p-5">
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-display font-bold text-starteq-bone text-base">Sua Build</h3>
               {Object.keys(build).length > 0 && (

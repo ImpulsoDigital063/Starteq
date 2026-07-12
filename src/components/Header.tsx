@@ -30,7 +30,7 @@ export function Header() {
       </div>
 
       {/* Header principal · logo + search + carrinho */}
-      <header className="sticky top-0 z-50 bg-starteq-black/95 backdrop-blur border-b border-starteq-line">
+      <header className="sticky top-0 z-50 bg-starteq-black/70 backdrop-blur-xl border-b border-starteq-line shadow-[0_1px_0_rgba(245,197,24,0.08),0_10px_30px_-20px_rgba(0,0,0,0.9)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 md:gap-6 h-16">
             <MobileNav />

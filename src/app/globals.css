@@ -90,6 +90,25 @@
   @media (prefers-reduced-motion: reduce) {
     .site-noise { display: none; }
   }
+
+  /* ===== Camada 2 · refino ===== */
+  /* glow que acende no hover (CTAs, botões de destaque) */
+  .glow-hover { transition: box-shadow .3s, transform .2s; }
+  .glow-hover:hover { box-shadow: 0 0 0 1px rgba(245,197,24,.25), 0 0 34px -6px rgba(245,197,24,.55); }
+  /* divisor com fade nas pontas (em vez de linha reta chapada) */
+  .divider-fade { height: 1px; border: 0; background: linear-gradient(90deg, transparent, rgba(245,197,24,.28), transparent); }
+
+  /* ===== Camada 3 · assinatura ===== */
+  /* holofote que segue o cursor · --mx/--my vêm do GamerFX (só ponteiro fino) */
+  .spotlight { position: relative; }
+  .spotlight > * { position: relative; z-index: 1; }
+  .spotlight::before {
+    content: ""; position: absolute; inset: 0; z-index: 0; border-radius: inherit; pointer-events: none;
+    opacity: 0; transition: opacity .35s;
+    background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(245,197,24,0.13), transparent 55%);
+  }
+  .spotlight:hover::before { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) { .spotlight::before { display: none; } }
 }
 
 @layer utilities {

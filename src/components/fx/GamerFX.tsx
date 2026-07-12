@@ -67,6 +67,14 @@ export default function GamerFX() {
           const py = (mouse.y - r.top) / r.height - 0.5;
           tilt.style.transform = `perspective(800px) rotateY(${px * 9}deg) rotateX(${-py * 9}deg)`;
         }
+
+        // holofote que segue o cursor (Camada 3)
+        const spot = t.closest("[data-spotlight]") as HTMLElement | null;
+        if (spot) {
+          const r = spot.getBoundingClientRect();
+          spot.style.setProperty("--mx", `${mouse.x - r.left}px`);
+          spot.style.setProperty("--my", `${mouse.y - r.top}px`);
+        }
       };
       window.addEventListener("mousemove", onMove, { passive: true });
 
