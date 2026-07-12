@@ -164,7 +164,7 @@ Praticamente proibitivo em 2026 com a tributação da Receita. Imposto + frete i
 
 | Rota | Preço | Frete/Prazo | Pós-venda | Indicado |
 |---|---|---|---|---|
-| Loja Palmas | Mercado | Mesmo dia | Direto, presencial | Build entrada/médio |
+| Loja Palmas | Mercado | Combinado no WhatsApp | Direto, presencial | Build entrada/médio |
 | Pichau/Kabum | Baixo | R$ 100, 7 dias | Por email, 20d | Build top + paciência |
 | Mercado Livre | Variável | R$ 50, 4 dias | Risco vendedor | Só com seller top |
 | Importação | Caro c/ imposto | Indefinido | Inexistente | Não compensa |
@@ -173,7 +173,7 @@ Praticamente proibitivo em 2026 com a tributação da Receita. Imposto + frete i
 
 O que ninguém fala: o **PC montado por loja local sai mais barato no longo prazo** porque você economiza em hora de YouTube tentando entender qual peça é compatível, frete dobrado quando vem peça errada, e dias parados sem PC esperando o suporte responder.
 
-Loja local boa entrega: peça validada, **mesmo-dia de manutenção em caso de defeito**, parcelamento PIX e contato humano direto pra dúvida pré-venda.
+Loja local boa entrega: peça validada, **assistência presencial em caso de defeito** (sem depender de suporte por e-mail que demora), parcelamento PIX e contato humano direto pra dúvida pré-venda.
 
 ## Resumo
 
@@ -399,82 +399,127 @@ Quer testar a build no /montador? A compatibilidade é validada peça a peça. S
   },
   {
     slug: "rtx-5070-vs-4070-super-vale-a-pena",
-    title: "RTX 5070 vs 4070 Super · qual vale a pena agora",
+    title: "RTX 5070 vs 4070 Super em 2026 · qual vale a pena de verdade",
     excerpt:
-      "Comparativo direto entre as duas placas mais quentes do momento. FPS real em 1440p, custo-benefício, e quando faz sentido esperar a próxima geração.",
+      "Comparativo com dados reais: specs, desempenho em 1440p, DLSS 4 e preço no Brasil. Spoiler — a placa nova tem MENOS núcleos que a antiga, e isso muda tudo.",
     category: "Hardware",
     author: "Tripulação Starteq",
-    date: "2026-05-08",
+    date: "2026-06-20",
     read_min: 8,
     cover_icon: "zap",
-    body: `A RTX 5070 entrou no mercado prometendo desempenho de 4070 Super com mais eficiência energética. Vamos pro real.
+    body: `A RTX 5070 (arquitetura Blackwell) chegou pra ser a placa de 1440p da geração. Mas quando você olha os números reais, aparece uma surpresa: em força bruta, ela quase empata com a 4070 Super do ano anterior. Vamos ao que os reviews de verdade mostram.
 
 ## Especificações lado a lado
 
 | Spec | RTX 4070 Super | RTX 5070 |
 |---|---|---|
+| Arquitetura | Ada Lovelace | Blackwell |
+| Núcleos CUDA | 7.168 | 6.144 |
+| VRAM | 12GB GDDR6X (21 Gbps) | 12GB GDDR7 (28 Gbps) |
+| Barramento | 192-bit | 192-bit |
 | TDP | 220W | 250W |
-| VRAM | 12GB GDDR6X | 12GB GDDR7 |
-| Preço médio | R$ 4.690 | R$ 5.890 |
-| FPS médio 1440p Ultra | 110 | 125 |
+| Preço de lançamento (EUA) | US$ 599 | US$ 549 |
 
-## Quando ir de 4070 Super
+O detalhe que salta aos olhos: **a RTX 5070 tem MENOS núcleos CUDA que a 4070 Super** (6.144 contra 7.168). Ela compensa com clocks maiores, cores de nova geração e memória GDDR7, que entrega cerca de **33% mais banda**. ([Tom's Hardware](https://www.tomshardware.com/pc-components/gpus/nvidia-geforce-rtx-4070-super-review-boosted-clocks-and-core-counts-for-the-same-dollar599-as-the-vanilla-4070) · [Hostbor](https://hostbor.com/rtx-5070-vs-4070s-comparison/))
 
-- Orçamento até R$ 5.000
-- Fonte 650W-750W já existente
-- Não vai usar ray tracing pesado
+## Desempenho real (segundo as reviews)
 
-## Quando ir de 5070
+- **1440p rasterização nativa:** praticamente empate — a 5070 fica ~1–2% à frente, trocando de líder jogo a jogo. ([Tom's Guide](https://www.tomsguide.com/computing/gpus/nvidia-geforce-rtx-5070-review))
+- **4K:** ~5% mais rápida em média. ([Hostbor](https://hostbor.com/rtx-5070-vs-4070s-comparison/))
+- **Ray tracing:** aí sim abre vantagem, ~10–15% sobre a 4070 Super. ([Hyper Cyber](https://hypercyber.com/blogs/news/rtx-5070-fps-benchmarks-how-does-it-stack-up-in-real-gaming))
 
-- Quer 4K nativo em alguns jogos
-- Tem fonte 850W ou mais
-- Vai segurar a build por 3+ anos sem upgrade
+O Tom's Guide chegou a chamar a 5070 de "filho do meio esquisito" da linha — geração modesta em desempenho puro. ([Tom's Guide](https://www.tomsguide.com/computing/gpus/nvidia-geforce-rtx-5070-review))
 
-## Conclusão
+## O verdadeiro diferencial: DLSS 4
 
-Pra maioria dos gamers em 2026, a **4070 Super continua sendo o sweet spot**. A 5070 só compensa pra quem mira 4K ou ray tracing pesado · diferença de ~R$ 1.200 não justifica os 15% extras de FPS na maioria dos cenários.
+Onde a 5070 realmente separa é no **DLSS 4 com Multi Frame Generation** — exclusivo da linha RTX 50. Ele gera até **3 quadros por frame renderizado**, elevando muito a fluidez percebida em jogos compatíveis. A 4070 Super não roda esse recurso. ([TweakTown](https://www.tweaktown.com/reviews/10997/nvidia-geforce-rtx-5070-founders-edition-dlss-4-is-still-game-changer-in-1440p/index.html))
 
-Quer ver as duas no /montador com fonte recomendada calculada automaticamente? Clica lá.`,
+Vale a ressalva honesta: boa parte do "salto" de FPS que aparece no marketing são quadros gerados por IA. Em rasterização nativa, o empate com a geração anterior é real.
+
+## Preço no Brasil
+
+O sugerido de lançamento no Brasil saiu em **R$ 5.499,99**, mas o preço de rua caiu bastante ao longo do ciclo: o menor valor registrado foi **R$ 3.314** (maio/2026), com a faixa realista girando em torno de **R$ 3.300–4.500** dependendo do modelo. ([Canaltech](https://canaltech.com.br/hardware/qual-e-o-preco-sugerido-das-geforce-rtx-5070-no-brasil-veja-para-nao-pagar-caro/) · [Hardware Barato](https://www.hardwarebarato.com/produtos/placas-de-video/rtx-5070))
+
+## O elefante na sala: 12GB
+
+A crítica mais pesada das reviews é a mesma pra ambas: **12GB de VRAM em barramento 192-bit em 2026**. Enquanto isso, a AMD entrega 16GB por menos dinheiro (RX 9060 XT). VRAM virou argumento de compra mais decisivo que os próprios núcleos.
+
+## Veredito
+
+- **Vale a 5070** se você joga com ray tracing, quer DLSS 4 / Multi Frame Generation, ou vai segurar a build por anos.
+- **A 4070 Super ainda compete** — principalmente usada/em promoção — pra quem foca rasterização pura e não faz questão do DLSS 4.
+- Pra quem prioriza **custo por frame**, olhe também a RX 9060 XT 16GB (veja nosso comparativo de placas até R$ 2.500).
+
+Quer ver as opções no [montador](/montador) com a fonte recomendada calculada automaticamente? É só montar.
+
+## Fontes
+
+- Tom's Hardware — [RTX 4070 Super review](https://www.tomshardware.com/pc-components/gpus/nvidia-geforce-rtx-4070-super-review-boosted-clocks-and-core-counts-for-the-same-dollar599-as-the-vanilla-4070)
+- Tom's Guide — [RTX 5070 review](https://www.tomsguide.com/computing/gpus/nvidia-geforce-rtx-5070-review)
+- Hostbor — [RTX 5070 vs 4070 Super](https://hostbor.com/rtx-5070-vs-4070s-comparison/)
+- Canaltech — [Preço sugerido da RTX 5070 no Brasil](https://canaltech.com.br/hardware/qual-e-o-preco-sugerido-das-geforce-rtx-5070-no-brasil-veja-para-nao-pagar-caro/)
+- Hardware Barato — [Histórico de preço RTX 5070](https://www.hardwarebarato.com/produtos/placas-de-video/rtx-5070)`,
   },
   {
     slug: "ddr5-vs-ddr4-vale-a-pena-mudar",
     title: "DDR5 é mesmo tão melhor que DDR4? Spoiler: depende",
     excerpt:
-      "Diferença real em jogos, em renderização, e quando o upgrade pra DDR5 faz sentido (e quando é só queimar dinheiro).",
+      "Diferença real em jogos (por resolução), em produtividade, o efeito da crise das memórias e quando o upgrade pra DDR5 faz sentido. Com números e fontes.",
     category: "Hardware",
     author: "Tripulação Starteq",
-    date: "2026-05-05",
-    read_min: 5,
+    date: "2026-06-15",
+    read_min: 7,
     cover_icon: "cpu",
-    body: `DDR5 não é uma revolução universal. Em alguns cenários melhora muito, em outros é diferença de margem.
+    body: `"DDR5 é muito melhor que DDR4?" A resposta honesta é: depende do que você faz e da resolução em que joga. Em alguns cenários o ganho é real; em outros, é margem de erro. Vamos aos números de reviews de verdade.
 
-## Onde DDR5 ganha
+## Em jogos, o ganho depende da resolução
 
-- **Edição de vídeo / renderização 3D:** ganho real de 15-25%
-- **CPUs Ryzen 7000+ e Intel 14ª/15ª:** plataforma já é otimizada
-- **Multi-tarefa pesada:** vários programas abertos simultaneamente
+O segredo é entender que memória rápida só ajuda quando a CPU é o gargalo — ou seja, em resoluções mais baixas:
 
-## Onde DDR4 ainda é suficiente
+| Cenário | Ganho do DDR5 sobre DDR4 |
+|---|---|
+| 1080p com CPU forte (CPU-bound) | ~15–20% de média |
+| 1080p — média geral dos jogos | ~4% média / ~10% nos 1% lows |
+| 1440p e 4K (GPU-bound) | menos de 5% — praticamente empate |
 
-- **Jogos em 1080p e 1440p:** diferença típica de 1-5 FPS
-- **Uso geral (office, web, leve):** zero perceptível
-- **Build até R$ 4.000:** investir o dinheiro em GPU melhor compensa mais
+Fonte: [TechSpot — DDR5 vs DDR4 gaming](https://www.techspot.com/review/3059-ddr5-vs-ddr4-gaming/) · [Club386](https://www.club386.com/ddr4-vs-ddr5-pc/)
 
-## Custo-benefício atualizado
+Resumindo: quem joga em **1440p ou 4K quase não sente diferença**. O ganho grande só aparece a 1080p com CPU sobrando — e mesmo assim varia muito por jogo (tem título que sobe 27%, outro que não muda nada).
 
-Kingston Fury Beast 16GB DDR4 3200MHz: R$ 290
-Kingston Fury Beast 16GB DDR5 5200MHz: R$ 390
+## Em produtividade, aí sim DDR5 abre distância
 
-Diferença de R$ 100 por kit. Pra gamer 1080p, o dinheiro fica melhor numa SSD maior ou numa GPU step acima.
+- Render em Premiere/DaVinci: **15–25% mais rápido**.
+- Blender / 3ds Max: até **+40%** (o dobro de banda de memória pesa muito).
+- Compilar código, compressão, IA: DDR5 na frente.
 
-## Quando obrigatoriamente DDR5
+Fonte: [Servermall](https://servermall.com/blog/ddr4-vs-ddr5-ram-performance-comparison-and-key-differences/)
 
-- CPU AM5 (Ryzen 7000/8000/9000) — não tem opção
-- Intel 14ª/15ª com mobo DDR5 — também sem volta
+## O fator 2026: a crise das memórias mudou a conta
+
+O argumento clássico "economizo indo de DDR4" perdeu força. Por causa da alta de preços (a IA sugando a produção), a **DDR4 está subindo mais rápido que a DDR5**: +172% contra +76% no primeiro trimestre de 2026, porque as fábricas praticamente pararam de produzir DDR4. Um módulo DDR4 16GB bateu **R$ 950**; um kit DDR5 32GB (2x16) ficou em torno de **R$ 864–918**. ([Adrenaline](https://www.adrenaline.com.br/hardware/precos-de-memorias-ddr4-estao-subindo-mais-rapido-do-que-os-de-ddr5/))
+
+Ou seja: pra build nova, apostar em DDR4 só pra "economizar" já não é o atalho que era.
+
+## Quando é obrigatoriamente DDR5 (ou DDR4)
+
+- **AMD AM5 (Ryzen 7000/8000/9000): só existe DDR5.** Não há placa AM5 com DDR4. ([Socket AM5](https://en.wikipedia.org/wiki/Socket_AM5))
+- **Intel LGA1700 (12ª/13ª/14ª gen): aceita as duas** — é a única rota pra aproveitar DDR4 hoje, útil se você já tem os pentes.
+
+## Curiosidade: CL alto não é lento
+
+Muita gente vê "DDR5-6000 CL30" e acha que é mais lento que "DDR4-3200 CL16" porque o número CL é maior. Errado. O que importa é a latência em nanossegundos: **DDR5-6000 CL30 = ~10 ns, igualzinho a DDR4-3200 CL16 (~10 ns)**. O CL parece maior só porque cada ciclo de clock é mais curto. ([Kingspec](https://www.kingspectech.com/blogs/posts/what-cl-for-ddr5-ram)) O ponto ideal de uma build gamer/produtividade em 2026 é **DDR5-6000 CL30**.
 
 ## Conclusão
 
-Não pague mais por DDR5 só pelo número maior. Pague pra build que aproveita ela.`,
+Não pague mais por DDR5 só pelo número maior — pague por uma build que aproveita. Joga 1440p/4K e só quer jogar? A diferença é pequena. Edita vídeo, renderiza, compila? DDR5 compensa. Montando do zero numa plataforma AM5? Já vem DDR5 de fábrica. Na dúvida, monta no [montador](/montador) que a gente já filtra a memória compatível com a placa.
+
+## Fontes
+
+- TechSpot — [DDR5 vs DDR4 Gaming](https://www.techspot.com/review/3059-ddr5-vs-ddr4-gaming/)
+- Club386 — [DDR4 vs DDR5](https://www.club386.com/ddr4-vs-ddr5-pc/)
+- Servermall — [DDR4 vs DDR5 performance](https://servermall.com/blog/ddr4-vs-ddr5-ram-performance-comparison-and-key-differences/)
+- Adrenaline — [Preços de DDR4 subindo mais rápido que DDR5](https://www.adrenaline.com.br/hardware/precos-de-memorias-ddr4-estao-subindo-mais-rapido-do-que-os-de-ddr5/)
+- Kingspec — [O que é CL na DDR5](https://www.kingspectech.com/blogs/posts/what-cl-for-ddr5-ram)`,
   },
   {
     slug: "setup-gamer-palmas-4-dicas-quarto-epico",
