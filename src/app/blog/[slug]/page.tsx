@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Icon } from "@/components/Icon";
+import { PostCover } from "@/components/PostCover";
 import { POSTS, findPost, getRelatedPosts } from "@/lib/posts";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -142,9 +143,12 @@ export default async function PostPage({ params }: Params) {
           </header>
 
           {/* COVER */}
-          <div className="aspect-[2/1] max-w-4xl mx-auto bg-gradient-to-br from-starteq-gold/20 to-starteq-coal flex items-center justify-center text-9xl">
-            <Icon name={post.cover_icon} size={180} className="text-starteq-gold" strokeWidth={1.5} />
-          </div>
+          <PostCover
+            category={post.category}
+            icon={post.cover_icon}
+            iconSize={300}
+            className="aspect-[2/1] max-w-4xl mx-auto rounded-xl border border-starteq-line"
+          />
 
           {/* BODY */}
           <section className="py-12 lg:py-16">
@@ -237,9 +241,7 @@ export default async function PostPage({ params }: Params) {
                       href={`/blog/${p.slug}`}
                       className="group bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-xl overflow-hidden transition-all"
                     >
-                      <div className="aspect-video bg-gradient-to-br from-starteq-coal to-starteq-card flex items-center justify-center text-5xl">
-                        <Icon name={p.cover_icon} size={48} className="text-starteq-gold" strokeWidth={1.5} />
-                      </div>
+                      <PostCover category={p.category} icon={p.cover_icon} iconSize={90} className="aspect-video" />
                       <div className="p-4">
                         <h3 className="font-space font-bold text-sm text-starteq-bone group-hover:text-starteq-gold leading-snug">
                           {p.title}

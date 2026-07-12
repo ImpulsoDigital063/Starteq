@@ -3,6 +3,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StarField } from "@/components/StarField";
 import { Icon } from "@/components/Icon";
+import { PostCover } from "@/components/PostCover";
 import { POSTS } from "@/lib/posts";
 
 export const metadata = {
@@ -58,9 +59,12 @@ export default function BlogPage() {
               className="group block bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-2xl overflow-hidden mb-12 transition-all"
             >
               <div className="grid lg:grid-cols-2 gap-0">
-                <div className="aspect-video lg:aspect-auto bg-gradient-to-br from-starteq-gold/20 to-starteq-coal flex items-center justify-center text-9xl">
-                  <Icon name={featured.cover_icon} size={120} className="text-starteq-gold" strokeWidth={1.5} />
-                </div>
+                <PostCover
+                  category={featured.category}
+                  icon={featured.cover_icon}
+                  iconSize={220}
+                  className="aspect-video lg:aspect-auto lg:h-full min-h-[220px]"
+                />
                 <div className="p-8 lg:p-10 flex flex-col justify-center">
                   <div className="flex items-center gap-3 text-xs mb-4">
                     <span className={`px-2.5 py-1 rounded border font-space font-bold uppercase tracking-wider ${CATEGORY_COLORS[featured.category]}`}>
@@ -90,9 +94,7 @@ export default function BlogPage() {
                   href={`/blog/${p.slug}`}
                   className="group bg-starteq-card border border-starteq-line hover:border-starteq-gold/40 rounded-xl overflow-hidden transition-all hover:-translate-y-1"
                 >
-                  <div className="aspect-video bg-gradient-to-br from-starteq-coal to-starteq-card flex items-center justify-center text-6xl">
-                    <Icon name={p.cover_icon} size={72} className="text-starteq-gold" strokeWidth={1.5} />
-                  </div>
+                  <PostCover category={p.category} icon={p.cover_icon} iconSize={120} className="aspect-video" />
                   <div className="p-5">
                     <div className="flex items-center gap-2 text-xs mb-3">
                       <span className={`px-2 py-0.5 rounded border font-space font-bold uppercase tracking-wider text-[10px] ${CATEGORY_COLORS[p.category]}`}>
