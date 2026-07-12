@@ -129,6 +129,183 @@ Placa de vídeo não vive sozinha: ela precisa de uma fonte adequada e de um pro
 - André Indica — [Guia: melhores placas de vídeo 2026](https://www.andreindica.com.br/guia/melhores-placas-de-video-2026/)`,
   },
   {
+    slug: "quanto-custa-montar-pc-gamer-palmas-2026",
+    title: "Quanto custa montar um PC gamer em Palmas-TO em 2026? Orçamento real de R$ 3.000, R$ 5.000 e R$ 8.000",
+    excerpt:
+      "Três builds fechadas com peças reais e preços de 2026, pra 1080p e 1440p. O que dá pra esperar de cada faixa e onde o teu dinheiro rende mais — montado e testado aqui em Palmas.",
+    category: "Build",
+    author: "Tripulação Starteq",
+    date: "2026-07-02",
+    read_min: 9,
+    cover_icon: "credit-card",
+    body: `"Quanto custa montar um PC gamer decente hoje?" É a pergunta que mais chega na loja. A resposta em 2026 vem com uma ressalva: os preços de memória e SSD subiram (a tal crise das memórias), então o orçamento de entrada ficou um pouco mais alto que no ano passado. Mesmo assim, dá pra montar máquina boa em três faixas bem definidas. Peças reais, preços de rua de 2026.
+
+## R$ ~3.000 — Entrada 1080p que roda tudo
+
+O objetivo aqui é 1080p a 60fps+ nos jogos atuais, sem frescura.
+
+| Peça | Modelo de referência | Faixa (R$) |
+|---|---|---|
+| Processador | Ryzen 5 5600 (AM4) | ~700–900 |
+| Placa de vídeo | RX 7600 8GB (ou RTX 4060) | ~1.600–1.800 |
+| Memória | 16GB (2×8) DDR4 3200 | ~600 |
+| Armazenamento | SSD NVMe 512GB–1TB | ~400–700 |
+| Fonte | 550–600W 80+ Bronze | ~250–400 |
+| Gabinete | Mid tower | ~130 |
+
+O Ryzen 5 5600 entrega cerca de 95% do 5600X por bem menos, e a RX 7600 faz ~82 FPS médios em 1080p Ultra. ([Techload](https://techload.com.br/ryzen-5600/) · [XP Gamer](https://xpgamer.com.br/rx-7600-vs-rtx-4060-melhor-placa-2026/)) Build fechada nessa faixa sai entre **R$ 3.380 e R$ 4.930** dependendo das escolhas. ([DeckVirtual](https://deckvirtual.com/build-pc-gamer-3000-reais/))
+
+## R$ ~5.000 — Médio, 1080p folgado / 1440p ok
+
+Sobe a placa de vídeo e ganha fôlego pra 1440p e pra segurar os próximos anos.
+
+- **GPU:** RTX 5060 (8GB, ~R$ 2.300) ou, melhor pra durar, RX 9060 XT 16GB (~R$ 2.500) — a "rainha do custo por frame" de 2026. ([TerabyteShop](https://www.terabyteshop.com.br/blog/melhores-placas-video-custo-beneficio-2026))
+- **CPU:** Ryzen 5 na plataforma AM5 ou o próprio 5600, conforme o resto.
+- **Memória:** 16GB (subindo pra 32GB se editar vídeo).
+- **Armazenamento:** SSD NVMe 1TB.
+
+## R$ ~8.000+ — Alto, 1440p com folga
+
+Faixa de quem quer 1440p alto/ultra e ray tracing.
+
+- **GPU:** RTX 5070 (~R$ 3.300–4.500) ou RX 9070 (~R$ 4.500).
+- **CPU:** Ryzen 7 (plataforma AM5, DDR5).
+- **Memória:** 32GB DDR5-6000.
+- **Fonte:** 750W+ 80+ Gold de marca.
+
+## As regras que valem pra qualquer faixa em 2026
+
+1. **16GB de RAM em dual channel é o piso.** Nunca monte com 8GB só pra economizar.
+2. **SSD NVMe, nunca HD como disco principal.** HD mecânico causa travadas e loading longo.
+3. **Não economize na fonte.** Fonte fraca/genérica trava o PC nos picos e arrisca o hardware inteiro. Vá de 80+ Bronze de marca conhecida pra cima.
+4. **O dinheiro vai primeiro pra GPU** — ela carrega ~70% do desempenho em jogo.
+
+Fonte das regras: [TechTudo — como montar PC 2026](https://www.techtudo.com.br/guia/2026/01/como-montar-pc-gamer-basico-intermediario-e-premium-em-2026-veja-custo-edinfoeletro.ghtml) · [Olhar Digital](https://olhardigital.com.br/2026/04/27/curiosidades/quanto-custa-montar-um-pc-gamer-completo-em-2026/)
+
+## Montando em Palmas
+
+A vantagem de fechar a build aqui: a gente monta à mão, testa rodando de verdade, entrega com nota e garantia por peça — e o preço da peça fica travado no orçamento (num mercado que oscila toda semana, isso vale ouro). Monta a tua no [configurador](/montador) com compatibilidade validada, ou chama no WhatsApp que a gente fecha o orçamento das três faixas pra você comparar.
+
+## Fontes
+
+- TechTudo — [Como montar PC gamer básico, intermediário e premium em 2026](https://www.techtudo.com.br/guia/2026/01/como-montar-pc-gamer-basico-intermediario-e-premium-em-2026-veja-custo-edinfoeletro.ghtml)
+- Olhar Digital — [Quanto custa montar um PC gamer completo em 2026](https://olhardigital.com.br/2026/04/27/curiosidades/quanto-custa-montar-um-pc-gamer-completo-em-2026/)
+- DeckVirtual — [Build PC gamer R$ 3.000](https://deckvirtual.com/build-pc-gamer-3000-reais/)
+- Techload — [Ryzen 5 5600 review](https://techload.com.br/ryzen-5600/)
+- TerabyteShop — [Melhores placas custo-benefício 2026](https://www.terabyteshop.com.br/blog/melhores-placas-video-custo-beneficio-2026)`,
+  },
+  {
+    slug: "8gb-vram-ainda-vale-a-pena-2026",
+    title: "8GB de VRAM ainda vale a pena em 2026? A verdade antes de comprar sua placa",
+    excerpt:
+      "Jogos AAA estão estourando os 8GB de VRAM em 1080p. Entenda o que isso causa, por que 12GB virou o piso recomendado e quando 8GB ainda serve — sem enrolação de vendedor.",
+    category: "Hardware",
+    author: "Tripulação Starteq",
+    date: "2026-06-28",
+    read_min: 6,
+    cover_icon: "memory",
+    body: `Você viu uma placa de vídeo baratinha com 8GB e ficou tentado. Antes de comprar, precisa entender uma mudança que aconteceu em 2026: **os 8GB de VRAM viraram o novo gargalo da faixa de entrada**. Vamos ao que é fato.
+
+## O que é VRAM e por que ela trava o jogo
+
+VRAM é a memória da placa de vídeo — onde ficam as texturas, os modelos e os efeitos do que está na tela. Quando o jogo precisa de mais VRAM do que a placa tem, ele começa a "trocar" dados com a RAM do sistema, que é muito mais lenta. O resultado que você sente: **quedas bruscas de FPS, travadas (stutter) e texturas que demoram a carregar** — mesmo com uma placa que, no papel, seria rápida.
+
+## Por que 8GB ficou apertado
+
+Jogos AAA de 2025-2026 estão estourando os 8GB **já em 1080p com texturas em alto/ultra**. Não é 4K — é Full HD, a resolução mais comum do Brasil. Por isso a regra que virou consenso entre os reviewers brasileiros neste ano é direta: **não compre placa com menos de 12GB de VRAM pra jogar títulos AAA**. ([TerabyteShop](https://www.terabyteshop.com.br/blog/melhores-placas-video-custo-beneficio-2026))
+
+Isso mexeu com o mercado: uma placa como a **RTX 5060, com só 8GB**, é ótima em desempenho bruto mas nasce com prazo de validade menor pra jogos pesados — enquanto opções com mais VRAM aguentam melhor o que vem. ([André Indica](https://www.andreindica.com.br/guia/melhores-placas-de-video-2026/))
+
+## Quando 8GB AINDA serve
+
+Sendo justo — 8GB não virou lixo. Ainda entrega bem se o seu caso é:
+
+- **eSports e jogos competitivos** (Valorant, CS2, LoL, Fortnite): consomem pouca VRAM e rodam voando em 8GB.
+- **Jogos mais antigos ou indies:** sem problema.
+- **Orçamento realmente apertado agora**, com plano de trocar em 1-2 anos.
+
+Se você joga majoritariamente competitivo, gastar a mais só pela VRAM pode não fazer sentido.
+
+## Quando fugir dos 8GB
+
+- Você joga (ou quer jogar) **AAA single-player** com gráficos no alto: The Last of Us, Hogwarts Legacy, Cyberpunk, Alan Wake e cia.
+- Quer **segurar a placa por 3+ anos** sem upgrade.
+- Vai jogar em **1440p**.
+
+Nesses casos, a diferença de preço pra uma placa de **12GB (Intel Arc B580) ou 16GB (RX 9060 XT)** se paga em tranquilidade. ([TechTudo tier list](https://www.techtudo.com.br/noticias/2026/02/qual-a-melhor-placa-de-video-de-2026-veja-tier-list-e-escolha-para-o-seu-pc-edinfoeletro.ghtml))
+
+## O resumo honesto
+
+VRAM virou, em 2026, um critério de compra mais decisivo que a "força" pura da placa. Se o dinheiro está curto e você joga competitivo, 8GB resolve. Se quer AAA no alto e durabilidade, mire 12GB pra cima. Na Starteq a gente não empurra placa — fala qual é o seu jogo que a gente indica o que faz sentido de verdade. Vê as opções no [montador](/montador).
+
+## Fontes
+
+- TerabyteShop — [Melhores placas de vídeo custo-benefício 2026](https://www.terabyteshop.com.br/blog/melhores-placas-video-custo-beneficio-2026)
+- TechTudo — [Tier list: melhor placa de vídeo de 2026](https://www.techtudo.com.br/noticias/2026/02/qual-a-melhor-placa-de-video-de-2026-veja-tier-list-e-escolha-para-o-seu-pc-edinfoeletro.ghtml)
+- André Indica — [Guia: melhores placas de vídeo 2026](https://www.andreindica.com.br/guia/melhores-placas-de-video-2026/)`,
+  },
+  {
+    slug: "ryzen-ou-intel-2026-melhor-processador-gamer",
+    title: "Ryzen ou Intel em 2026? Guia do processador gamer por faixa de preço",
+    excerpt:
+      "A briga eterna, resolvida com dados de 2026: quem lidera em jogos, quem entrega mais por real, e qual processador escolher em cada faixa de orçamento.",
+    category: "Hardware",
+    author: "Tripulação Starteq",
+    date: "2026-06-25",
+    read_min: 7,
+    cover_icon: "cpu",
+    body: `Ryzen ou Intel? A pergunta que nunca morre. Em 2026 ela tem uma resposta bem mais clara do que costumava ter — pelo menos pra quem monta PC focado em jogos. Vamos direto ao ponto, por faixa de preço.
+
+## Pra jogar, a AMD está na frente em 2026
+
+O ponto que virou consenso: as CPUs **AMD Ryzen com 3D V-Cache (linha X3D)** lideram os benchmarks de gaming em 2026. O **Ryzen 7 9800X3D** é apontado como o melhor processador de jogos do ano. ([TerabyteShop](https://www.terabyteshop.com.br/blog/amd-ryzen-9000x3d-vs-intel-core-ultra-200-melhor-processador-games-2026) · [Newegg](https://www.newegg.com/insider/intel-core-ultra-200-vs-amd-ryzen-9000-which-cpu-should-you-buy-in-2026/))
+
+A Intel Core Ultra série 200 melhorou o desempenho single-thread e é forte em produtividade, mas **em jogos as X3D da AMD continuam à frente**. ([Newegg](https://www.newegg.com/insider/intel-core-ultra-200-vs-amd-ryzen-9000-which-cpu-should-you-buy-in-2026/))
+
+O que dá esse pulo em jogos é o 3D V-Cache: uma camada extra de memória cache empilhada no processador, que reduz o tempo de acesso a dados — e jogo adora cache.
+
+## Por faixa de preço (2026)
+
+| Faixa | Escolha gamer | Preço aprox. (R$) |
+|---|---|---|
+| Entrada | Ryzen 5 5600 (AM4) ou Intel i5-12400F | ~700–900 |
+| Custo-benefício | Ryzen 5 9600X (AM5) | ~1.300 |
+| Equilíbrio | Ryzen 7 9700X | ~1.700 |
+| Topo gaming | Ryzen 7 9800X3D | topo da categoria |
+
+Preços de referência de 2026. ([TechTudo](https://www.techtudo.com.br/listas/2026/01/melhor-processador-custo-beneficio-opcoes-de-destaque-edqualcomprarie.ghtml) · [KitPC](https://kitpc.com.br/blog/melhor-processador-custo-beneficio-em-2026-ryzen-ou-intel-por-faixa-de-preco))
+
+## Quando a Intel faz sentido
+
+- Você **já tem uma placa-mãe Intel** e quer só trocar o processador.
+- Seu uso é **produtividade pesada** (algumas cargas favorecem o Core Ultra) misturada com jogo.
+- Quer aproveitar **plataforma DDR4** (Intel LGA1700 aceita DDR4; AM5 só DDR5) — útil se você já tem os pentes.
+
+## A pegadinha da plataforma
+
+Escolher CPU não é só o chip — é a plataforma inteira:
+
+- **AMD AM5 (Ryzen 7000/9000):** só DDR5, mas soquete com vida longa (suporte estendido) — dá pra fazer upgrade de CPU no futuro sem trocar a placa.
+- **Intel LGA1700:** aceita DDR4 ou DDR5, mas com menos fôlego de upgrade futuro.
+
+Pra quem monta do zero pensando em durar, a longevidade do soquete AM5 é um argumento forte da AMD além do desempenho.
+
+## Veredito
+
+- **Foco em jogos, montando do zero:** AMD Ryzen — X3D no topo, 9600X/9700X no custo-benefício.
+- **Orçamento apertado:** Ryzen 5 5600 ou i5-12400F resolvem 1080p com folga.
+- **Já tem plataforma Intel ou faz produtividade pesada:** Core Ultra 200 é opção válida.
+
+Na dúvida de qual encaixa na sua placa e no seu orçamento, monta no [montador](/montador) — ele valida a compatibilidade do soquete e da memória automaticamente — ou chama a Starteq no WhatsApp.
+
+## Fontes
+
+- TerabyteShop — [Ryzen 9000X3D vs Intel Core Ultra 200](https://www.terabyteshop.com.br/blog/amd-ryzen-9000x3d-vs-intel-core-ultra-200-melhor-processador-games-2026)
+- Newegg — [Intel Core Ultra 200 vs AMD Ryzen 9000](https://www.newegg.com/insider/intel-core-ultra-200-vs-amd-ryzen-9000-which-cpu-should-you-buy-in-2026/)
+- TechTudo — [Melhor processador custo-benefício](https://www.techtudo.com.br/listas/2026/01/melhor-processador-custo-beneficio-opcoes-de-destaque-edqualcomprarie.ghtml)
+- KitPC — [Melhor processador custo-benefício 2026: Ryzen ou Intel](https://kitpc.com.br/blog/melhor-processador-custo-beneficio-em-2026-ryzen-ou-intel-por-faixa-de-preco)`,
+  },
+  {
     slug: "onde-comprar-pc-gamer-palmas-tocantins-2026",
     title: "Onde comprar PC gamer em Palmas-TO em 2026 · guia completo",
     excerpt:
@@ -359,43 +536,60 @@ Independente da rota, **a regra de ouro é nunca comprar sem validação de comp
     slug: "como-montar-pc-gamer-1080p-sem-gastar-fortuna",
     title: "Como montar um PC gamer pra rodar tudo em 1080p sem gastar fortuna",
     excerpt:
-      "Build até R$ 3.500 que entrega 100+ FPS em Valorant, Fortnite, CS2 e roda os AAA modernos em high. Combo CPU + GPU que mais entrega valor agora.",
+      "O combo CPU + GPU que mais entrega valor pra 1080p 60fps+ em 2026, com preços reais. Onde economizar sem perder desempenho — e os 3 lugares onde você NÃO pode cortar.",
     category: "Build",
     author: "Tripulação Starteq",
-    date: "2026-05-10",
-    read_min: 6,
+    date: "2026-06-01",
+    read_min: 7,
     cover_icon: "gamepad",
-    body: `Em 2026 não é difícil montar um PC gamer 1080p de alto nível por menos de 3.500. O segredo está no combo CPU + GPU equilibrado.
+    body: `1080p ainda é a resolução mais jogada do Brasil — e a boa notícia é que dá pra montar uma máquina que roda tudo em Full HD com folga sem entrar em faixa de preço absurda. O segredo é o equilíbrio entre CPU e GPU. Este é o combo que aparece de forma mais consistente como melhor custo-benefício em 2026.
 
-## Combo recomendado
+## O combo recomendado
 
-- **CPU:** AMD Ryzen 5 5600 (R$ 690 no PIX) · 6 núcleos · cooler box incluído
-- **Mobo:** ASUS Prime B550M-K (R$ 690)
-- **RAM:** Corsair Vengeance 16GB DDR4 3600MHz (R$ 350)
-- **GPU:** GALAX RTX 4060 1-Click OC (R$ 2.290)
-- **SSD:** Kingston NV2 500GB NVMe (R$ 249)
-- **Fonte:** Corsair CV650 650W Bronze (R$ 390)
-- **Gabinete:** Rise Mode Z3 Glass ATX RGB (R$ 419)
+| Peça | Modelo de referência | Faixa (R$) |
+|---|---|---|
+| Processador | AMD Ryzen 5 5600 (AM4) | ~700–900 |
+| Placa de vídeo | RX 7600 8GB (ou RTX 4060) | ~1.600–1.800 |
+| Memória | 16GB (2×8) DDR4 3200 dual channel | ~600 |
+| Armazenamento | SSD NVMe 1TB | ~400–700 |
+| Fonte | 550–600W 80+ Bronze de marca | ~250–400 |
+| Gabinete | Mid tower com boa ventilação | ~130 |
 
-Total à vista PIX: R$ 5.078. Cabe em 10x sem juros de R$ 553 no cartão.
+Build fechada nessa configuração sai entre **R$ 3.380 e R$ 4.930** dependendo das escolhas. ([DeckVirtual](https://deckvirtual.com/build-pc-gamer-3000-reais/))
 
 ## Por que essa combinação
 
-A RTX 4060 entrega 100+ FPS em todos os esports atuais em 1080p. O Ryzen 5 5600 não é gargalo nessa GPU. 16GB DDR4 é o piso confortável pra jogo em 2026. SSD NVMe pra Windows + 2-3 jogos pesados.
+- O **Ryzen 5 5600** entrega ~95% do desempenho do 5600X por bem menos, com apenas 65W de consumo — se consolidou como escolha inteligente pra 1080p. ([Techload](https://techload.com.br/ryzen-5600/) · [Pichau Arena](https://www.pichauarena.com.br/hardware/amd-ryzen-5-5600-review/))
+- A **RX 7600** faz cerca de **82 FPS médios em 1080p Ultra**; a RTX 4060 fica em ~85 FPS (diferença de ~4% em rasterização, mas a 4060 adiciona DLSS e ray tracing melhor). ([XP Gamer](https://xpgamer.com.br/rx-7600-vs-rtx-4060-melhor-placa-2026/)) Ambas rodam a maioria dos AAA em Full HD alto/ultra com 60fps+ e voam nos esports (CS2, Valorant, LoL, Fortnite).
+- **16GB em dual channel** é o piso confortável de 2026.
 
-## O que NÃO comprar nessa faixa
+## Onde economizar (sem perder FPS)
 
-- Fontes genéricas sem certificação 80+
-- Gabinete sem ventoinha frontal (térmico vira problema em Palmas)
-- RAM 2133/2400MHz (gargalha CPU AMD)
+- **Fique no DDR4.** O kit Ryzen 5600 + DDR4 sai muito mais barato que uma plataforma DDR5, e pra 1080p a diferença de desempenho não justifica o custo. ([Techload](https://techload.com.br/ryzen-5600/))
+- **Geração anterior de CPU** (Ryzen 5600 / i5-12400F) em vez do topo atual — pouca perda em 1080p.
+- **Placa-mãe B550** (nova ou usada) em vez de placa DDR5 topo.
+- **Gabinete simples** (~R$ 130) — não afeta FPS, só estética/ventilação.
 
-## Como adaptar pro seu orçamento
+## Onde você NÃO pode economizar
 
-- **R$ 4.500:** mantém tudo, troca SSD pra 1TB · R$ 419 a mais
-- **R$ 6.500:** sobe pra Ryzen 7 7700 + B650M DDR5 · pula pra 1440p tranquilo
-- **R$ 8.500:** RTX 4070 Super entra · agora é setup de elite
+1. **GPU** — carrega ~70% do desempenho em jogo. Cortar aqui derruba os FPS diretamente. ([DeckVirtual](https://deckvirtual.com/build-pc-gamer-3000-reais/))
+2. **Fonte (PSU)** — fonte fraca ou genérica trava e desliga o PC nos picos de consumo e arrisca o hardware inteiro. Vá de 80+ Bronze de marca conhecida, 550–600W.
+3. **RAM em dual channel, 16GB** — single channel ou 8GB causa stutter e queda de FPS no carregamento.
 
-Quer testar a build no /montador? A compatibilidade é validada peça a peça. Sem chance de comprar errado.`,
+## Adaptando o orçamento
+
+- **Quer 1440p:** sobe a GPU pra RX 9060 XT 16GB e considera plataforma AM5 (DDR5).
+- **Vai editar vídeo:** 32GB de RAM e SSD maior.
+- **Segurar por anos:** priorize VRAM (12GB+) na placa.
+
+Monta a tua no [montador](/montador) — ele valida a compatibilidade peça a peça e calcula a fonte recomendada, então não tem como comprar errado.
+
+## Fontes
+
+- DeckVirtual — [Build PC gamer R$ 3.000](https://deckvirtual.com/build-pc-gamer-3000-reais/)
+- Techload — [Ryzen 5 5600 review](https://techload.com.br/ryzen-5600/)
+- Pichau Arena — [Ryzen 5 5600 review](https://www.pichauarena.com.br/hardware/amd-ryzen-5-5600-review/)
+- XP Gamer — [RX 7600 vs RTX 4060](https://xpgamer.com.br/rx-7600-vs-rtx-4060-melhor-placa-2026/)`,
   },
   {
     slug: "rtx-5070-vs-4070-super-vale-a-pena",
@@ -559,84 +753,131 @@ Headphone over-ear · pad de mouse grande (90×40cm) · USB hub na borda da mesa
     slug: "pc-gamer-consome-quanto-energia-vale-solar",
     title: "Quanto consome um PC gamer rodando 8h/dia? Vale energia solar?",
     excerpt:
-      "Cálculo real do consumo de uma build R$ 5k rodando 8h/dia · quanto pesa na conta de luz em Palmas · ponto onde solar começa a fazer sentido.",
+      "Consumo real por perfil de build (com fontes), quanto pesa na conta rodando 8h/dia, o segredo da eficiência da fonte e quando energia solar faz sentido pra um gamer em Palmas.",
     category: "Mercado",
     author: "Tripulação Starteq",
-    date: "2026-04-28",
-    read_min: 6,
+    date: "2026-06-10",
+    read_min: 7,
     cover_icon: "zap",
-    body: `Pergunta que volta toda semana no WhatsApp. Vamos colocar número real.
+    body: `Pergunta que volta toda semana no WhatsApp: "ligar o PC gamer o dia todo vai estourar minha conta de luz?" Vamos colocar número real, com fonte — e sem drama.
 
-## Consumo típico de PC gamer atual
+## Quanto consome de verdade (em jogo)
 
-- **Build R$ 5k** (Ryzen 5 + RTX 4060): ~350W em jogo pesado · ~150W idle/web
-- **Build R$ 8k** (Ryzen 7 + RTX 4070 Super): ~450W em jogo · ~180W idle
-- **Build R$ 12k** (Ryzen 9 + RTX 5070): ~550W em jogo · ~200W idle
+Importante: o que importa é o consumo do sistema em uso, não a "capacidade" da fonte. Uma fonte de 650W não puxa 650W o tempo todo — ela puxa o que o PC precisa.
 
-## Cálculo na conta de luz Palmas (tarifa Energisa ~R$ 0.95/kWh)
+| Perfil | Exemplo de build | Consumo em jogo |
+|---|---|---|
+| Entrada | i5 + RX 6600 XT | ~250W |
+| Médio | Ryzen 5 + RTX 4060 | 280–350W |
+| High-end | i7 + RTX 4070 Super | 350–450W |
+| Entusiasta | Ryzen 9 + RTX 4090 | até 750W (4K + ray tracing) |
 
-Build R$ 8k · 8h/dia mistas (4h jogo + 4h web/estudo):
-- Consumo médio: 300W
-- 8h × 300W = 2,4 kWh/dia
-- 30 dias × 2,4 = 72 kWh/mês
-- 72 × 0,95 = **R$ 68/mês**
+Fonte: [Guia de wattage de PC](https://informatyk-szczecin.com/pc-wattage-guide/). A faixa típica de um gamer em 2026 fica entre **300 e 600W** em uso intenso. ([SolarTech](https://solartechonline.com/blog/how-much-electricity-does-gaming-pc-use/))
 
-Build R$ 12k mesmo uso: ~R$ 95/mês.
+## Quanto isso pesa na conta
 
-## Vale solar pra gamer?
+Usando a tarifa residencial média no Brasil com impostos (~R$ 0,80/kWh — em Palmas confere o valor exato na sua conta da Energisa; a ANEEL projetou reajuste médio de +8% em 2026), rodando **8h/dia de jogo**:
 
-Painel pequeno (1-2 kWp) cobre o PC + ar-condicionado de quarto sem dificuldade. Em Palmas (que tem irradiação solar das mais altas do BR), o payback é mais rápido que no Sudeste.
+| Perfil | kWh/mês | Custo/mês | Custo/ano |
+|---|---|---|---|
+| Entrada (250W) | ~60 | ~R$ 48 | ~R$ 576 |
+| Médio (350W) | ~84 | ~R$ 67 | ~R$ 806 |
+| High-end (450W) | ~108 | ~R$ 86 | ~R$ 1.037 |
 
-Se sua conta de luz já passa R$ 250/mês e tem espaço no telhado, solar começa a fazer sentido. **A gente conhece quem instala bem em Palmas** (chama no WhatsApp pra indicação).
+Fonte da tarifa: [ANEEL via pv-magazine](https://www.pv-magazine-brasil.com/2026/03/17/aneel-projeta-aumento-tarifario-medio-de-8-em-2026/). Duas ressalvas honestas: 8h/dia de jogo puro é cenário pesado (na vida real tem bastante idle, que consome bem menos), e o monitor some ~20–50W à parte.
+
+## O detalhe que quase ninguém olha: eficiência da fonte
+
+A conta acima é o consumo do PC. Mas a tomada puxa um pouco mais, por causa da eficiência da fonte — e aí entra o selo **80 Plus**:
+
+- Bronze: ~82–85% de eficiência
+- Gold: ~87–90%
+- Platinum / Titanium: 90%+
+
+O pulo do gato: **em idle (PC ocioso, ~60W) a eficiência despenca** na maioria das fontes — só o Titanium mantém eficiência alta em carga baixa. Por isso a fonte ideal é a que trabalha perto de **50% da capacidade** (onde a eficiência é máxima). Superdimensionar demais (1000W num PC que puxa 300W) desperdiça. ([80 Plus — Wikipedia](https://en.wikipedia.org/wiki/80_Plus) · [Newegg](https://www.newegg.com/insider/understanding-power-supply-efficiency-ratings-the-complete-80-plus-certification-guide-for-2026/)) Pra maioria, **Gold é o custo-benefício** de eficiência.
+
+## Vale energia solar pra gamer?
+
+Sendo honesto: **instalar solar só pra bancar o PC não fecha conta.** Um gamer adiciona ~60–110 kWh/mês; o payback de um sistema solar residencial no Brasil é de **3 a 5 anos** e vale pra casa inteira, não pra um aparelho. ([Energia Solar Hoje](https://energiasolarhoje.com.br/payback-da-energia-solar-em-2025-calculo-real-e-exemplos/))
+
+A boa notícia pra Palmas: como o Tocantins tem irradiação solar das mais altas do Brasil, o payback aqui tende ao **piso da faixa (~3 anos)**. ([Skylight](https://www.skylightenergiasolar.com.br/post/energia-solar-no-brasil-oferece-retorno-de-at%C3%A9-45-ao-ano-e-payback-entre-2-e-5-anos)) Então o gamer entra como mais um motivo pra dimensionar o sistema um pouco maior — não como justificativa isolada.
 
 ## Resumo
 
-PC gamer NÃO é o grande vilão da conta. O vilão é o ar-condicionado e o chuveiro. Foca aí primeiro.`,
+PC gamer não é o vilão da conta de luz — um setup médio custa ~R$ 60–90/mês jogando pesado 8h/dia. Escolha uma fonte Gold bem dimensionada (perto de 50% de carga) e você já economiza no desperdício. Solar compensa pra casa toda, e em Palmas com retorno rápido. Quer a fonte certa calculada pra sua build? O [montador](/montador) já recomenda a wattagem ideal.
+
+## Fontes
+
+- Guia de wattage de PC — [informatyk-szczecin](https://informatyk-szczecin.com/pc-wattage-guide/)
+- ANEEL / pv-magazine — [Reajuste tarifário médio de 8% em 2026](https://www.pv-magazine-brasil.com/2026/03/17/aneel-projeta-aumento-tarifario-medio-de-8-em-2026/)
+- 80 Plus — [Wikipedia](https://en.wikipedia.org/wiki/80_Plus) · [Newegg](https://www.newegg.com/insider/understanding-power-supply-efficiency-ratings-the-complete-80-plus-certification-guide-for-2026/)
+- Energia Solar Hoje — [Payback da energia solar](https://energiasolarhoje.com.br/payback-da-energia-solar-em-2025-calculo-real-e-exemplos/)`,
   },
   {
     slug: "fps-caiu-5-checagens-antes-de-culpar-o-jogo",
     title: "Por que tua FPS caiu? 5 checagens antes de culpar o jogo",
     excerpt:
-      "Fix gratuito que resolve 80% dos casos. Antes de pensar em upgrade ou reinstalar Windows, passa por essa lista.",
+      "Antes de pensar em upgrade ou reinstalar o Windows, passa por essas checagens. A causa nº 1 é grátis de resolver — e a maioria erra o diagnóstico culpando a peça errada.",
     category: "Tutorial",
     author: "Tripulação Starteq",
-    date: "2026-04-22",
-    read_min: 5,
+    date: "2026-06-05",
+    read_min: 8,
     cover_icon: "wrench",
-    body: `Antes de gastar dinheiro com upgrade ou pensar que o jogo "tá quebrado", passa por essa lista.
+    body: `Sua FPS caiu, o jogo começou a travar (stutter) e você já pensou "meu PC ficou fraco". Calma. Na maioria dos casos não é hardware velho — é uma dessas cinco coisas, e quase todas são de graça pra resolver. Antes de comprar peça, passa por aqui.
 
-## 1. Drivers da GPU atualizados?
+## 1. Superaquecimento (a causa nº 1) — thermal throttling
 
-GeForce Experience (NVIDIA) ou Adrenalin (AMD) · clica em "Verificar atualizações". 30% dos casos de FPS baixo resolvem aqui.
+Essa é a campeã. Quando a CPU passa de ~90°C ou a GPU de ~85°C, o próprio sistema **reduz o clock pra se proteger** — e você sente como travada. ([SmoothFPS](https://smoothfps.com/guides/thermal-throttling))
 
-## 2. Temperatura da GPU e CPU
+O sintoma que entrega: **o stutter começa depois de 10-30 minutos** de jogo (o calor vai "encharcando" os componentes); num teste curto fica tudo liso. Faixas de referência:
 
-Baixa o HWMonitor (gratuito). Roda o jogo. Olha se passa de 85°C em alguma peça.
+| Peça | Ideal | Crítico | Perigo |
+|---|---|---|---|
+| CPU | 60–75°C | 85–95°C | 95°C+ |
+| GPU | 65–80°C | 85–95°C | 95°C+ |
 
-Se passa, é hora de:
-- Limpar poeira do gabinete (faz isso a cada 3 meses em Palmas)
-- Trocar pasta térmica da CPU (a cada 1-2 anos)
-- Adicionar ventoinha extra no gabinete
+**Diagnóstico:** HWiNFO (mostra a flag de throttling), HWMonitor ou MSI Afterburner com overlay de temperatura. **Fix:** limpar a poeira das fans e dissipadores resolve a maioria (em Palmas, faça a cada 3 meses); trocar a pasta térmica num PC de 2+ anos baixa 10-20°C; melhorar o fluxo de ar do gabinete. ([SmoothFPS](https://smoothfps.com/guides/thermal-throttling))
 
-## 3. Background do Windows
+## 2. Drivers da GPU desatualizados ou corrompidos
 
-CTRL+SHIFT+ESC pra abrir o Task Manager. Aba Processes. Tem alguma coisa comendo CPU ou GPU?
+GPU com driver velho perde desempenho e trava em jogos novos. Baixe sempre do site oficial (NVIDIA ou AMD), nunca de terceiros. Resolve uma fatia enorme dos casos.
 
-Suspeitos comuns: Discord overlay, OBS rodando à toa, software de RGB pesado (Razer/Corsair), antivírus em scan.
+## 3. Gargalo (bottleneck) — e o erro de culpar a peça errada
 
-## 4. Resolução e configurações do jogo
+Aqui mora o engano mais comum. Instale o **MSI Afterburner + RivaTuner** e ligue o overlay de uso de CPU e GPU no jogo. ([MZ Tech](https://menezestech.com.br/como-usar-o-msi-afterburner-para-monitorar-hardware/)) Aí leia:
 
-Você tá rodando em resolução nativa do monitor? Filtragem antialiasing tá no máximo? Ray tracing ligado em GPU que não aguenta?
+- **CPU perto de 100% e GPU abaixo de ~60%** → gargalo de CPU.
+- **GPU em 99-100%** → isso é NORMAL e desejável em jogo pesado. Não é defeito.
 
-Cada jogo tem um preset que vale mais que outro pra desempenho. Procura no YouTube "best settings [nome do jogo] [sua GPU]".
+A curiosidade que quase todo mundo erra: as pessoas culpam a GPU quando ela está a 100%, mas GPU a 100% é o esperado — o problema costuma ser a **CPU a 100% com a GPU ociosa**. Em 1080p o peso cai mais sobre a CPU, então gargalo de processador é comum nessa resolução. ([Tecnoblog](https://tecnoblog.net/responde/como-monitorar-uso-da-gpu-computador/))
 
-## 5. Windows precisando reiniciar
+## 4. RAM e armazenamento
 
-Sério. Windows que tá rodando há 5 dias acumula lixo. Reinicia a máquina antes de qualquer fix complexo.
+- **RAM:** 8GB ou memória em single channel derruba FPS e causa stutter justamente nos picos (carregar mapa, trocar de cena). 16GB em dual channel é o piso.
+- **Armazenamento:** HD mecânico como disco do jogo causa travadas e loading longo. SSD (de preferência NVMe) resolve.
+
+## 5. Background e plano de energia do Windows
+
+CTRL+SHIFT+ESC abre o Gerenciador de Tarefas. Veja o que está comendo CPU/RAM: Discord overlay, OBS ligado à toa, software de RGB pesado (Razer/Corsair), antivírus em scan, navegador com 40 abas. E confira o plano de energia — se estiver em "Economia", troque pra **Alto desempenho** (o modo economia limita o clock). ([MW Consultoria](https://www.mwconsultoria.net/post/pc-gamer-travando-durante-os-jogos-causas-e-como-resolver))
+
+## Erros comuns (não faça)
+
+- **Aspirador de pó doméstico na placa** → risco de descarga estática que queima componente. Use ar comprimido. ([SmoothFPS](https://smoothfps.com/guides/thermal-throttling))
+- **Pasta térmica demais (ou de menos)** — os dois pioram a troca de calor.
+- **Desativar o thermal throttling** achando que "resolve" — você só removeu a proteção do hardware.
+- Achar que **gabinete quente por fora = superaquecimento interno**. Não é indicador confiável; meça com software.
+- Dica boa: **limitar o FPS (frame cap)** um pouco abaixo do máximo costuma reduzir stutter e deixar a experiência mais consistente.
 
 ## Se passou de tudo e ainda tá ruim
 
-Aí provavelmente é gargalo real de hardware. Aí sim a gente conversa upgrade · CPU ou GPU. Manda mensagem no WhatsApp que avaliamos sua build antes de comprar peça.`,
+Aí sim pode ser gargalo real de hardware. Manda mensagem no WhatsApp que a gente avalia sua build — de repente é só um upgrade pontual (RAM, SSD, cooler) que resolve, antes de você gastar com peça grande.
+
+## Fontes
+
+- SmoothFPS — [Thermal throttling guide](https://smoothfps.com/guides/thermal-throttling)
+- MZ Tech — [Como usar o MSI Afterburner pra monitorar hardware](https://menezestech.com.br/como-usar-o-msi-afterburner-para-monitorar-hardware/)
+- Tecnoblog — [Como monitorar o uso da GPU](https://tecnoblog.net/responde/como-monitorar-uso-da-gpu-computador/)
+- MW Consultoria — [PC gamer travando durante os jogos](https://www.mwconsultoria.net/post/pc-gamer-travando-durante-os-jogos-causas-e-como-resolver)`,
   },
 ];
 
