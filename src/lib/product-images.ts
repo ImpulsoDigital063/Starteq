@@ -40,8 +40,9 @@ const GPU_VARIANTS = [
 ];
 
 export function getProductPhoto(product: Pick<Product, "sku" | "slug" | "category" | "brand" | "image">): string {
-  // Imagem REAL migrada (starteqpalmas.com → WebP local) tem prioridade sobre o placeholder
-  if (product.image && product.image.startsWith("/products/starteq/")) return product.image;
+  // Imagem REAL tem prioridade sobre o placeholder: path local (/products/starteq/) OU
+  // URL absoluta (http) — quando o catálogo vem do ComandaPRO, a foto é uma URL completa.
+  if (product.image && (product.image.startsWith("http") || product.image.startsWith("/products/starteq/"))) return product.image;
   const slug = product.slug.toLowerCase();
   const sku = product.sku.toLowerCase();
   const brand = product.brand.toLowerCase();
@@ -102,8 +103,8 @@ export function getProductGallery(
   product: Pick<Product, "sku" | "slug" | "category" | "brand" | "image">,
 ): string[] {
   const primary = getProductPhoto(product);
-  // produto com imagem REAL migrada → mostra só ela (não mistura fotos genéricas de contexto)
-  if (product.image && product.image.startsWith("/products/starteq/")) return [primary];
+  // produto com imagem REAL (path local ou URL do ComandaPRO) → mostra só ela (não mistura genéricas)
+  if (product.image && (product.image.startsWith("http") || product.image.startsWith("/products/starteq/"))) return [primary];
   const cat = product.category;
 
   // Periféricos · galeria mais "ambiente" e "uso real"
