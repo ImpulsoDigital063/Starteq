@@ -11,6 +11,7 @@ type ApiProduct = {
   sku: string; name: string; category: string; brand: string | null;
   priceCents: number; pixPriceCents?: number; stock: number; specs: Record<string, unknown>;
   badge?: Product["badge"]; highlight?: boolean;
+  image?: string | null; images?: string[]; description?: string | null;
 };
 
 // INTERINO: mostra o catálogo REAL (231 do starteqpalmas.com + webp) até os produtos
@@ -34,7 +35,7 @@ export async function getProducts(): Promise<Product[]> {
       price: p.priceCents / 100,
       pix_price: (p.pixPriceCents ?? p.priceCents) / 100,
       stock: p.stock,
-      image: `/products/${p.category}.svg`,
+      image: p.image || `/products/${p.category}.svg`, // foto real do produto; fallback SVG por categoria
       specs: p.specs as Product["specs"],
       highlight: p.highlight,
       badge: p.badge,
